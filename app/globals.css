@@ -1,0 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.component-px {
+  @apply px-6 sm:px-12 md:px-16 lg:px-32 xl:px-48;
+}
