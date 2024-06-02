@@ -64,9 +64,19 @@ const Header = () => {
     },
   ];
 
+  const [top, setTop] = useState(true);
+
+  useEffect(() => {
+    const scrollHandler = () => {
+      window.scrollY > 10 ? setTop(false) : setTop(true)
+    };
+    window.addEventListener('scroll', scrollHandler);
+    return () => window.removeEventListener('scroll', scrollHandler);
+  }, [top]);
+
   return (
     !isSigned && (
-      <header className="py-2 shadow">
+      <header className={`py-2 w-full transition-all ease-in-out sticky top-0 bg-white z-50 ${!top && `shadow`}`}>
         <div className="component-px flex items-center justify-between">
           <Link href="/">
             <h1 className="text-2xl font-bold text-primary">ZIELN</h1>
@@ -113,7 +123,9 @@ const Header = () => {
                 >
                   Login
                 </button>
-                <button className=" text-primary border-2 border-primary px-4 py-2 rounded-full shadow-md hover:bg-primary hover:text-white transition duration-300">
+                <button
+                  onClick={() => router.push("/signup")}
+                  className=" text-primary border-2 border-primary px-4 py-2 rounded-full shadow-md hover:bg-primary hover:text-white transition duration-300">
                   Register
                 </button>
               </>
