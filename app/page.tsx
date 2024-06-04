@@ -1,18 +1,30 @@
 import React from "react";
-import Header from "./components/globalcomponents/Header";
-import Footer from "./components/globalcomponents/Footer";
+import PageLayout from "./components/globalcomponents/PageLayout";
+import { Metadata } from "next";
+import HeroSection from "./components/pagecomponents/landingpage/HeroSection";
+import Partners from "./components/pagecomponents/landingpage/Partners";
+import Contact from "./components/pagecomponents/landingpage/Contact";
+import LatestEvents from "./components/pagecomponents/landingpage/LatestEvents";
+
+export const metadata: Metadata = {
+  title: "ZIELN",
+  keywords: "",
+  openGraph: {
+    title: "Zieln",
+    description:
+      "Our mission at Zieln is to empower students by providing seamless access to information about extra-curricular and co-curricular activities.",
+    images: "/images/og-landing.png",
+  },
+};
 
 const Home: React.FC = () => {
   return (
-    <>
-      <Header />
-      <main className="flex flex-col items-center justify-center min-h-screen p-10 text-center text-white">
-        <h1 className="text-6xl font-bold mb-8 text-tertiary">
-          Welcome to <span className="text-primary">ZEILN</span>
-        </h1>
-      </main>
-      <Footer />
-    </>
+    <PageLayout>
+      <HeroSection />
+      <Partners />
+      <LatestEvents />
+      <Contact />
+    </PageLayout>
   );
 };
 

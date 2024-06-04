@@ -1,142 +1,103 @@
 "use client";
 import { UserButton, useClerk } from "@clerk/nextjs";
-import { MenuProps } from "antd";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import AntdDropdown from "./AntdDropdown";
-import PrelineDropDown from "./ResourcesDropdown";
+import { Drawer } from "antd";
+import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { GrMenu } from "react-icons/gr";
 import ResourcesDropDown from "./ResourcesDropdown";
+import { PrimaryButton, PrimaryOutlineButton } from "./Buttons";
 
 const Header = () => {
-  const router = useRouter();
   const { user } = useClerk();
-  const pathName = usePathname();
-  const [isSigned, setIsSigned] = useState(false);
 
-  useEffect(() => {
-    setIsSigned(pathName === "/signin" || pathName === "/signup");
-  }, [pathName]);
+  const [open, setOpen] = useState(false);
 
-  // Listen to changes in the user state
-  useEffect(() => {
-    setIsSigned(false); // Reset isSigned state when user changes
-  }, [user]);
+  const showDrawer = () => {
+    setOpen(true);
+  };
+
+  const onClose = () => {
+    setOpen(false);
+  };
 
   console.log(user);
-
-  const items: MenuProps["items"] = [
-    {
-      key: "1",
-      label: (
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://www.antgroup.com"
-        >
-          1st menu item
-        </a>
-      ),
-    },
-    {
-      key: "2",
-      label: (
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://www.aliyun.com"
-        >
-          2nd menu item
-        </a>
-      ),
-    },
-    {
-      key: "3",
-      label: (
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://www.luohanacademy.com"
-        >
-          3rd menu item
-        </a>
-      ),
-    },
-  ];
 
   const [top, setTop] = useState(true);
 
   useEffect(() => {
     const scrollHandler = () => {
-      window.scrollY > 10 ? setTop(false) : setTop(true)
+      window.scrollY > 10 ? setTop(false) : setTop(true);
     };
-    window.addEventListener('scroll', scrollHandler);
-    return () => window.removeEventListener('scroll', scrollHandler);
+    window.addEventListener("scroll", scrollHandler);
+    return () => window.removeEventListener("scroll", scrollHandler);
   }, [top]);
 
   return (
-    !isSigned && (
-      <header className={`py-2 w-full transition-all ease-in-out sticky top-0 bg-white z-50 ${!top && `shadow`}`}>
-        <div className="component-px flex items-center justify-between">
-          <Link href="/">
-            <h1 className="text-2xl font-bold text-primary">ZIELN</h1>
-          </Link>
+    <header
+      className={`py-2 w-full transition-all ease-in-out sticky top-0 bg-white z-50 ${
+        !top && `shadow`
+      }`}
+    >
+      <div className="component-px flex items-center justify-between">
+        <Link href="/">
+          <Image
+            src="/logo.png"
+            alt="Zieln Logo"
+            width={100}
+            height={100}
+            className="w-16 lg:w-20"
+          />
+        </Link>
 
-          <div className="flex space-x-4">
-            <a
-              className="font-medium text-grayy-700 hover:text-primary py-3 md:px-3 md:py-6 "
-              href="#"
-              aria-current="page"
-            >
-              About
-            </a>
+        <div className="hidden lg:flex space-x-4">
+          <NavItem name="About" link="/about" />
+          <NavItem name="Events For You" link="/events" />
+          <ResourcesDropDown />
+          <NavItem name="Blogs" link="/blogs" />
+        </div>
 
-            <a
-              className="font-medium text-grayy-700 hover:text-primary py-3 md:px-3 md:py-6 dark:text-neutral-200 dark:hover:text-neutral-500"
-              href="#"
-            >
-              Events For you
-            </a>
-
-            <AntdDropdown
-              items={items}
-              buttonLabel="Event Categories"
-              placement="bottom"
-            />
-
-            <ResourcesDropDown />
-
-            <a
-              className="font-medium text-grayy-700 hover:text-primary py-3 md:px-3 md:py-6 dark:text-neutral-200 dark:hover:text-neutral-500"
-              href="#"
-            >
-              Blogs
-            </a>
-          </div>
-
+        <div className="flex items-center space-x-4">
           <div className="buttons flex space-x-4">
             {!user ? (
               <>
-                <button
-                  onClick={() => router.push("/signin")}
-                  className="bg-primary text-white px-4 py-2 rounded-full shadow-md  hover:text-primary hover:bg-white border-2 border-primary transition duration-300"
-                >
-                  Login
-                </button>
-                <button
-                  onClick={() => router.push("/signup")}
-                  className=" text-primary border-2 border-primary px-4 py-2 rounded-full shadow-md hover:bg-primary hover:text-white transition duration-300">
-                  Register
-                </button>
+                <PrimaryButton link="/sign-in" buttonName="Log in" />
+                <PrimaryOutlineButton link="/sign-up" buttonName="Register" />
               </>
             ) : (
               <UserButton />
             )}
           </div>
+
+          {/* For small screen   */}
+          <button onClick={showDrawer} className="lg:hidden">
+            <GrMenu size={24} />
+          </button>
+          <Drawer
+            title={<h1 className="text-xl font-bold">Zieln</h1>}
+            onClose={onClose}
+            open={open}
+          >
+            <NavItem name="About" link="/about" />
+            <NavItem name="Events For You" link="/events" />
+            <ResourcesDropDown />
+            <NavItem name="Blogs" link="/blogs" />
+          </Drawer>
         </div>
-      </header>
-    )
+      </div>
+    </header>
   );
 };
 
 export default Header;
+
+const NavItem = ({ link, name }: { link: string; name: string }) => {
+  return (
+    <Link href={link}>
+      <div className="font-medium text-gray-700 hover:text-primary py-3 md:px-3 md:py-6 dark:text-neutral-200 dark:hover:text-neutral-500">
+        {name}
+      </div>
+    </Link>
+  );
+};

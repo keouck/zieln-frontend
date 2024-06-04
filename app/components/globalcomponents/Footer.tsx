@@ -1,20 +1,27 @@
 /* eslint-disable react/no-unescaped-entities */
+import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const Footer: React.FC = () => {
   return (
     <footer className="mt-auto bg-gray-900 w-full dark:bg-neutral-950">
-      <div className="mt-auto w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 lg:pt-20 mx-auto">
+      <div className="mt-auto w-full  py-10 lg:pt-20 mx-auto component-px">
         {/* <!-- Grid --> */}
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
           <div className="col-span-full lg:col-span-1">
-            <a
+            <Link
               className="flex-none text-xl font-semibold text-white"
-              href="#"
+              href="/"
               aria-label="Brand"
             >
-              ZIELN
-            </a>
+              <Image
+                src="/logo.png"
+                alt="Zieln Logo"
+                width={100}
+                height={100}
+              />
+            </Link>
           </div>
           {/* <!-- End Col --> */}
 
