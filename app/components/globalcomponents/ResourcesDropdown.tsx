@@ -16,7 +16,7 @@ export default function ResourcesDropDown() {
     <div className="hs-dropdown   [--adaptive:none] [--auto-close:true]  py-3 md:px-3 md:py-6">
       <button
         type="button"
-        className="flex items-center w-full text-grayy-700 hover:text-primary font-medium dark:text-neutral-200 dark:hover:text-neutral-500"
+        className="flex items-center w-full text-gray-800 hover:text-primary font-medium dark:text-neutral-200 dark:hover:text-neutral-500"
       >
         Resources
         <FiChevronDown className="flex-shrink-0 ms-2 size-4" />
@@ -76,7 +76,7 @@ export default function ResourcesDropDown() {
                     Zieln empowers students by providing seamless access to
                     information about extra-curricular activities.
                   </p>
-                  <p className="mt-3 inline-flex items-center gap-x-1 text-sm text-blue-600 decoration-2 hover:underline font-medium dark:text-blue-400 dark:hover:text-blue-500">
+                  <p className="mt-3 inline-flex items-center gap-x-1 text-sm text-gray-700 decoration-2 hover:underline font-medium ">
                     Learn more
                     <svg
                       className="flex-shrink-0 size-4 transition ease-in-out group-hover:translate-x-1"
@@ -106,7 +106,7 @@ export default function ResourcesDropDown() {
 const DropdownItem = ({ icon, text }: any) => (
   <a
     href="#"
-    className="flex gap-x-4 text-gray-800 hover:text-blue-600 dark:text-neutral-200"
+    className="flex gap-x-4 text-gray-700 hover:text-primary dark:text-neutral-200"
   >
     {icon}
     <div className="grow">

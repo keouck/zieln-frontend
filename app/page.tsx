@@ -8,7 +8,7 @@ import LatestEvents from "./components/pagecomponents/landingpage/LatestEvents";
 
 export const metadata: Metadata = {
   title: "ZIELN",
-  keywords: "",
+  keywords: "zieln, event, event listing, students",
   openGraph: {
     title: "Zieln",
     description:

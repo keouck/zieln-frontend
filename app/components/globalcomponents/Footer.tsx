@@ -5,7 +5,7 @@ import React from "react";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="mt-auto bg-gray-900 w-full dark:bg-neutral-950">
+    <footer className="mt-auto bg-primary w-full dark:bg-neutral-950">
       <div className="mt-auto w-full  py-10 lg:pt-20 mx-auto component-px">
         {/* <!-- Grid --> */}
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
@@ -34,7 +34,7 @@ const Footer: React.FC = () => {
                   className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200"
                   href="#"
                 >
-                  Pricing
+                  Events
                 </a>
               </p>
               <p>
@@ -42,15 +42,7 @@ const Footer: React.FC = () => {
                   className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200"
                   href="#"
                 >
-                  Changelog
-                </a>
-              </p>
-              <p>
-                <a
-                  className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200"
-                  href="#"
-                >
-                  Docs
+                  Mentorship
                 </a>
               </p>
             </div>
@@ -77,23 +69,13 @@ const Footer: React.FC = () => {
                   Blog
                 </a>
               </p>
+
               <p>
                 <a
                   className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200"
                   href="#"
                 >
-                  Careers
-                </a>{" "}
-                <span className="inline ms-1 text-xs bg-blue-700 text-white py-1 px-2 rounded-lg">
-                  We're hiring
-                </span>
-              </p>
-              <p>
-                <a
-                  className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200"
-                  href="#"
-                >
-                  Customers
+                  Contact us
                 </a>
               </p>
             </div>
@@ -118,14 +100,14 @@ const Footer: React.FC = () => {
                   />
                 </div>
                 <a
-                  className="w-full sm:w-auto whitespace-nowrap p-3 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+                  className="w-full sm:w-auto whitespace-nowrap p-3 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary text-white hover:scale-95 disabled:opacity-50 disabled:pointer-events-none"
                   href="#"
                 >
                   Subscribe
                 </a>
               </div>
               <p className="mt-3 text-sm text-gray-400">
-                New UI kits or big discounts. Never spam.
+                Subscribe for weekly updates of events
               </p>
             </form>
           </div>

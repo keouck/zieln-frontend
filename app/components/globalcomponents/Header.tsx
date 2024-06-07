@@ -17,10 +17,23 @@ const Header = () => {
   const showDrawer = () => {
     setOpen(true);
   };
-
   const onClose = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    // Check the screen size initially
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   console.log(user);
 
@@ -78,9 +91,11 @@ const Header = () => {
             title={<h1 className="text-xl font-bold">Zieln</h1>}
             onClose={onClose}
             open={open}
+            className="lg:hidden"
           >
             <NavItem name="About" link="/about" />
             <NavItem name="Events For You" link="/events" />
+            <NavItem name="Mentorship" link="/mentorship" />
             <ResourcesDropDown />
             <NavItem name="Blogs" link="/blogs" />
           </Drawer>
@@ -95,7 +110,7 @@ export default Header;
 const NavItem = ({ link, name }: { link: string; name: string }) => {
   return (
     <Link href={link}>
-      <div className="font-medium text-gray-700 hover:text-primary py-3 md:px-3 md:py-6 dark:text-neutral-200 dark:hover:text-neutral-500">
+      <div className="font-medium text-gray-800 hover:text-primary py-3 md:px-3 md:py-6 dark:text-neutral-200 dark:hover:text-neutral-500">
         {name}
       </div>
     </Link>
