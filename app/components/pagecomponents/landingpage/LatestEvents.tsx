@@ -7,9 +7,7 @@ export default function LatestEvents() {
   return (
     <section className="component-px component-py">
       <div className="mb-6 sm:mb-10 max-w-2xl text-center mx-auto">
-        <h1 className="font-medium text-black text-2xl sm:text-4xl dark:text-white">
-          Latest Events
-        </h1>
+        <h1 className="component-heading">Latest Events</h1>
       </div>
 
       {/* <!-- Card Grid --> */}

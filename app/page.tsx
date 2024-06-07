@@ -5,6 +5,8 @@ import HeroSection from "./components/pagecomponents/landingpage/HeroSection";
 import Partners from "./components/pagecomponents/landingpage/Partners";
 import Contact from "./components/pagecomponents/landingpage/Contact";
 import LatestEvents from "./components/pagecomponents/landingpage/LatestEvents";
+import FAQs from "./components/pagecomponents/landingpage/FAQs";
+import Testimonials from "./components/pagecomponents/landingpage/Testimonials";
 
 export const metadata: Metadata = {
   title: "ZIELN",
@@ -23,6 +25,8 @@ const Home: React.FC = () => {
       <HeroSection />
       <Partners />
       <LatestEvents />
+      <Testimonials />
+      <FAQs />
       <Contact />
     </PageLayout>
   );

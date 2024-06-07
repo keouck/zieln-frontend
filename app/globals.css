@@ -10,6 +10,10 @@
   @apply py-8 lg:py-16;
 }
 
+.component-heading {
+  @apply font-semibold text-2xl md:text-4xl md:leading-tight;
+}
+
 .cl-internal-1j7ahlv {
   width: 2.5rem !important;
   height: 2.5rem !important;
@@ -39,4 +43,66 @@
   to {
     transform: translateX(-50%);
   }
+}
+
+/* Testimonials Swiper  */
+:root {
+  --swiper-pagination-bullet-inactive-color: #fff;
+  --swiper-pagination-bullet-active-color: #999898; /* or any desired color */
+}
+
+.swiper-pagination-bullet {
+  width: 30px !important;
+  height: 5px !important; /* Small rectangle shape */
+  color: #fff !important;
+  opacity: 1 !important;
+  background: var(--swiper-pagination-bullet-inactive-color, #fff);
+  border-radius: 4px !important; /* Optional: slight rounding of corners */
+  margin: 0 5px !important;
+}
+
+.swiper-pagination-bullet-active {
+  color: #fff !important;
+  background: var(--swiper-pagination-bullet-active-color, #f37022) !important;
+}
+
+/* swiper arrow  */
+/* Base styles for the navigation buttons */
+.swiper-button-prev,
+.swiper-button-next {
+  position: absolute !important;
+  top: var(--swiper-navigation-top-offset, 50%) !important;
+  width: 40px !important; /* Decrease the size of the circle */
+  height: 40px !important; /* Decrease the size of the circle */
+  margin-top: calc(-20px) !important; /* Center the button vertically */
+  z-index: 10 !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: white !important; /* Change the color of the arrows to white */
+  border-radius: 50% !important;
+  border: 2px solid #fff !important; /* Add a white border around the circular buttons */
+}
+
+/* Adjust the size of the arrow icons */
+.swiper-button-prev:after,
+.swiper-button-next:after {
+  font-family: swiper-icons !important;
+  font-size: 20px !important; /* Decrease the size of the arrow */
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  font-variant: initial !important;
+  line-height: 1 !important;
+  color: white !important; /* Ensure the arrow color is white */
+}
+
+/* Specific styles for the previous button */
+.swiper-button-prev {
+  left: 10px !important; /* Adjust the position if needed */
+}
+
+/* Specific styles for the next button */
+.swiper-button-next {
+  right: 10px !important; /* Adjust the position if needed */
 }
