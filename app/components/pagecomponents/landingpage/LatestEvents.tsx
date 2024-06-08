@@ -11,7 +11,7 @@ export default function LatestEvents() {
       </div>
 
       {/* <!-- Card Grid --> */}
-      <div className="grid md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 lg:gap-12">
+      <div className="mt-4 lg:mt-8 grid md:grid-cols-2 gap-8 lg:gap-16">
         {eventsData.map((event, index) => (
           <a key={index} className="group block" href="#">
             <div className="aspect-w-16 aspect-h-12 overflow-hidden bg-gray-100 rounded-2xl shadow dark:bg-neutral-800">
@@ -23,10 +23,10 @@ export default function LatestEvents() {
             </div>
 
             <div className="pt-4">
-              <h3 className="relative inline-block text-lg font-bold text-black before:absolute before:bottom-0.5 before:start-0 before:-z-[1] before:w-full before:h-1 before:bg-lime-400 before:transition before:origin-left before:scale-x-0 group-hover:before:scale-x-100 dark:text-white">
+              <h3 className="relative inline-block text-lg font-bold text-black before:absolute before:bottom-0.5 before:start-0 before:-z-[1] before:w-full before:h-1 before:bg-primary before:transition before:origin-left before:scale-x-0 group-hover:before:scale-x-100 ">
                 {event.title}
               </h3>
-              <p className="mt-1 text-gray-600 dark:text-neutral-400">
+              <p className="mt-1 text-gray-600">
                 {event.description}
               </p>
 

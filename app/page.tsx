@@ -10,7 +10,7 @@ import Testimonials from "./components/pagecomponents/landingpage/Testimonials";
 
 export const metadata: Metadata = {
   title: "ZIELN",
-  keywords: "",
+  keywords: "zieln, event, event listing, students",
   openGraph: {
     title: "Zieln",
     description:

@@ -1,5 +1,6 @@
 import { slidesData } from "@/app/data/slidesData";
 import Link from "next/link";
+import { PrimaryButton } from "../../globalcomponents/Buttons";
 
 /* eslint-disable react/no-unescaped-entities */
 export default function HeroSection() {
@@ -22,17 +23,23 @@ export default function HeroSection() {
                     style={{ backgroundImage: `url(${slide.image})` }}
                   >
                     <div className="mt-auto w-2/3 md:max-w-lg ps-5 pb-5 md:ps-10 lg:ps-20 md:pb-10">
-                      <h1 className="block text-white font-bold md:text-lg lg:text-xl">{slide?.title}</h1>
+                      <h1 className="block text-white font-bold md:text-lg lg:text-xl">
+                        {slide?.title}
+                      </h1>
                       <h2 className="block text-white text-xl md:text-3xl">
                         {slide?.description}
                       </h2>
-                      <div className="mt-5">
-                        <Link
+                      <div className="flex mt-5">
+                        {/* <Link
                           className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl bg-white border border-transparent text-black hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none"
                           href={slide?.buttonLink}
                         >
                           {slide?.buttonText}
-                        </Link>
+                        </Link> */}
+                        <PrimaryButton
+                          buttonName={slide?.buttonText}
+                          link={slide?.buttonLink}
+                        />
                       </div>
                     </div>
                   </div>
