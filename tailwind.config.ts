@@ -9,16 +9,23 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      animation: {
+        marquee: "marquee var(--marquee-duration) linear infinite",
+      },
+      keyframes: {
+        marquee: {
+          "100%": { transform: "translateX(-50%)" },
+        },
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       colors: {
-        primary: "#4CAF50", // Vivid Green
-        secondary: "#2196F3", // Bright Blue
-        tertiary: "#FF9800", // Bright Orange
-        neutral: "#FFFFFF", // White
+        primary: "#000000", // Black
+        secondary: "#FFFFFF", // White
+        neutral: "#808080", // Gray
       },
     },
   },
