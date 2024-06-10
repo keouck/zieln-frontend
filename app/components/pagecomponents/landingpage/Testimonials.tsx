@@ -21,7 +21,7 @@ export default function Testimonials() {
         <h1 className="component-heading">Testimonials</h1>
         <p className="lg:text-lg  mt-2">What other says about us</p>
       </div>
-      <div className="mt-4  component-px py-8 bg-darkGreen">
+      <div className="mt-4  component-px">
         <Swiper
           loop
           autoplay={{
@@ -52,16 +52,18 @@ interface Testimonial {
 
 const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => {
   return (
-    <div className="component-px pb-4 text-white relative">
+    <div className="component-px pb-8 lg:pb-16 text-white relative">
       <div className="component-px absolute -top-0 left-0">
         <BiSolidQuoteAltLeft size={72} className=" opacity-25" />
       </div>
       <div className="w-full flex items-center text-center">
         <div className="pt-4 lg:pt-8">
-          <p className="text-xl lg:text-3xl mt-4 md:text-base">
+          <p className="text-lg md:text-xl lg:text-3xl mt-4 p-4 lg:p-0">
             {testimonial?.message}
           </p>
-          <p className="mt-4 lg:mt-8 text-lg lg:text-xl font-medium">{testimonial?.name}</p>
+          <p className="mt-4 lg:mt-8 text-lg lg:text-xl font-medium">
+            {testimonial?.name}
+          </p>
           <p className="text-gray-400">{testimonial?.designation}</p>
         </div>
       </div>

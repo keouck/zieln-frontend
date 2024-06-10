@@ -81,9 +81,10 @@
   align-items: center !important;
   justify-content: center !important;
   color: white !important; /* Change the color of the arrows to white */
-  border-radius: 50% !important;
-  border: 2px solid #fff !important; /* Add a white border around the circular buttons */
+  /* border-radius: 50% !important;
+  border: 2px solid #fff !important; Add a white border around the circular buttons */
 }
+
 
 /* Adjust the size of the arrow icons */
 .swiper-button-prev:after,
