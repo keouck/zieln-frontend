@@ -15,9 +15,9 @@ interface EventCardProps {
 
 const EventCard: React.FC<EventCardProps> = ({ event }) => {
   return (
-    <div className="bg-white shadow-md rounded-2xl overflow-hidden">
+    <div className="bg-white shadow-md rounded-2xl overflow-hidden transition duration-300 transform group hover:shadow-lg hover:scale-105">
       <img
-        className="w-full h-32 md:h-40 object-cover object-center"
+        className="w-full h-32 md:h-40 object-cover object-center group-hover:scale-105 transition duration-300"
         src={event.image}
         alt={event.title}
       />
@@ -26,15 +26,11 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
         <div className="">
           <div className="flex items-center mt-2">
             <FiCalendar className="w-4 h-4 mr-2 text-gray-700" />
-            <p className="text-gray-700 text-xs md:text-sm">
-              {event.date}
-            </p>
+            <p className="text-gray-700 text-xs md:text-sm">{event.date}</p>
           </div>
           <div className="flex items-center mt-2">
             <FiMapPin className="w-4 h-4 mr-2 text-gray-700" />
-            <p className="text-gray-700 text-xs md:text-sm">
-              {event.location}
-            </p>
+            <p className="text-gray-700 text-xs md:text-sm">{event.location}</p>
           </div>
         </div>
       </div>
