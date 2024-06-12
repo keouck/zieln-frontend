@@ -4,6 +4,7 @@ import Link from "next/link";
 import React from "react";
 
 const Footer: React.FC = () => {
+  const currentYear = new Date().getFullYear();
   return (
     <footer className="mt-auto bg-primary w-full dark:bg-neutral-950">
       <div className="mt-auto w-full  py-10 lg:pt-20 mx-auto component-px">
@@ -118,7 +119,7 @@ const Footer: React.FC = () => {
         <div className="mt-5 sm:mt-12 grid gap-y-2 sm:gap-y-0 sm:flex sm:justify-between sm:items-center">
           <div className="flex justify-between items-center">
             <p className="text-sm text-gray-400 dark:text-neutral-400">
-              © 2022 Zieln. All rights reserved.
+              © {currentYear} Zieln. All rights reserved.
             </p>
           </div>
           {/* <!-- End Col --> */}
