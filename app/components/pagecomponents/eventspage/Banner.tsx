@@ -11,12 +11,13 @@ export default function Banner() {
     >
       <div className="absolute inset-0 bg-black opacity-70"></div>
       <div className="relative max-w-4xl mx-auto text-center component-px component-py">
-        <h1 className="text-2xl lg:text-5xl font-bold mb-2 md:mb-4">Upcoming Events</h1>
+        <h1 className="text-2xl lg:text-5xl font-bold mb-2 md:mb-4">
+          Upcoming Events
+        </h1>
         <p className="md:text-xl mb-3 md:mb-6">
           Stay updated with our latest events and activities. Join us and be a
           part of our vibrant community!
         </p>
-        <SecondaryButton buttonName="+ Add Event" />
       </div>
     </section>
   );
