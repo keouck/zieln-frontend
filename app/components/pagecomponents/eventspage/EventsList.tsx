@@ -40,7 +40,7 @@ const EventsList: React.FC = () => {
     <section className="component-px component-py">
       <div className="mb-8 lg:mb-16 grid md:grid-cols-3 gap-4 md:gap-0">
         <div className="md:col-span-2 flex justify-end">
-          <div className="w-full flex items-center border border-gray-300 rounded-full max-w-xl pl-4 pr-2 py-2">
+          <div className="w-full flex items-center border border-gray-300 rounded-full max-w-xl px-4 py-2 space-x-3">
             <input
               type="text"
               placeholder="Search events..."
@@ -50,7 +50,7 @@ const EventsList: React.FC = () => {
           </div>
         </div>
 
-        <div className="md:col-span-1 w-full flex items-center justify-end">
+        <div className="md:col-span-1 w-full flex items-center justify-end ">
           <Select
             labelInValue
             defaultValue={{ value: "latest", label: "Sort By:" }}
