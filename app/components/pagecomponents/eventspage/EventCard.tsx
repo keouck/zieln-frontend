@@ -18,10 +18,10 @@ interface EventCardProps {
 const EventCard: React.FC<EventCardProps> = ({ event }) => {
   return (
     <Link href={`/events/${event?.id}`}>
-      <div className="bg-white shadow-md rounded-2xl overflow-hidden">
-        <img
-          className="w-full h-32 md:h-40 object-cover object-center"
-          src={event.image}
+    <div className="cursor-pointer bg-white shadow-md rounded-2xl  overflow-hidden transition duration-300 transform group hover:shadow-lg hover:scale-105">
+    <img
+        className="w-full h-32 md:h-40 object-cover object-center group-hover:scale-105 transition duration-300"
+        src={event.image}
           alt={event.title}
         />
         <div className="p-4">
