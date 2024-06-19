@@ -3,11 +3,10 @@ import { UserButton, useClerk } from "@clerk/nextjs";
 import { Drawer } from "antd";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { GrMenu } from "react-icons/gr";
-import ResourcesDropDown from "./ResourcesDropdown";
 import { PrimaryButton, PrimaryOutlineButton } from "./Buttons";
+import ResourcesDropDown from "./ResourcesDropdown";
 
 const Header = () => {
   const { user } = useClerk();
@@ -69,6 +68,7 @@ const Header = () => {
           <NavItem name="Events" link="/events" />
           <ResourcesDropDown />
           <NavItem name="Blogs" link="/blogs" />
+          <NavItem name="Contact us" link="/contact" />
         </div>
 
         <div className="flex items-center space-x-4">
@@ -98,6 +98,7 @@ const Header = () => {
             <NavItem name="Mentorship" link="/mentorship" />
             <ResourcesDropDown />
             <NavItem name="Blogs" link="/blogs" />
+            <NavItem name="Contact us" link="/contact" />
           </Drawer>
         </div>
       </div>
