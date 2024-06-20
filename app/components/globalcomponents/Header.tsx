@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { GrMenu } from "react-icons/gr";
 import { PrimaryButton, PrimaryOutlineButton } from "./Buttons";
 import ResourcesDropDown from "./ResourcesDropdown";
+import { usePathname, useRouter } from "next/navigation";
 
 const Header = () => {
   const { user } = useClerk();
@@ -109,9 +110,18 @@ const Header = () => {
 export default Header;
 
 const NavItem = ({ link, name }: { link: string; name: string }) => {
+  const path = usePathname();
+  const isActive = path === link;
+  console.log(path);
   return (
     <Link href={link}>
-      <div className="font-medium text-gray-800 hover:text-primary py-3 md:px-3 md:py-6 dark:text-neutral-200 dark:hover:text-neutral-500">
+      <div
+        className={`py-3 md:px-3 md:py-6 ${
+          isActive
+            ? "text-black font-bold"
+            : "text-gray-800 font-medium hover:text-primary dark:text-neutral-200 dark:hover:text-neutral-500"
+        }`}
+      >
         {name}
       </div>
     </Link>
