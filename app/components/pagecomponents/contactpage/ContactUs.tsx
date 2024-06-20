@@ -4,7 +4,7 @@ import ContactForm from "./ContactForm";
 
 export default function ContactUs() {
   return (
-    <section className="w-full bg-gray-900 text-white flex items-center justify-center">
+    <section className="w-full bg-[#373A40] text-white flex items-center justify-center">
       <div className="component-py component-px grid lg:grid-cols-2 gap-8 lg:gap-16">
         {/* Contact Details */}
         <div className="flex items-center">
