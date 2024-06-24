@@ -33,6 +33,7 @@ export default function ContactForm() {
     toast.success("Message sent successfully!");
     setFormData({
       name: "",
+    
       company: "",
       email: "",
       phone: "",

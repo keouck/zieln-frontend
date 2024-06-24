@@ -2,7 +2,9 @@
 // components/BlogCard.tsx
 
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { FaFacebook, FaLink, FaTwitter } from "react-icons/fa";
+import { FacebookShareButton, TwitterShareButton } from "react-share";
 
 interface BlogCardProps {
   id: number;
@@ -21,6 +23,18 @@ const BlogCard: React.FC<BlogCardProps> = ({
   date,
   image,
 }) => {
+  const [url, setUrl] = useState("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setUrl(window.location.href);
+    }
+  }, []);
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(url);
+    alert("Link copied to clipboard!");
+  };
   return (
     <Link href={`/blogs/${id}`}>
       <div className="bg-white shadow-md rounded-lg lg:rounded-3xl overflow-hidden transition duration-300 transform group hover:shadow-lg hover:scale-105">
@@ -35,7 +49,20 @@ const BlogCard: React.FC<BlogCardProps> = ({
             <p>5 min read</p>
           </div>
           <h2 className="text-lg lg:text-xl font-medium mb-2">{title}</h2>
-          <p className="text-sm text-gray-400">{date}</p>
+          <div className="flex justify-between">
+            <p className="text-sm text-gray-400">{date}</p>
+            <p className="flex space-x-2">
+              <FacebookShareButton url={url}>
+                <FaFacebook className="text-sm text-gray-700" />
+              </FacebookShareButton>
+              <TwitterShareButton url={url}>
+                <FaTwitter className="text-sm text-gray-700" />
+              </TwitterShareButton>
+              <button onClick={copyToClipboard} className="text-sm text-gray-700">
+                <FaLink />
+              </button>
+            </p>
+          </div>
         </div>
       </div>
     </Link>
