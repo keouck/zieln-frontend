@@ -8,21 +8,20 @@ export default function EventDetailPage() {
   const { event } = useParams();
   const eventId = Array.isArray(event) ? event[0] : event;
   const eventItem = eventsData.find((eve) => eve.id === parseInt(eventId));
-  const defaultEvent = {
-    id: 0,
-    image: "",
-    title: "Event Not Found",
-    description: "The requested event could not be found.",
-    tags: [],
-    date: "",
-    location: "",
-    audience: "",
-    name: "Event Not Found", // Add 'name' property
-  };
+
+  if (!eventItem) {
+    return (
+      <PageLayout>
+        <section className="component-px component-py">
+          <div>Event not found.</div>
+        </section>
+      </PageLayout>
+    );
+  }
 
   return (
     <PageLayout>
-      <EventDetail event={eventItem || defaultEvent} />
+      <EventDetail event={eventItem} />
     </PageLayout>
   );
 }

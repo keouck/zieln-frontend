@@ -35,8 +35,6 @@ const Header = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  console.log(user);
-
   const [top, setTop] = useState(true);
 
   useEffect(() => {
@@ -112,7 +110,6 @@ export default Header;
 const NavItem = ({ link, name }: { link: string; name: string }) => {
   const path = usePathname();
   const isActive = path === link;
-  console.log(path);
   return (
     <Link href={link}>
       <div
