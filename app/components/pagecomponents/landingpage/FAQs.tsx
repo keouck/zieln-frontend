@@ -26,11 +26,7 @@ const FAQs = () => {
         >
           {faqsData.map((faq, index) => (
             <Panel
-              header={
-                <h2 className="text-lg lg:text-xl font-medium text-gray-600 hover:text-primary active:text-primary">
-                  {faq?.question}
-                </h2>
-              }
+              header={<h2 className="text-lg lg:text-xl">{faq?.question}</h2>}
               className="py-2"
               key={index}
             >

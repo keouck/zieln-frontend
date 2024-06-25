@@ -112,3 +112,19 @@
   border-color: #000000 !important;
 }
 
+
+.ant-collapse-item .ant-collapse-header-text {
+  font-weight: 500 !important;
+  color: #4b5563 !important;
+}
+
+.ant-collapse-header-text:hover {
+  font-weight: 600 !important;
+  color: #000000 !important;
+}
+
+
+.ant-collapse-item-active .ant-collapse-header-text {
+  font-weight: 600 !important;
+  color: #000000 !important;
+}
