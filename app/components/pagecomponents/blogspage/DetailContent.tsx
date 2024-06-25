@@ -7,8 +7,10 @@ import {
   FaCalendarAlt,
   FaUser,
   FaLink,
+  FaArrowLeft,
 } from "react-icons/fa";
 import { FacebookShareButton, TwitterShareButton } from "react-share";
+import { Divider, FloatButton } from "antd";
 
 interface Blog {
   id: number;
@@ -104,6 +106,19 @@ export default function DetailContent({ blog }: DetailContentProps) {
           </p>
         </div>
       </div>
+      <FloatButton
+        icon={<FaArrowLeft className="text-sm" />}
+        description="Go back"
+        shape="square"
+        style={{
+          right: 54,
+          width: "60px",
+          fontWeight: "bolder",
+          border: "1px solid black",
+          whiteSpace: "nowrap",
+        }}
+        onClick={() => window.history.back()}
+      />
     </section>
   );
 }
