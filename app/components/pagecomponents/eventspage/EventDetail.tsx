@@ -1,8 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
+import React, { useState } from "react";
 import {
   FaMapMarkerAlt,
   FaRegCalendarCheck,
   FaRegStar,
+  FaStar,
   FaUserFriends,
 } from "react-icons/fa";
 import { FiBookmark } from "react-icons/fi";
@@ -10,6 +12,7 @@ import {
   PrimaryButton,
   PrimaryOutlineButton,
 } from "../../globalcomponents/Buttons";
+import { FaBookmark } from "react-icons/fa6";
 
 interface EventDetailProps {
   event: {
@@ -18,10 +21,29 @@ interface EventDetailProps {
     location: string;
     audience: string;
     image: string;
+    interested: number; // New property for interested count
   };
 }
 
 const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
+  const [saved, setSaved] = useState(false); // State to track if event is saved
+  const [interested, setInterested] = useState(false); // State to track if user is interested
+  const [interestedCount, setInterestedCount] = useState(event.interested); // State to track the count of interested users
+
+  const toggleSaved = () => {
+    setSaved(!saved); // Toggle the saved state
+  };
+
+  const toggleInterested = () => {
+    if (interested) {
+      setInterested(false); // If already interested, toggle to uninterested
+      setInterestedCount(interestedCount - 1); // Decrement the interested count
+    } else {
+      setInterested(true); // If not interested, toggle to interested
+      setInterestedCount(interestedCount + 1); // Increment the interested count
+    }
+  };
+
   return (
     <section className="pb-8 lg:pb-16">
       {/* Banner */}
@@ -69,18 +91,18 @@ const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
         <div className="flex flex-row flex-wrap items-center gap-4 mb-8">
           <PrimaryButton
             icon={<FaRegCalendarCheck />}
-            buttonName="Register"
+            buttonName="Register (510)"
             link="/register"
           />
           <PrimaryOutlineButton
-            icon={<FiBookmark />}
-            buttonName="Save For Later"
-            link="/register"
+            icon={saved ? <FaBookmark /> : <FiBookmark />}
+            buttonName={saved ? "Saved For Later" : "Save For Later"}
+            onClick={toggleSaved}
           />
           <PrimaryOutlineButton
-            icon={<FaRegStar />}
-            buttonName="Interested"
-            link="/register"
+            icon={interested ? <FaStar /> : <FaRegStar />}
+            buttonName={`Interested (${interestedCount})`}
+            onClick={toggleInterested}
           />
         </div>
       </div>

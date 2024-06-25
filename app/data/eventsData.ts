@@ -7,6 +7,7 @@ export const eventsData = [
     tags: ["Education", "UK", "Expo"],
     date: "July 15, 2024",
     location: "AHZ Baneshwor Office, Kathmandu",
+    interested: 128,
     audience: "Students and professionals interested in studying abroad"
   },
   {
@@ -17,6 +18,7 @@ export const eventsData = [
     tags: ["Environment", "Sustainability", "Conservation"],
     date: "June 5, 2024",
     location: "Global",
+    interested: 128,
     audience: "Environmentalists, activists, and concerned citizens"
   },
   {
@@ -27,6 +29,7 @@ export const eventsData = [
     tags: ["Motorcycles", "Rally", "Biking"],
     date: "August 10, 2024",
     location: "City Park",
+    interested: 128,
     audience: "Motorcycle enthusiasts and bikers"
   },
   {
@@ -37,6 +40,7 @@ export const eventsData = [
     tags: ["Futsal", "Sports", "Tournament"],
     date: "July 20 - August 5, 2024",
     location: "Uniglobe Sports Complex",
+    interested: 128,
     audience: "Futsal players and sports enthusiasts of all ages"
   },
   {
@@ -47,6 +51,7 @@ export const eventsData = [
     tags: ["Education", "UK", "Expo"],
     date: "July 15, 2024",
     location: "AHZ Baneshwor Office, Kathmandu",
+    interested: 128,
     audience: "Students and professionals interested in studying abroad"
   },
   {
@@ -57,6 +62,7 @@ export const eventsData = [
     tags: ["Environment", "Sustainability", "Conservation"],
     date: "June 5, 2024",
     location: "Global",
+    interested: 128,
     audience: "Environmentalists, activists, and concerned citizens"
   },
   {
@@ -67,6 +73,7 @@ export const eventsData = [
     tags: ["Motorcycles", "Rally", "Biking"],
     date: "August 10, 2024",
     location: "City Park",
+    interested: 128,
     audience: "Motorcycle enthusiasts and bikers"
   },
   {
@@ -77,6 +84,7 @@ export const eventsData = [
     tags: ["Futsal", "Sports", "Tournament"],
     date: "July 20 - August 5, 2024",
     location: "Uniglobe Sports Complex",
+    interested: 128,
     audience: "Futsal players and sports enthusiasts of all ages"
   }
 ];
