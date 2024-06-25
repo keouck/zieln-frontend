@@ -107,8 +107,12 @@ export default function DetailContent({ blog }: DetailContentProps) {
         </div>
       </div>
       <FloatButton
-        icon={<FaArrowLeft className="text-sm" />}
-        description="Go back"
+        icon={
+          <img
+            src="https://www.svgrepo.com/show/101168/go-back-arrow.svg"
+            alt=""
+          />
+        }
         shape="square"
         style={{
           right: 54,
