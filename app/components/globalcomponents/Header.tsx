@@ -109,7 +109,7 @@ export default Header;
 
 const NavItem = ({ link, name }: { link: string; name: string }) => {
   const path = usePathname();
-  const isActive = path === link;
+  const isActive = path.startsWith(link);
   return (
     <Link href={link}>
       <div
