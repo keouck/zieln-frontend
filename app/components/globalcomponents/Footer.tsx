@@ -33,19 +33,19 @@ const Footer: React.FC = () => {
               <p>
                 <a
                   className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200"
-                  href="#"
+                  href="/events"
                 >
                   Events
                 </a>
               </p>
-              <p>
+              {/* <p>
                 <a
                   className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200"
                   href="#"
                 >
                   Mentorship
                 </a>
-              </p>
+              </p> */}
             </div>
           </div>
           {/* <!-- End Col --> */}
@@ -57,7 +57,7 @@ const Footer: React.FC = () => {
               <p>
                 <a
                   className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200"
-                  href="#"
+                  href="/about"
                 >
                   About us
                 </a>
@@ -65,7 +65,7 @@ const Footer: React.FC = () => {
               <p>
                 <a
                   className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200"
-                  href="#"
+                  href="/blogs"
                 >
                   Blog
                 </a>
@@ -74,7 +74,7 @@ const Footer: React.FC = () => {
               <p>
                 <a
                   className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200"
-                  href="#"
+                  href="/contact"
                 >
                   Contact us
                 </a>
