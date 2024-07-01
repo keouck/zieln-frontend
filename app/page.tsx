@@ -7,6 +7,7 @@ import Contact from "./components/pagecomponents/landingpage/Contact";
 import LatestEvents from "./components/pagecomponents/landingpage/LatestEvents";
 import FAQs from "./components/pagecomponents/landingpage/FAQs";
 import Testimonials from "./components/pagecomponents/landingpage/Testimonials";
+import Blogs from "./components/pagecomponents/landingpage/Blogs";
 
 export const metadata: Metadata = {
   title: "ZIELN",
@@ -26,6 +27,7 @@ const Home: React.FC = () => {
       <Partners />
       <LatestEvents />
       <Testimonials />
+      <Blogs />
       <FAQs />
       <Contact />
     </PageLayout>
