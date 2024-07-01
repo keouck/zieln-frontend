@@ -1,13 +1,14 @@
 "use client";
 import { UserButton, useClerk } from "@clerk/nextjs";
-import { Drawer } from "antd";
+import { Drawer, Dropdown, Menu } from "antd";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { FiMenu } from "react-icons/fi";
 import { GrMenu } from "react-icons/gr";
 import { PrimaryButton, PrimaryOutlineButton } from "./Buttons";
 import ResourcesDropDown from "./ResourcesDropdown";
-import { usePathname, useRouter } from "next/navigation";
 
 const Header = () => {
   const { user } = useClerk();
@@ -45,6 +46,14 @@ const Header = () => {
     return () => window.removeEventListener("scroll", scrollHandler);
   }, [top]);
 
+  const menu = (
+    <Menu>
+      <Menu.Item key="0">
+        <Link href={`/profile/${user?.username}`}>View Profile</Link>
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
     <header
       className={`py-2 w-full transition-all ease-in-out sticky top-0 bg-white z-50 ${
@@ -71,18 +80,27 @@ const Header = () => {
         </div>
 
         <div className="flex items-center space-x-4">
-          <div className="buttons flex space-x-4">
+          <div className="buttons flex items-center space-x-4">
             {!user ? (
               <>
                 <PrimaryButton link="/sign-in" buttonName="Log in" />
                 <PrimaryOutlineButton link="/sign-up" buttonName="Register" />
               </>
             ) : (
-              <UserButton />
+              <>
+                <UserButton />
+                <Dropdown
+                  overlay={menu}
+                  trigger={["click"]}
+                  className="hidden lg:block"
+                >
+                  <FiMenu size={24} className="cursor-pointer" />
+                </Dropdown>
+              </>
             )}
           </div>
 
-          {/* For small screen   */}
+          {/* For small screen */}
           <button onClick={showDrawer} className="lg:hidden">
             <GrMenu size={24} />
           </button>
@@ -116,7 +134,7 @@ const NavItem = ({ link, name }: { link: string; name: string }) => {
         className={`py-3 md:px-3 md:py-6 ${
           isActive
             ? "text-black font-bold"
-            : "text-gray-800 font-medium hover:text-primary dark:text-neutral-200 dark:hover:text-neutral-500"
+            : "text-gray-800 font-medium hover:text-black hover:font-bold transition duration-300"
         }`}
       >
         {name}
