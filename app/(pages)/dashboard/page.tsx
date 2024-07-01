@@ -18,17 +18,18 @@ const Home: React.FC = () => {
     });
   };
 
-  console.log(user);
-
   return (
     <PageLayout>
       <section className="flex flex-col items-center justify-center min-h-screen p-10 text-center ">
         <h1 className="text-6xl font-bold mb-8">Welcome to ZEILN DASHBOARD</h1>
 
         {!user?.unsafeMetadata.role && (
-          <div className="flex flex-col gap-y-10">
-            <label htmlFor="role">Select Role</label>
+          <div className="flex flex-col gap-y-7">
+            <label htmlFor="role" className="text-xl font-medium">
+              Select Role
+            </label>
             <Select
+              style={{ width: 200 }}
               id="role"
               value={role}
               onChange={(e) => setRole(e as TRole)}
