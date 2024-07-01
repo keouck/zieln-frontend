@@ -7,43 +7,11 @@ import { eventsData } from "@/app/data/eventsData";
 
 const EventsList: React.FC = () => {
   const [sortedEvents, setSortedEvents] = useState(eventsData);
-  const [events, setEvents] = useState([]);
-  const [eventsLoading, setEventsLoading] = useState<boolean>(true);
   const [sortOrder, setSortOrder] = useState<string>("latest");
   const [modalVisible, setModalVisible] = useState<boolean>(false);
 
   const handleChange = (value: { value: string; label: React.ReactNode }) => {
     setSortOrder(value.value);
-  };
-
-  const fetchEvent = async () => {
-    try {
-      const res = await fetch(`/api/event`, {
-        method: "POST",
-      });
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(
-          "An error occurred while fetching events. Please try again."
-        );
-      }
-
-      const events = data?.data?.map((event: any) => ({
-        id: event.id,
-        title: event.attributes.name,
-        date: "2021-10-10",
-        location: "New York",
-        image: "https://cdn2.allevents.in/thumbs/thumb665ae34394a59.jpg",
-      }));
-
-      console.log("event", events);
-      setEvents(events);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setEventsLoading(false);
-    }
   };
 
   useEffect(() => {
@@ -58,8 +26,6 @@ const EventsList: React.FC = () => {
       );
     }
     setSortedEvents(sorted);
-
-    fetchEvent();
   }, [sortOrder]);
 
   const handleOpenModal = () => {
@@ -151,17 +117,9 @@ const EventsList: React.FC = () => {
         </div>
 
         <div className="col-span-4 grid md:grid-cols-2 xl:grid-cols-3 gap-8">
-          {eventsLoading ? (
-            <div>Loading....</div>
-          ) : events.length === 0 ? (
-            <div>
-              <h2 className="text-xl font-semibold">No events found</h2>
-            </div>
-          ) : (
-            sortedEvents.map((event, index) => (
-              <EventCard key={index} event={event} />
-            ))
-          )}
+          {sortedEvents.map((event, index) => (
+            <EventCard key={index} event={event} />
+          ))}
         </div>
       </div>
     </section>
