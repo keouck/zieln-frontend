@@ -134,7 +134,7 @@ const NavItem = ({ link, name }: { link: string; name: string }) => {
         className={`py-3 md:px-3 md:py-6 ${
           isActive
             ? "text-black font-bold"
-            : "text-gray-800 font-medium hover:text-black hover:font-bold transition duration-300"
+            : "text-gray-800 font-medium hover:text-black  transition duration-300"
         }`}
       >
         {name}

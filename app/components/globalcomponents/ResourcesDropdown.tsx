@@ -16,7 +16,7 @@ export default function ResourcesDropDown() {
     <div className="hs-dropdown   [--adaptive:none] [--auto-close:true]  py-3 md:px-3 md:py-6">
       <button
         type="button"
-        className="flex items-center w-full text-gray-800 hover:text-primary hover:font-bold font-medium dark:text-neutral-200 dark:hover:text-neutral-500"
+        className="flex items-center w-full text-gray-800 hover:text-primary font-medium dark:text-neutral-200 dark:hover:text-neutral-500"
       >
         Resources
         <FiChevronDown className="flex-shrink-0 ms-2 size-4" />

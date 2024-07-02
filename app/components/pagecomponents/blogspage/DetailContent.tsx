@@ -1,16 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import React, { useState, useEffect } from "react";
+import { FloatButton } from "antd";
+import { useEffect, useState } from "react";
 import {
-  FaFacebook,
-  FaTwitter,
   FaCalendarAlt,
-  FaUser,
+  FaFacebook,
   FaLink,
-  FaArrowLeft,
+  FaTwitter,
+  FaUser,
 } from "react-icons/fa";
 import { FacebookShareButton, TwitterShareButton } from "react-share";
-import { Divider, FloatButton } from "antd";
 
 interface Blog {
   id: number;
@@ -52,9 +51,7 @@ export default function DetailContent({ blog }: DetailContentProps) {
           <div className="flex items-center space-x-4">
             <div className="flex items-center">
               <FaCalendarAlt className="text-gray-200 lg:text-xl mr-2" />
-              <p className="text-sm lg:text-base">
-                {new Date(blog.date).toLocaleDateString()}
-              </p>
+              <p className="text-sm lg:text-base">{blog?.date}</p>
             </div>
             <div className="flex items-center">
               <FaUser className="text-gray-200 lg:text-xl mr-2" />

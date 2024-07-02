@@ -13,15 +13,16 @@ interface BlogCardProps {
   content: string;
   date: string;
   image: string;
+  writer: string;
 }
 
 const BlogCard: React.FC<BlogCardProps> = ({
   id,
-  category,
   title,
   content,
-  date,
   image,
+  writer,
+  date,
 }) => {
   const [url, setUrl] = useState("");
 
@@ -36,33 +37,45 @@ const BlogCard: React.FC<BlogCardProps> = ({
     alert("Link copied to clipboard!");
   };
   return (
-    <Link href={`/blogs/${id}`}>
-      <div className="bg-white shadow-md rounded-lg lg:rounded-3xl overflow-hidden transition duration-300 transform group hover:shadow-lg hover:scale-105">
+    <Link
+      className="group flex flex-col h-full border border-gray-200 hover:border-transparent hover:shadow-lg transition-all duration-300 rounded-xl p-5 "
+      href={`/blogs/${id}`}
+    >
+      <div className="aspect-w-16 aspect-h-11">
         <img
+          className="w-full h-60 object-cover rounded-xl"
           src={image}
-          alt={title}
-          className="w-full h-48 lg:h-60 object-cover rounded-t-lg group-hover:scale-105 transition duration-300"
+          alt="Image Description"
         />
-        <div className="p-4">
-          <div className="flex justify-between my-2 text-gray-700">
-            <p>{category}</p>
-            <p>5 min read</p>
+      </div>
+      <div className="my-3">
+        <p className="text-gray-500 mb-2">
+          <small>{date}</small>
+        </p>
+        <h3 className="text-xl font-semibold text-gray-800 ">{title}</h3>
+        <p className="mt-5 text-gray-600  line-clamp-2">{content}</p>
+      </div>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-x-2">
+          <img
+            className="size-8 rounded-full"
+            src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=320&h=320&q=80"
+            alt="Image Description"
+          />
+          <div>
+            <h5 className="text-sm text-gray-800 ">By {writer}</h5>
           </div>
-          <h2 className="text-lg lg:text-xl font-medium mb-2">{title}</h2>
-          <div className="flex justify-between">
-            <p className="text-sm text-gray-400">{date}</p>
-            <p className="flex space-x-2">
-              <FacebookShareButton url={url}>
-                <FaFacebook className="text-sm text-gray-700" />
-              </FacebookShareButton>
-              <TwitterShareButton url={url}>
-                <FaTwitter className="text-sm text-gray-700" />
-              </TwitterShareButton>
-              <button onClick={copyToClipboard} className="text-sm text-gray-700">
-                <FaLink />
-              </button>
-            </p>
-          </div>
+        </div>
+        <div className="flex gap-x-2 text-gray-800">
+          <FacebookShareButton url={url}>
+            <FaFacebook className="text-base" />
+          </FacebookShareButton>
+          <TwitterShareButton url={url}>
+            <FaTwitter className="text-base" />
+          </TwitterShareButton>
+          <button onClick={copyToClipboard} className="text-base">
+            <FaLink />
+          </button>
         </div>
       </div>
     </Link>
