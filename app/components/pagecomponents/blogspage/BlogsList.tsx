@@ -30,8 +30,10 @@ export default function BlogsList() {
     <section>
       <div className="text-white bg-primary component-px component-py">
         <div className="text-center ">
-          <h2 className="text-2xl lg:text-4xl font-bold">Our Blogs</h2>
-          <p className="600 mt-2 lg:mt-4 md:text-lg">
+          <h2 className="text-2xl lg:text-5xl font-bold mb-2 md:mb-4">
+            Our Blogs
+          </h2>
+          <p className="md:text-xl mb-3 md:mb-6">
             Discover the latest updates and insights
           </p>
         </div>

@@ -1,7 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
+import { eventsData } from "@/app/data/eventsData";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   FaEnvelope,
   FaFacebook,
@@ -15,8 +16,6 @@ import {
   PrimaryButton,
   PrimaryOutlineButton,
 } from "../../globalcomponents/Buttons";
-import { GoKebabHorizontal } from "react-icons/go";
-import { eventsData } from "@/app/data/eventsData";
 import EventCard from "../eventspage/EventCard";
 
 export default function UsersProfile({
@@ -121,7 +120,7 @@ export default function UsersProfile({
             </div>
           </div>
         </div>
-        <div className="col-span-3 py-4">
+        <div className="col-span-3 py-4 lg:py-8">
           {/* Other details like Name, designations, Follow button, edit profile option in three dots menu, followers and following information */}
           <div className="flex flex-col lg:flex-row justify-between mb-4">
             <div>
