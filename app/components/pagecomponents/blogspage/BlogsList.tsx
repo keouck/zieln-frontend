@@ -1,17 +1,29 @@
 "use client";
 import { blogsData } from "@/app/data/blogsData";
 import { DatePicker, Select } from "antd";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import BlogCard from "./BlogCard";
-import PageLayout from "../../globalcomponents/PageLayout";
 import Loader from "../../globalcomponents/Loader";
+import useFetch from "@/app/hooks/useFetch";
 
 const { Option } = Select;
 
 export default function BlogsList() {
-  const [blogs, setBlogs] = useState([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const {
+    data: category,
+    loading: categoryLoading,
+    error: errorLoading,
+  } = useFetch(`/api/category`, {
+    method: "PUT",
+  });
+  console.log("category", category);
+  const {
+    data: blogs,
+    loading,
+    error,
+  } = useFetch(`/api/blog`, {
+    method: "PUT",
+  });
 
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -31,33 +43,6 @@ export default function BlogsList() {
     let dateMatch = selectedDate ? blog.date === selectedDate : true;
     return categoryMatch && dateMatch;
   });
-
-  const fetchBlogs = async () => {
-    try {
-      setLoading(true);
-      const res = await fetch(`/api/blog`, {
-        method: "PUT",
-      });
-      const blogs = await res.json();
-
-      if (!res.ok) {
-        throw new Error(
-          "An error occurred while fetching blogs. Please try again."
-        );
-      }
-
-      setBlogs(blogs.data);
-    } catch (error: any) {
-      console.error(error);
-      setError(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchBlogs();
-  }, []);
 
   if (error) {
     return (
@@ -81,18 +66,20 @@ export default function BlogsList() {
 
         <div className="mt-4 lg:mt-8 text-center flex flex-col lg:flex-row items-center justify-center gap-4">
           <p>Filter by: </p>
-          <Select
-            placeholder="Select Category"
-            style={{ width: 200 }}
-            onChange={handleCategoryChange}
-            allowClear
-          >
-            <Option value={null}>All</Option>
-            <Option value="Tips and Tricks">Tips and Tricks</Option>
-            <Option value="Career Development">Career Development</Option>
-            <Option value="Tech and Innovation">Tech and Innovation</Option>
-            {/* Add more categories as needed */}
-          </Select>
+          {!categoryLoading && (
+            <Select
+              placeholder="Select Category"
+              style={{ width: 200 }}
+              onChange={handleCategoryChange}
+              allowClear
+            >
+              {category?.data?.map((category: any) => (
+                <Option key={category.id} value={category.attributes.Category}>
+                  {category.attributes.Category}
+                </Option>
+              ))}
+            </Select>
+          )}
           <DatePicker
             placeholder="Select Date"
             style={{ width: 200 }}
@@ -105,7 +92,7 @@ export default function BlogsList() {
       {loading ? <Loader /> : null}
       <div className="component-px component-py grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
         {!loading &&
-          blogs.map((blog: any) => (
+          blogs?.data?.map((blog: any) => (
             <BlogCard
               key={blog.id}
               id={blog.id}

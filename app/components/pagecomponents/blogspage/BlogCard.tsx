@@ -24,7 +24,6 @@ const BlogCard: React.FC<BlogCardProps> = ({
   writer,
   date,
 }) => {
-  console.log(image);
   const [url, setUrl] = useState("");
 
   useEffect(() => {
