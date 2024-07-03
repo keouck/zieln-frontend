@@ -85,7 +85,6 @@
   border: 2px solid #fff !important; Add a white border around the circular buttons */
 }
 
-
 /* Adjust the size of the arrow icons */
 .swiper-button-prev:after,
 .swiper-button-next:after {
@@ -108,10 +107,12 @@
   right: 10px !important; /* Adjust the position if needed */
 }
 
-.ant-select-outlined:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover .ant-select-selector {
+.ant-select-outlined:not(.ant-select-disabled):not(
+    .ant-select-customize-input
+  ):not(.ant-pagination-size-changer):hover
+  .ant-select-selector {
   border-color: #000000 !important;
 }
-
 
 .ant-collapse-item .ant-collapse-header-text {
   font-weight: 500 !important;
@@ -122,7 +123,6 @@
   font-weight: 600 !important;
   color: #000000 !important;
 }
-
 
 .ant-collapse-item-active .ant-collapse-header-text {
   font-weight: 600 !important;
@@ -153,13 +153,15 @@
   animation-delay: -1s;
 }
 @keyframes l2 {
-    100% {box-shadow: 0 0 0 40px #0000}
+  100% {
+    box-shadow: 0 0 0 40px #0000;
+  }
 }
 
 .ant-select-selection-placeholder {
   color: #000 !important;
 }
 
- .ant-picker-input  {
+.ant-picker-input {
   color: #000 !important;
 }

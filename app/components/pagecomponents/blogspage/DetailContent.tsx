@@ -10,13 +10,35 @@ import {
   FaUser,
 } from "react-icons/fa";
 import { FacebookShareButton, TwitterShareButton } from "react-share";
+import {
+  BlocksRenderer,
+  type BlocksContent,
+} from "@strapi/blocks-react-renderer";
+
+interface BlogCategories {
+  data: {
+    id: string;
+    attributes: {
+      Category: string;
+    };
+  }[];
+}
 
 interface Blog {
   id: number;
-  title: string;
-  image: string;
+  Title: string;
+  Thumbnail: {
+    data: {
+      attributes: {
+        url: string;
+      };
+    };
+  };
+  Content: BlocksContent;
+  blog_categories: BlogCategories;
   date: string;
   writer: string;
+  createdAt: string;
 }
 
 interface DetailContentProps {
@@ -42,20 +64,30 @@ export default function DetailContent({ blog }: DetailContentProps) {
       <div className="absolute inset-0 w-full h-96 bg-black -z-10"></div>
       <div className="relative z-20">
         <div className="mb-2 lg:mb-4">
-          <span className="bg-white px-4 py-1 rounded-full text-sm">Blog</span>
+          {blog?.blog_categories?.data?.map((category) => (
+            <span
+              key={category.id}
+              className="bg-white px-4 py-1 rounded-full text-sm mr-2"
+            >
+              {category.attributes.Category}
+            </span>
+          ))}
+          {/* <span className="bg-white px-4 py-1 rounded-full text-sm">Blog</span> */}
         </div>
         <h1 className="text-2xl lg:text-4xl font-semibold mb-4 lg:mb-8 lg:max-w-4xl text-white">
-          {blog.title}
+          {blog.Title}
         </h1>
         <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 mb-4 text-white">
           <div className="flex items-center space-x-4">
             <div className="flex items-center">
               <FaCalendarAlt className="text-gray-200 lg:text-xl mr-2" />
-              <p className="text-sm lg:text-base">{blog?.date}</p>
+              <p className="text-sm lg:text-base">
+                {new Date(blog.createdAt).toLocaleString()}
+              </p>
             </div>
             <div className="flex items-center">
               <FaUser className="text-gray-200 lg:text-xl mr-2" />
-              <p className="text-sm lg:text-base">{blog.writer}</p>
+              <p className="text-sm lg:text-base">{blog.writer || "Zieln"}</p>
             </div>
           </div>
           <div className="flex items-center space-x-4 mb-4">
@@ -73,34 +105,13 @@ export default function DetailContent({ blog }: DetailContentProps) {
 
         <div className="w-full">
           <img
-            src={blog.image}
-            alt={blog.title}
+            src={`http://localhost:1337${blog?.Thumbnail?.data?.attributes.url}`}
+            alt={blog.Title}
             className="object-cover w-full max-h-96 rounded-lg"
           />
         </div>
         <div className="mt-4 lg:mt-8 space-y-4 lg:space-y-8 lg:text-lg text-black">
-          <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Blanditiis
-            sequi libero quos nesciunt nemo unde eligendi esse temporibus
-            suscipit nihil id impedit atque, possimus quaerat minima optio sit
-            ullam quae magni error voluptatum! Ex enim iste recusandae,
-            perspiciatis repellendus veritatis dolorem earum assumenda sit ea,
-            fuga temporibus. Rerum, odit quibusdam?
-          </p>
-          <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nihil
-            maiores accusamus ad eum? Ad, fugiat dolores unde atque quasi
-            voluptatum nemo vitae quisquam ullam! Adipisci obcaecati accusantium
-            at nesciunt culpa perferendis id vel fugit omnis, recusandae
-            architecto itaque quidem cum voluptate corrupti repudiandae animi
-            dolorum accusamus facere veniam. Mollitia eum vel dolores
-            consequatur temporibus commodi error quia. Optio maiores ea neque
-            iste aspernatur atque quis, ipsum obcaecati ab, quo rerum illum non
-            nemo assumenda veritatis commodi! Aut pariatur harum ipsa illum.
-            Quis ipsa rerum deleniti maiores blanditiis, sit facilis
-            perspiciatis neque, repellat eligendi placeat, corrupti voluptates
-            quasi fugit praesentium saepe!
-          </p>
+          {blog?.Content && <BlocksRenderer content={blog?.Content} />}
         </div>
       </div>
       <FloatButton

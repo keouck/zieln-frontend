@@ -1,12 +1,18 @@
 "use client";
 import { blogsData } from "@/app/data/blogsData";
 import { DatePicker, Select } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BlogCard from "./BlogCard";
+import PageLayout from "../../globalcomponents/PageLayout";
+import Loader from "../../globalcomponents/Loader";
 
 const { Option } = Select;
 
 export default function BlogsList() {
+  const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
 
@@ -25,6 +31,41 @@ export default function BlogsList() {
     let dateMatch = selectedDate ? blog.date === selectedDate : true;
     return categoryMatch && dateMatch;
   });
+
+  const fetchBlogs = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch(`/api/blog`, {
+        method: "PUT",
+      });
+      const blogs = await res.json();
+
+      if (!res.ok) {
+        throw new Error(
+          "An error occurred while fetching blogs. Please try again."
+        );
+      }
+
+      setBlogs(blogs.data);
+    } catch (error: any) {
+      console.error(error);
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchBlogs();
+  }, []);
+
+  if (error) {
+    return (
+      <section className="component-px component-py">
+        <div>{error}</div>
+      </section>
+    );
+  }
 
   return (
     <section>
@@ -61,19 +102,21 @@ export default function BlogsList() {
           />
         </div>
       </div>
+      {loading ? <Loader /> : null}
       <div className="component-px component-py grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
-        {filteredBlogs.map((blog, index) => (
-          <BlogCard
-            key={index}
-            id={blog.id}
-            category={blog.category}
-            title={blog.title}
-            content={blog.content}
-            date={blog.date}
-            image={blog.image}
-            writer={blog?.writer}
-          />
-        ))}
+        {!loading &&
+          blogs.map((blog: any) => (
+            <BlogCard
+              key={blog.id}
+              id={blog.id}
+              category={"something"}
+              title={blog.attributes.Title}
+              content={blog.attributes.description}
+              date={new Date(blog.attributes.publishedAt).toDateString()}
+              image={`http://localhost:1337${blog.attributes.Thumbnail.data.attributes.url}`}
+              writer={"Someone"}
+            />
+          ))}
       </div>
     </section>
   );
