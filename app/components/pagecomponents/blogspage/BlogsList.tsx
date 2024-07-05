@@ -3,21 +3,32 @@ import { blogsData } from "@/app/data/blogsData";
 import { DatePicker, Select } from "antd";
 import { useState } from "react";
 import BlogCard from "./BlogCard";
+import PaginationComponent from "../../globalcomponents/Pagination";
 
 const { Option } = Select;
 
 export default function BlogsList() {
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
 
-  const handleCategoryChange = (value: any) => {
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(10);
+
+  const handleCategoryChange = (value: string | null) => {
     setSelectedCategory(value);
+    setCurrentPage(1);
   };
 
-  const handleDateChange = ({ date, dateString }: any) => {
-    setSelectedDate(dateString);
+  const handleDateChange = (date: any, dateString: string | string[]) => {
+    if (Array.isArray(dateString)) {
+      setSelectedDate(dateString[0]);
+    } else {
+      setSelectedDate(dateString);
+    }
   };
 
+  // Filter blogs
   const filteredBlogs = blogsData.filter((blog) => {
     let categoryMatch = selectedCategory
       ? blog.category === selectedCategory
@@ -26,10 +37,21 @@ export default function BlogsList() {
     return categoryMatch && dateMatch;
   });
 
+  // Pagination logic
+  const paginatedBlogs = filteredBlogs.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
+  );
+
+  const handlePageChange = (page: number, pageSize?: number) => {
+    setCurrentPage(page);
+    if (pageSize) setPageSize(pageSize);
+  };
+
   return (
     <section>
       <div className="text-white bg-primary component-px component-py">
-        <div className="text-center ">
+        <div className="text-center">
           <h2 className="text-2xl lg:text-5xl font-bold mb-2 md:mb-4">
             Our Blogs
           </h2>
@@ -62,7 +84,7 @@ export default function BlogsList() {
         </div>
       </div>
       <div className="component-px component-py grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
-        {filteredBlogs.map((blog, index) => (
+        {paginatedBlogs.map((blog, index) => (
           <BlogCard
             key={index}
             id={blog.id}
@@ -74,6 +96,17 @@ export default function BlogsList() {
             writer={blog?.writer}
           />
         ))}
+      </div>
+
+      <div className="flex justify-center mt-8pb-8 lg:pb-16">
+        <PaginationComponent
+          totalItems={filteredBlogs.length}
+          current={currentPage}
+          pageSize={pageSize}
+          onPageChange={handlePageChange}
+          showSizeChanger
+          pageSizeOptions={[5, 10, 20, 50]}
+        />
       </div>
     </section>
   );
