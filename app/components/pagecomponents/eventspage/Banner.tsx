@@ -1,4 +1,4 @@
-import { PrimaryButton, SecondaryButton } from "../../globalcomponents/Buttons";
+import { PrimaryWhiteOutlineButton } from "../../globalcomponents/Buttons";
 
 export default function Banner() {
   return (
@@ -18,6 +18,12 @@ export default function Banner() {
           Stay updated with our latest events and activities. Join us and be a
           part of our vibrant community!
         </p>
+        <div className="flex items-center justify-center">
+          <PrimaryWhiteOutlineButton
+            buttonName="+ Create Event"
+            link="/create-event"
+          />
+        </div>
       </div>
     </section>
   );

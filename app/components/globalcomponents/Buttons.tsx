@@ -145,3 +145,37 @@ export const SecondaryOutlineButton = ({
     </div>
   );
 };
+
+export const PrimaryWhiteOutlineButton = ({
+  link,
+  onClick,
+  buttonName,
+  icon,
+}: ButtonProps) => {
+  const buttonProps = {
+    ...(link && { href: link }),
+    ...(onClick && { onClick }),
+  };
+
+  return (
+    <div>
+      {link ? (
+        <Link href={link}>
+          <div className="text-white bg-transparent px-3 py-1.5 lg:px-4 lg:py-2 rounded-full shadow-md border border-white hover:bg-secondary active:scale-95 hover:text-primary transition duration-300 text-sm md:text-base flex items-center space-x-2">
+            {icon && <span>{icon}</span>}
+            <span>{buttonName}</span>
+          </div>
+        </Link>
+      ) : (
+        <button
+          onClick={onClick}
+          className="text-primary bg-white px-3 py-1.5 lg:px-4 lg:py-2 rounded-full shadow-md border-2 border-primary hover:bg-primary active:scale-95 hover:text-white transition duration-300 text-sm md:text-base flex items-center space-x-2"
+          {...buttonProps}
+        >
+          {icon && <span>{icon}</span>}
+          <span>{buttonName}</span>
+        </button>
+      )}
+    </div>
+  );
+};
