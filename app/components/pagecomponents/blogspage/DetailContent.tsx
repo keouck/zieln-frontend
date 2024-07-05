@@ -14,6 +14,7 @@ import {
   BlocksRenderer,
   type BlocksContent,
 } from "@strapi/blocks-react-renderer";
+import BlockRenderClient from "@/app/utils/BlockRender";
 
 interface BlogCategories {
   data: {
@@ -111,7 +112,7 @@ export default function DetailContent({ blog }: DetailContentProps) {
           />
         </div>
         <div className="mt-4 lg:mt-8 space-y-4 lg:space-y-8 lg:text-lg text-black">
-          {blog?.Content && <BlocksRenderer content={blog?.Content} />}
+          {blog?.Content && <BlockRenderClient content={blog.Content} />}
         </div>
       </div>
       <FloatButton

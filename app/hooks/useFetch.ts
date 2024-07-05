@@ -19,7 +19,7 @@ const useFetch = (url: string, config?: any) => {
     };
 
     fetchData();
-  }, [url, config]);
+  }, [url]);
 
   return { data, loading, error };
 };
