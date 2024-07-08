@@ -3,6 +3,7 @@
 import { blogsData } from "@/app/data/blogsData";
 import React from "react";
 import BlogCard from "../blogspage/BlogCard";
+import Link from "next/link";
 
 export default function Blogs() {
   return (
@@ -30,9 +31,9 @@ export default function Blogs() {
       </div>
 
       <div className="mt-12 text-center">
-        <a
+        <Link
           className="py-3 px-4 inline-flex items-center gap-x-1 text-sm font-medium rounded-full border border-primary  text-primary shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
-          href="#"
+          href="/blogs"
         >
           Read more
           <svg
@@ -49,7 +50,7 @@ export default function Blogs() {
           >
             <path d="m9 18 6-6-6-6" />
           </svg>
-        </a>
+        </Link>
       </div>
     </section>
   );
