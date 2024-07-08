@@ -163,3 +163,7 @@
  .ant-picker-input  {
   color: #000 !important;
 }
+
+.ant-drawer{
+  font-family: inherit !important;
+}

@@ -83,11 +83,18 @@ const Header = () => {
           <div className="buttons flex items-center space-x-4">
             {!user ? (
               <>
+                <PrimaryOutlineButton
+                  link="/create-event"
+                  buttonName="+ Create Event"
+                />
                 <PrimaryButton link="/sign-in" buttonName="Log in" />
-                <PrimaryOutlineButton link="/sign-up" buttonName="Register" />
               </>
             ) : (
               <>
+                <PrimaryOutlineButton
+                  link="/create-event"
+                  buttonName="+ Create Event"
+                />
                 <UserButton />
                 <Dropdown
                   overlay={menu}
