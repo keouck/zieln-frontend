@@ -10,13 +10,14 @@ const { Option } = Select;
 export default function BlogsList() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [sortOrder, setSortOrder] = useState<string>("latest");
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
 
   const handleCategoryChange = (value: string | null) => {
-    setSelectedCategory(value);
+    setSelectedCategory(value === "all" ? null : value);
     setCurrentPage(1);
   };
 
@@ -28,6 +29,10 @@ export default function BlogsList() {
     }
   };
 
+  const handleSortOrderChange = (value: string) => {
+    setSortOrder(value);
+  };
+
   // Filter blogs
   const filteredBlogs = blogsData.filter((blog) => {
     let categoryMatch = selectedCategory
@@ -37,8 +42,17 @@ export default function BlogsList() {
     return categoryMatch && dateMatch;
   });
 
+  // Sort blogs
+  const sortedBlogs = filteredBlogs.sort((a, b) => {
+    if (sortOrder === "latest") {
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    } else {
+      return new Date(a.date).getTime() - new Date(b.date).getTime();
+    }
+  });
+
   // Pagination logic
-  const paginatedBlogs = filteredBlogs.slice(
+  const paginatedBlogs = sortedBlogs.slice(
     (currentPage - 1) * pageSize,
     currentPage * pageSize
   );
@@ -50,55 +64,62 @@ export default function BlogsList() {
 
   return (
     <section>
-      <div className="text-white bg-primary component-px component-py">
-        <div className="text-center">
-          <h2 className="text-2xl lg:text-5xl font-bold mb-2 md:mb-4">
-            Our Blogs
-          </h2>
-          <p className="md:text-xl mb-3 md:mb-6">
-            Discover the latest updates and insights
-          </p>
+      <div className="mb-8 pt-8 lg:pt-16 component-px">
+        <div className="flex justify-center">
+          <h1 className="text-xl lg:text-3xl font-medium mb-4 lg:mb-8 max-w-3xl text-center">
+            Stay Updated with the Latest Trends and Insights from Our Expert
+            Blogs
+          </h1>
         </div>
-
-        <div className="mt-4 lg:mt-8 text-center flex flex-col lg:flex-row items-center justify-center gap-4">
-          <p>Filter by: </p>
+        <div className="flex justify-center gap-4 mb-4">
           <Select
             placeholder="Select Category"
-            style={{ width: 200 }}
+            allowClear
             onChange={handleCategoryChange}
-            allowClear
+            className="w-48"
           >
-            <Option value={null}>All</Option>
+            <Option value="all">All</Option>
+            <Option value="Events">Events</Option>
             <Option value="Tips and Tricks">Tips and Tricks</Option>
-            <Option value="Career Development">Career Development</Option>
-            <Option value="Tech and Innovation">Tech and Innovation</Option>
-            {/* Add more categories as needed */}
+            <Option value="business">Business</Option>
           </Select>
-          <DatePicker
-            placeholder="Select Date"
-            style={{ width: 200 }}
-            onChange={handleDateChange}
-            allowClear
-            inputReadOnly
-          />
+          <DatePicker.RangePicker onChange={handleDateChange} />
+          <Select
+            placeholder="Sort By"
+            defaultValue="latest"
+            onChange={handleSortOrderChange}
+            className="w-32"
+          >
+            <Option value="latest">Latest</Option>
+            <Option value="oldest">Oldest</Option>
+          </Select>
         </div>
       </div>
-      <div className="component-px component-py grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
-        {paginatedBlogs.map((blog, index) => (
-          <BlogCard
-            key={index}
-            id={blog.id}
-            category={blog.category}
-            title={blog.title}
-            content={blog.content}
-            date={blog.date}
-            image={blog.image}
-            writer={blog?.writer}
-          />
-        ))}
-      </div>
 
-      <div className="flex justify-center mt-8pb-8 lg:pb-16">
+      {paginatedBlogs.length > 0 ? (
+        <div className="component-px pb-8 lg:pb-16 grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
+          {paginatedBlogs.map((blog, index) => (
+            <BlogCard
+              key={index}
+              id={blog.id}
+              category={blog.category}
+              title={blog.title}
+              content={blog.content}
+              date={blog.date}
+              image={blog.image}
+              writer={blog?.writer}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="flex justify-center items-center h-64">
+          <p className="text-lg lg:text-xl font-medium">
+            No blogs found under the selected category.
+          </p>
+        </div>
+      )}
+
+      <div className="flex justify-center mt-8 pb-8 lg:pb-16">
         <PaginationComponent
           totalItems={filteredBlogs.length}
           current={currentPage}
