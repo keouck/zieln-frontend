@@ -1,11 +1,10 @@
 "use client";
 
-import { UploadOutlined } from "@ant-design/icons";
-import { Button, DatePicker, Form, Input, Timeline } from "antd";
+import { nextStepsData } from "@/app/data/nextStepsData.";
+import { DatePicker, Form, Input, Timeline } from "antd";
+import dayjs, { Dayjs } from "dayjs";
 import Image from "next/image";
 import { useState } from "react";
-import dayjs, { Dayjs } from "dayjs"; // Import dayjs
-import { nextStepsData } from "@/app/data/nextStepsData.";
 
 interface FormValues {
   yourName: string;
@@ -14,11 +13,9 @@ interface FormValues {
   address: string;
   eventName: string;
   eventAddress: string;
-  eventDate: string; // Separate date field
-  eventTime: string; // Separate time field
+  eventDate: string;
+  eventTime: string;
   company: string;
-  eventLogo: File | null;
-  eventBanner: File | null;
   eventDescription: string;
 }
 
@@ -34,10 +31,18 @@ export default function CreateEvent() {
     eventDate: "",
     eventTime: "",
     company: "",
-    eventLogo: null,
-    eventBanner: null,
     eventDescription: "",
   });
+
+  const [eventLogo, setEventLogo] = useState<File | null>(null);
+  const [eventBanner, setEventBanner] = useState<File | null>(null);
+
+  const [eventLogoPreview, setEventLogoPreview] = useState<string | null>(null);
+  const [eventBannerPreview, setEventBannerPreview] = useState<string | null>(
+    null
+  );
+  const [eventLogoName, setEventLogoName] = useState<string | null>(null);
+  const [eventBannerName, setEventBannerName] = useState<string | null>(null);
 
   const handleFormChange = (changedValues: Partial<FormValues>) => {
     setFormValues({
@@ -46,10 +51,42 @@ export default function CreateEvent() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    alert(JSON.stringify(formValues, null, 2));
-    console.log("Form submitted with values:", formValues); // Debugging line
+  const handleSubmit = () => {
+    form
+      .validateFields()
+      .then((values) => {
+        // Convert files to base64 strings
+        const readFileAsDataURL = (
+          file: File | null
+        ): Promise<string | null> => {
+          return new Promise((resolve, reject) => {
+            if (!file) {
+              resolve(null);
+              return;
+            }
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+          });
+        };
+
+        Promise.all([
+          readFileAsDataURL(eventLogo),
+          readFileAsDataURL(eventBanner),
+        ]).then(([eventLogoDataURL, eventBannerDataURL]) => {
+          const submittedValues = {
+            ...values,
+            eventLogo: eventLogoDataURL,
+            eventBanner: eventBannerDataURL,
+          };
+          console.log("Form submitted with values:", submittedValues);
+          // Perform your submission logic here
+        });
+      })
+      .catch((errorInfo) => {
+        console.log("Validation failed:", errorInfo);
+      });
   };
 
   const handleFileChange = (
@@ -57,18 +94,28 @@ export default function CreateEvent() {
     field: "eventLogo" | "eventBanner"
   ) => {
     const file = e.target.files?.[0] || null;
-    setFormValues({
-      ...formValues,
-      [field]: file,
-    });
+    if (file) {
+      if (field === "eventLogo") {
+        setEventLogo(file);
+        setEventLogoPreview(URL.createObjectURL(file));
+        setEventLogoName(file.name);
+      } else if (field === "eventBanner") {
+        setEventBanner(file);
+        setEventBannerPreview(URL.createObjectURL(file));
+        setEventBannerName(file.name);
+      }
+    }
   };
 
-  const handleDateChange = (date: Dayjs | null, dateString: string | string[]) => {
+  const handleDateChange = (
+    date: Dayjs | null,
+    dateString: string | string[]
+  ) => {
     if (Array.isArray(dateString)) {
       // Handle the case where dateString is an array
       return;
     }
-    const [datePart, timePart] = dateString.split(' ');
+    const [datePart, timePart] = dateString.split(" ");
     setFormValues({
       ...formValues,
       eventDate: datePart,
@@ -132,12 +179,18 @@ export default function CreateEvent() {
             </header>
 
             <div className="p-6 lg:p-10">
-              <form onSubmit={handleSubmit}>
-                <h3 className="text-lg lg:text-xl font-bold mb-4">
-                  Personal Details
-                </h3>
+              <h3 className="text-lg lg:text-xl font-bold mb-4">
+                Personal Details
+              </h3>
+              <Form form={form} layout="vertical" onFinish={handleSubmit}>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-8">
-                  <Form.Item label="Your name">
+                  <Form.Item
+                    label="Your name"
+                    name="yourName"
+                    rules={[
+                      { required: true, message: "Please enter your name" },
+                    ]}
+                  >
                     <Input
                       name="yourName"
                       placeholder="Enter your name"
@@ -148,7 +201,14 @@ export default function CreateEvent() {
                     />
                   </Form.Item>
 
-                  <Form.Item label="Your email">
+                  <Form.Item
+                    label="Your email"
+                    name="yourEmail"
+                    rules={[
+                      { required: true, message: "Please enter your email" },
+                      { type: "email", message: "Please enter a valid email" },
+                    ]}
+                  >
                     <Input
                       name="yourEmail"
                       placeholder="Enter your email"
@@ -159,7 +219,16 @@ export default function CreateEvent() {
                     />
                   </Form.Item>
 
-                  <Form.Item label="Contact number">
+                  <Form.Item
+                    label="Contact number"
+                    name="contactNumber"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter your contact number",
+                      },
+                    ]}
+                  >
                     <Input
                       name="contactNumber"
                       placeholder="Enter your contact number"
@@ -170,7 +239,13 @@ export default function CreateEvent() {
                     />
                   </Form.Item>
 
-                  <Form.Item label="Your Address">
+                  <Form.Item
+                    label="Address"
+                    name="address"
+                    rules={[
+                      { required: true, message: "Please enter your address" },
+                    ]}
+                  >
                     <Input
                       name="address"
                       placeholder="Enter your address"
@@ -185,8 +260,17 @@ export default function CreateEvent() {
                 <h3 className="text-lg lg:text-xl font-bold mb-4">
                   Event Details
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                  <Form.Item label="Event name">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-8">
+                  <Form.Item
+                    label="Event name"
+                    name="eventName"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter the event name",
+                      },
+                    ]}
+                  >
                     <Input
                       name="eventName"
                       placeholder="Enter event name"
@@ -197,10 +281,19 @@ export default function CreateEvent() {
                     />
                   </Form.Item>
 
-                  <Form.Item label="Event holding address">
+                  <Form.Item
+                    label="Event address"
+                    name="eventAddress"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter the event address",
+                      },
+                    ]}
+                  >
                     <Input
                       name="eventAddress"
-                      placeholder="Enter event holding address"
+                      placeholder="Enter event address"
                       value={formValues.eventAddress}
                       onChange={(e) =>
                         handleFormChange({ eventAddress: e.target.value })
@@ -208,19 +301,37 @@ export default function CreateEvent() {
                     />
                   </Form.Item>
 
-                  <Form.Item label="Date and time">
+                  <Form.Item
+                    label="Event date and time"
+                    name="eventDateTime"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please select event date and time",
+                      },
+                    ]}
+                  >
                     <DatePicker
                       showTime
-                      className="w-full"
+                      format="YYYY-MM-DD HH:mm:ss"
                       onChange={handleDateChange}
-                      format="YYYY-MM-DD HH:mm"
+                      className="w-full"
                     />
                   </Form.Item>
 
-                  <Form.Item label="Company">
+                  <Form.Item
+                    label="Company"
+                    name="company"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter the company name",
+                      },
+                    ]}
+                  >
                     <Input
                       name="company"
-                      placeholder="Enter your company"
+                      placeholder="Enter company name"
                       value={formValues.company}
                       onChange={(e) =>
                         handleFormChange({ company: e.target.value })
@@ -228,31 +339,71 @@ export default function CreateEvent() {
                     />
                   </Form.Item>
 
-                  <Form.Item label="Event/Organization logo">
-                    <input
-                      type="file"
-                      name="eventLogo"
-                      onChange={(e) => handleFileChange(e, "eventLogo")}
-                      className=""
-                    />
+                  <Form.Item label="Event Logo">
+                    <label className="block cursor-pointer">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        style={{ display: "none" }}
+                        onChange={(e) => handleFileChange(e, "eventLogo")}
+                      />
+                      <div className="border border-gray-300 p-2 text-gray-700">
+                        {eventLogoName || "Choose event logo"}
+                      </div>
+                      {eventLogoPreview && (
+                        <div className="mt-2">
+                          <Image
+                            src={eventLogoPreview}
+                            alt="Event Logo Preview"
+                            width={100}
+                            height={100}
+                            className="rounded"
+                          />
+                        </div>
+                      )}
+                    </label>
                   </Form.Item>
 
-                  <Form.Item label="Event banner">
-                    <input
-                      type="file"
-                      name="eventBanner"
-                      onChange={(e) => handleFileChange(e, "eventBanner")}
-                    />
+                  <Form.Item label="Event Banner">
+                    <label className="block cursor-pointer">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        style={{ display: "none" }}
+                        onChange={(e) => handleFileChange(e, "eventBanner")}
+                      />
+                      <div className="border border-gray-300 p-2 text-gray-700">
+                        {eventBannerName || "Choose event banner"}
+                      </div>
+                      {eventBannerPreview && (
+                        <div className="mt-2">
+                          <Image
+                            src={eventBannerPreview}
+                            alt="Event Banner Preview"
+                            width={100}
+                            height={100}
+                            className="rounded"
+                          />
+                        </div>
+                      )}
+                    </label>
                   </Form.Item>
 
                   <Form.Item
-                    label="Event description"
-                    className="mb-8 col-span-2"
+                    label="Event Description"
+                    name="eventDescription"
+                    className="lg:col-span-2"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter a description for the event",
+                      },
+                    ]}
                   >
                     <Input.TextArea
                       name="eventDescription"
-                      rows={4}
                       placeholder="Enter event description"
+                      rows={5}
                       value={formValues.eventDescription}
                       onChange={(e) =>
                         handleFormChange({ eventDescription: e.target.value })
@@ -260,18 +411,13 @@ export default function CreateEvent() {
                     />
                   </Form.Item>
                 </div>
-
                 <button
                   type="submit"
-                  className="bg-primary py-2 rounded-lg w-full text-white lg:text-lg"
+                  className="bg-primary w-full text-white px-4 py-2 rounded-lg"
                 >
                   Submit
                 </button>
-                <p className="mt-6 text-sm text-gray-500">
-                  If you have any queries, please contact us at:
-                  contact@example.com
-                </p>
-              </form>
+              </Form>
             </div>
           </div>
         </div>
