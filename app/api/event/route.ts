@@ -1,10 +1,13 @@
 export async function PUT() {
   try {
-    const res = await fetch(`${process.env.NEXT_API_URL}/api/events`, {
-      next: {
-        revalidate: 10,
-      },
-    });
+    const res = await fetch(
+      `${process.env.NEXT_API_URL}/api/events?populate=*`,
+      {
+        next: {
+          revalidate: 10,
+        },
+      }
+    );
     const data = await res.json();
 
     if (!res.ok) {

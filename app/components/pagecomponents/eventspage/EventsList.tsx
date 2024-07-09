@@ -183,8 +183,8 @@ const EventsList: React.FC = () => {
         </div>
 
         <div className="col-span-4 grid md:grid-cols-2 xl:grid-cols-3 gap-8">
-          {paginatedEvents.map((event, index) => (
-            <EventCard key={index} event={event} />
+          {event?.data?.map((event: any) => (
+            <EventCard key={event?.id} event={event} />
           ))}
         </div>
       </div>
