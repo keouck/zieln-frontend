@@ -1,25 +1,52 @@
 /* eslint-disable react/no-unescaped-entities */
 
 import { eventsData } from "@/app/data/eventsData";
+import Link from "next/link";
+import { GoArrowUpRight } from "react-icons/go";
+import { RxStarFilled } from "react-icons/rx";
 
 /* eslint-disable @next/next/no-img-element */
 export default function LatestEvents() {
   return (
     <section className="component-px component-py">
-      <div className="mb-6 sm:mb-10 max-w-2xl text-center mx-auto">
-        <h1 className="component-heading">Latest Events</h1>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="component-heading">Latest Events</h1>
+          <p className="lg:text-lg mt-2">
+            Check out the most recent events happening in your area
+          </p>
+        </div>
+        <div>
+          <Link href="/events">
+            <div className="flex items-center text-gray-600 font-medium hover:text-gray-900 transition duration-300">
+              View All Events <GoArrowUpRight className="ml-1" />
+            </div>
+          </Link>
+        </div>
       </div>
 
       {/* <!-- Card Grid --> */}
       <div className="mt-4 lg:mt-8 grid md:grid-cols-2 gap-8 lg:gap-16">
         {eventsData.slice(0, 4).map((event, index) => (
-          <a key={index} className="group block" href="#">
-            <div className="aspect-w-16 aspect-h-12 overflow-hidden bg-gray-100 rounded-2xl shadow dark:bg-neutral-800">
+          <Link
+            key={index}
+            className="group block relative"
+            href={`/events/${event?.id}`}
+          >
+            <div className="aspect-w-16 aspect-h-12 overflow-hidden bg-gray-100 rounded-2xl shadow dark:bg-neutral-800 relative">
               <img
                 className="lg:h-96 w-full group-hover:scale-105 transition-transform duration-500 ease-in-out object-cover rounded-2xl"
                 src={event.image}
                 alt="Image Description"
               />
+
+              {/* Hover Popup */}
+              <div className="absolute bottom-4 left-4 bg-black bg-opacity-75 text-white text-sm px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="flex items-center space-x-2">
+                  <RxStarFilled className="text-yellow-500" />
+                  <span className="text-white">{event.interested} Interested</span>
+                </div>
+              </div>
             </div>
 
             <div className="pt-4">
@@ -39,7 +66,7 @@ export default function LatestEvents() {
                 ))}
               </div>
             </div>
-          </a>
+          </Link>
         ))}
       </div>
       {/* <!-- End Card Grid --> */}
