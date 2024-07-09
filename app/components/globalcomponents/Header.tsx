@@ -71,7 +71,7 @@ const Header = () => {
           />
         </Link>
 
-        <div className="hidden lg:flex space-x-4">
+        <div className="hidden lg:flex gap-x-4">
           <NavItem name="About" link="/about" />
           <NavItem name="Events" link="/events" />
           <ResourcesDropDown />
