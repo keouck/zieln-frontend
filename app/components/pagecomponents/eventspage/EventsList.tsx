@@ -14,6 +14,8 @@ const EventsList: React.FC = () => {
   const [sortedEvents, setSortedEvents] = useState(eventsData);
   const [sortOrder, setSortOrder] = useState<string>("latest");
   const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [serachInput, setSearchInput] = useState<string>("");
+
   // Pagination state
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(5);
@@ -54,13 +56,9 @@ const EventsList: React.FC = () => {
   useEffect(() => {
     let sorted = [...eventsData];
     if (sortOrder === "latest") {
-      sorted.sort(
-        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-      );
+      // sort
     } else {
-      sorted.sort(
-        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-      );
+      // sort
     }
     setSortedEvents(sorted);
   }, [sortOrder]);
@@ -84,6 +82,14 @@ const EventsList: React.FC = () => {
     setModalVisible(false);
   };
 
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(e.target.value);
+  };
+
+  const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+
   if (eventLoading) return <Loader />;
 
   return (
@@ -91,12 +97,16 @@ const EventsList: React.FC = () => {
       <div className="mb-8 lg:mb-16 grid md:grid-cols-3 gap-4 md:gap-0">
         <div className="md:col-span-2 flex justify-end">
           <div className="w-full flex items-center border border-gray-300 rounded-full max-w-xl px-4 py-2 space-x-3">
-            <input
-              type="text"
-              placeholder="Search events..."
-              className="w-full focus:outline-none"
-            />
-            <PrimaryButton buttonName="Search" />
+            <form>
+              <input
+                type="text"
+                placeholder="Search events..."
+                className="w-full focus:outline-none"
+                value={serachInput}
+                onChange={handleSearch}
+              />
+              <PrimaryButton buttonName="Search" buttonType="submit" />
+            </form>
           </div>
         </div>
 
