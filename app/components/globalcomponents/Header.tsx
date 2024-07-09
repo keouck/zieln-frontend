@@ -74,7 +74,7 @@ const Header = () => {
         <div className="hidden lg:flex space-x-4">
           <NavItem name="About" link="/about" />
           <NavItem name="Events" link="/events" />
-          <ResourcesDropDown />
+          <NavItem name="Resources" link="/resources" />
           <NavItem name="Blogs" link="/blogs" />
           <NavItem name="Contact us" link="/contact" />
         </div>
@@ -120,7 +120,7 @@ const Header = () => {
             <NavItem name="About" link="/about" />
             <NavItem name="Events" link="/events" />
             <NavItem name="Mentorship" link="/mentorship" />
-            <ResourcesDropDown />
+            <NavItem name="Resources" link="/resources" />
             <NavItem name="Blogs" link="/blogs" />
             <NavItem name="Contact us" link="/contact" />
           </Drawer>
