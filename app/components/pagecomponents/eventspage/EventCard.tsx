@@ -28,7 +28,7 @@ interface Event {
 }
 
 interface EventCardProps {
-  event: Event;
+  event: Event | any;
 }
 
 const EventCard: React.FC<EventCardProps> = ({ event }) => {
