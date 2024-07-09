@@ -1,12 +1,43 @@
-// components/FAQs.tsx
 "use client";
-import React from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Collapse } from "antd";
-import { faqsData } from "@/app/data/faqsData";
+import { fetchFaqsData } from "@/app/data/faqsData";
 
 const { Panel } = Collapse;
 
-const FAQs = () => {
+interface FAQ {
+  question: string;
+  answer: string;
+}
+
+const FAQs: React.FC = () => {
+  const [faqsData, setFaqsData] = useState<FAQ[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const loadFaqsData = useCallback(async () => {
+    try {
+      const data = await fetchFaqsData();
+      setFaqsData(data);
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadFaqsData();
+  }, [loadFaqsData]);
+
+  if (loading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <Error message={error} />;
+  }
+
   return (
     <section className="component-px component-py">
       <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
@@ -26,7 +57,7 @@ const FAQs = () => {
         >
           {faqsData.map((faq, index) => (
             <Panel
-              header={<h2 className="text-lg lg:text-xl">{faq?.question}</h2>}
+              header={<h2 className="text-lg lg:text-xl">{faq.question}</h2>}
               className="py-2"
               key={index}
             >
@@ -38,5 +69,21 @@ const FAQs = () => {
     </section>
   );
 };
+
+const Loading: React.FC = () => (
+  <section className="component-px component-py">
+    <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
+      <div className="lg:w-1/3">Loading...</div>
+    </div>
+  </section>
+);
+
+const Error: React.FC<{ message: string }> = ({ message }) => (
+  <section className="component-px component-py">
+    <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
+      <div className="lg:w-1/3">Error: {message}</div>
+    </div>
+  </section>
+);
 
 export default FAQs;
