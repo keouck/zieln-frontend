@@ -5,15 +5,47 @@ import { PrimaryButton } from "../../globalcomponents/Buttons";
 import EventCard from "./EventCard";
 import { eventsData } from "@/app/data/eventsData";
 import PaginationComponent from "../../globalcomponents/Pagination";
+import useFetch from "@/app/hooks/useFetch";
+import Loader from "../../globalcomponents/Loader";
+
+export const revalidate = 10;
 
 const EventsList: React.FC = () => {
   const [sortedEvents, setSortedEvents] = useState(eventsData);
   const [sortOrder, setSortOrder] = useState<string>("latest");
   const [modalVisible, setModalVisible] = useState<boolean>(false);
-
   // Pagination state
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(5);
+
+  // fetch events
+  const {
+    data: event,
+    loading: eventLoading,
+    error: eventError,
+  } = useFetch("/api/event", {
+    method: "PUT",
+  });
+
+  // fetch categories
+  const {
+    data: category,
+    loading: categoryLoading,
+    error: categoryError,
+  } = useFetch("/api/event/category", {
+    method: "PUT",
+  });
+
+  // fetch location
+  const {
+    data: location,
+    loading: locationLoading,
+    error: locationError,
+  } = useFetch("/api/event/location", {
+    method: "PUT",
+  });
+
+  console.log(event, category, location);
 
   const handleChange = (value: { value: string; label: React.ReactNode }) => {
     setSortOrder(value.value);
@@ -51,6 +83,8 @@ const EventsList: React.FC = () => {
   const handleCloseModal = () => {
     setModalVisible(false);
   };
+
+  if (eventLoading) return <Loader />;
 
   return (
     <section className="component-px component-py">
@@ -97,37 +131,53 @@ const EventsList: React.FC = () => {
         footer={null}
       >
         <h2 className="text-lg font-semibold mb-4">Categories</h2>
-        <div>
-          <Checkbox className="mb-2">Education</Checkbox>
-          <Checkbox className="mb-2">Environment</Checkbox>
-          <Checkbox className="mb-2">Motorcycles</Checkbox>
-          {/* Add more categories as needed */}
-        </div>
+        {categoryLoading ? (
+          <Loader />
+        ) : (
+          <div>
+            {category?.data?.map((category: any) => (
+              <Checkbox className="mb-2" key={category?.id}>
+                {category?.attributes?.name}
+              </Checkbox>
+            ))}
+          </div>
+        )}
         <h2 className="text-lg font-semibold mt-6 mb-4">Locations</h2>
-        <div>
-          <Checkbox className="mb-2">New York</Checkbox>
-          <Checkbox className="mb-2">Los Angeles</Checkbox>
-          <Checkbox className="mb-2">Chicago</Checkbox>
-          {/* Add more locations as needed */}
-        </div>
+        {locationLoading ? (
+          <Loader />
+        ) : (
+          <div>
+            {location?.data?.map((location: any) => (
+              <Checkbox className="mb-2" key={location?.id}>
+                {location?.attributes?.location}
+              </Checkbox>
+            ))}
+          </div>
+        )}
       </Modal>
 
       <div className="grid lg:grid-cols-5 gap-8">
         <div className="col-span-1 hidden lg:block">
           <div className="border p-4 rounded-lg">
             <h2 className="text-lg font-semibold mb-4">Categories</h2>
-            <div>
-              <Checkbox className="mb-2">Education</Checkbox>
-              <Checkbox className="mb-2">Environment</Checkbox>
-              <Checkbox className="mb-2">Motorcycles</Checkbox>
-              {/* Add more categories as needed */}
-            </div>
+            {categoryLoading ? (
+              <Loader />
+            ) : (
+              <div>
+                {category?.data?.map((category: any) => (
+                  <Checkbox className="mb-2" key={category?.id}>
+                    {category?.attributes?.name}
+                  </Checkbox>
+                ))}
+              </div>
+            )}
             <h2 className="text-lg font-semibold mt-6 mb-4">Locations</h2>
             <div>
-              <Checkbox className="mb-2">New York</Checkbox>
-              <Checkbox className="mb-2">Los Angeles</Checkbox>
-              <Checkbox className="mb-2">Chicago</Checkbox>
-              {/* Add more locations as needed */}
+              {location?.data?.map((location: any) => (
+                <Checkbox className="mb-2" key={location?.id}>
+                  {location?.attributes?.location}
+                </Checkbox>
+              ))}
             </div>
           </div>
         </div>
