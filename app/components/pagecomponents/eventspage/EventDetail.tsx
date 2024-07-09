@@ -13,22 +13,37 @@ import {
   PrimaryOutlineButton,
 } from "../../globalcomponents/Buttons";
 import { FaBookmark } from "react-icons/fa6";
+import { PUBLIC_URL } from "@/app/config/url";
 
 interface EventDetailProps {
   event: {
-    title: string;
+    user_id: string;
     description: string;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+    title: string;
+    date: string;
     location: string;
-    audience: string;
-    image: string;
-    interested: number; // New property for interested count
+    interested?: number;
+    audience?: string;
+    images: {
+      data: {
+        id: number;
+        attributes: {
+          url: string;
+        };
+      }[];
+    };
   };
 }
 
 const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
   const [saved, setSaved] = useState(false); // State to track if event is saved
   const [interested, setInterested] = useState(false); // State to track if user is interested
-  const [interestedCount, setInterestedCount] = useState(event.interested); // State to track the count of interested users
+  const [interestedCount, setInterestedCount] = useState(
+    event?.interested || 100
+  ); // State to track the count of interested users
 
   const toggleSaved = () => {
     setSaved(!saved); // Toggle the saved state
@@ -49,7 +64,7 @@ const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
       {/* Banner */}
       <div className="">
         <img
-          src={event?.image}
+          src={`${PUBLIC_URL}${event?.images.data[0].attributes.url}`}
           alt="Banner"
           className="w-full h-48 sm:h-64 md:h-80 object-cover"
         />
@@ -67,21 +82,21 @@ const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
           </div>
           <div className="pt-2 md:pt-4 lg:pt-8">
             <h1 className="text-xl md:text-2xl lg:text-4xl font-semibold md:mb-2">
-              {event.title}
+              {event?.title}
             </h1>
             <p className="text-sm md:text-base text-gray-600">
-              {event.description}
+              {event?.description}
             </p>
           </div>
         </div>
         <div className=" mt-0 lg:mt-10 space-y-2">
           <div className="flex items-center text-sm md:text-base">
             <FaMapMarkerAlt className="mr-2" />
-            <p>{event.location}</p>
+            <p>{event?.location}</p>
           </div>
           <div className="flex items-center text-sm md:text-base">
             <FaUserFriends className="mr-2" />
-            <p>{event.audience}</p>
+            <p>{event?.audience || 500}</p>
           </div>
         </div>
       </div>
@@ -111,19 +126,7 @@ const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
       <div className="component-px">
         <h3 className="text-lg md:text-2xl font-medium">About this Event</h3>
         <p className="text-sm lg:text-base mt-2 lg:mt-4">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque
-          asperiores voluptatem possimus modi qui vero dignissimos, illum libero
-          omnis, officiis esse eum. Vitae commodi repellat deleniti. Corrupti
-          sed natus officia vitae.
-        </p>
-        <p className="text-sm lg:text-base mt-2 lg:mt-4">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque
-          asperiores voluptatem possimus modi qui vero dignissimos, illum libero
-          omnis, officiis esse eum. Vitae commodi repellat deleniti. Corrupti
-          perferendis adipisci quod ea exercitationem odio ipsa praesentium modi
-          consectetur. Ab illo deleniti in, id, deserunt beatae libero sapiente
-          officiis, ut fuga vero quos officia. Suscipit beatae dolores molestias
-          sed natus officia vitae.
+          {event?.description}
         </p>
       </div>
     </section>
