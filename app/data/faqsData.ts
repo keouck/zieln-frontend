@@ -1,12 +1,9 @@
 // faqsData.ts
-import { BACKEND_URI } from "../../constant.js";
+import { BACKEND_URI } from "@/constant";
+import { get } from "@/utils/api";
 export const fetchFaqsData = async () => {
   try {
-    const response = await fetch(`${BACKEND_URI}/api/faqs`);
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-    const data = await response.json();
+    const data = await get("/faqs");
 
     // Transform the data to the desired format
     const formattedData =

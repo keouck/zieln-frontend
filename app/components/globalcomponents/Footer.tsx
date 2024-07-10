@@ -1,10 +1,37 @@
+"use client";
 /* eslint-disable react/no-unescaped-entities */
+import { post } from "@/utils/api";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
+import { Bounce, toast } from "react-toastify";
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
+  const [email, setEmail] = useState("");
+
+  const handleFormSubmit = async (e: Event) => {
+    e.preventDefault();
+
+    // Regular expression for email validation
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    // Validate email
+    if (!emailRegex.test(email)) {
+      setEmail("");
+      return toast.warn("Please enter a valid email address.");
+    }
+
+    try {
+      await post("/newsletter", { to: email });
+      setEmail("");
+      return toast.success("Thank you for subscribing to our newsletter!");
+    } catch (error) {
+      // console.error("Error posting to newsletter:", error);
+      return toast.error("Error posting to newsletter.");
+    }
+  };
+
   return (
     <footer className="mt-auto bg-primary w-full dark:bg-neutral-950">
       <div className="mt-auto w-full  py-10 lg:pt-20 mx-auto component-px">
@@ -86,7 +113,7 @@ const Footer: React.FC = () => {
           <div className="col-span-2">
             <h4 className="font-semibold text-gray-100">Stay up to date</h4>
 
-            <form>
+            <form onSubmit={handleFormSubmit}>
               <div className="mt-4 flex flex-col items-center gap-2 sm:flex-row sm:gap-3 bg-white rounded-lg p-2 dark:bg-neutral-900">
                 <div className="w-full">
                   <label htmlFor="hero-input" className="sr-only">
@@ -94,18 +121,20 @@ const Footer: React.FC = () => {
                   </label>
                   <input
                     type="text"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     id="hero-input"
                     name="hero-input"
                     className="py-3 px-4 block w-full border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-transparent dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
                     placeholder="Enter your email"
                   />
                 </div>
-                <Link
+                <button
+                  type="submit"
                   className="w-full sm:w-auto whitespace-nowrap p-3 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary text-white hover:scale-95 disabled:opacity-50 disabled:pointer-events-none"
-                  href="#"
                 >
                   Subscribe
-                </Link>
+                </button>
               </div>
               <p className="mt-3 text-sm text-gray-400">
                 Subscribe for weekly updates of events

@@ -35,7 +35,7 @@ const FAQs: React.FC = () => {
   }
 
   if (error) {
-    return <Error message={error} />;
+    return;
   }
 
   return (
@@ -74,14 +74,6 @@ const Loading: React.FC = () => (
   <section className="component-px component-py">
     <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
       <div className="lg:w-1/3">Loading...</div>
-    </div>
-  </section>
-);
-
-const Error: React.FC<{ message: string }> = ({ message }) => (
-  <section className="component-px component-py">
-    <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
-      <div className="lg:w-1/3">Error: {message}</div>
     </div>
   </section>
 );
