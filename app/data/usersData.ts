@@ -69,5 +69,55 @@ export const usersData = [
       "Advanced TypeScript",
       "Building Scalable Applications with Next.js"
     ]
+  },
+  {
+    id: "user_2hgDstMQj7Gi4PpOwkRb75pDwFU",
+    username: "yoursmayank",
+    unsafeMetadata: {
+      role: "STUDENT"
+    },
+    fullName: "Myank",
+    interests: ["TypeScript", "Next.js"],
+    email: "yoursmayank12@gmail.com",
+    phone: "+1122334455",
+    bio: "Hi, I'm Bibek Shah.",
+    profilePicture: "https://randomuser.me/api/portraits/men/4.jpg",
+    followers: [
+      { id: "1", username: "john_doe" }
+    ],
+    following: [
+      { id: "3", username: "mark_twain" }
+    ],
+    designation: "Frontend Developer",
+    curriculum: [
+      "Web Development Fundamentals",
+      "Advanced TypeScript",
+      "Building Scalable Applications with Next.js"
+    ]
+  },
+  {
+    id: "user_2hgDstMQj7Gi4PpOwkRb75pDwFU",
+    username: "outsmash",
+    unsafeMetadata: {
+      role: "ORGANIZATION"
+    },
+    fullName: "Outsmash Team",
+    interests: ["TypeScript", "Next.js"],
+    email: "outsmashteam@gmail.com",
+    phone: "+1122334455",
+    bio: "Hi, I'm Bibek Shah.",
+    profilePicture: "https://randomuser.me/api/portraits/men/4.jpg",
+    followers: [
+      { id: "1", username: "john_doe" }
+    ],
+    following: [
+      { id: "3", username: "mark_twain" }
+    ],
+    designation: "Frontend Developer",
+    curriculum: [
+      "Web Development Fundamentals",
+      "Advanced TypeScript",
+      "Building Scalable Applications with Next.js"
+    ]
   }
 ];
