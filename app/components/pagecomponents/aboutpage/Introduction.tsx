@@ -4,7 +4,7 @@ export default function Introduction() {
     <section className="component-px component-py ">
       <div className="grid md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
         <div className="order-2 md:order-1">
-          <h1 className="component-heading mb-4">About Zieln</h1>
+          <h1 className="component-heading mb-4">About Outsmash</h1>
           <p className="md:text-lg text-gray-700">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum veniam
             at dicta totam numquam? Dolore veritatis vitae porro cupiditate

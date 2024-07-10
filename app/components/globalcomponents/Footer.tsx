@@ -16,12 +16,9 @@ const Footer: React.FC = () => {
               href="/"
               aria-label="Brand"
             >
-              <Image
-                src="/logo.png"
-                alt="Zieln Logo"
-                width={100}
-                height={100}
-              />
+              <h1 className="text-2xl lg:text-4xl font-bold font-lora">
+                Outsmash
+              </h1>
             </Link>
           </div>
           {/* <!-- End Col --> */}
@@ -119,7 +116,7 @@ const Footer: React.FC = () => {
         <div className="mt-5 sm:mt-12 grid gap-y-2 sm:gap-y-0 sm:flex sm:justify-between sm:items-center">
           <div className="flex justify-between items-center">
             <p className="text-sm text-gray-400 dark:text-neutral-400">
-              © {currentYear} Zieln. All rights reserved.
+              © {currentYear} Outsmash. All rights reserved.
             </p>
           </div>
           {/* <!-- End Col --> */}

@@ -7,7 +7,7 @@ export default function NameMeaning() {
       <div className="flex flex-col md:flex-row items-center">
         <div className="md:w-1/2 md:pr-8 mb-8">
           <h2 className="component-heading mb-4">
-            What does <q>Zieln</q> mean?
+            What does <q>Outsmash</q> mean?
           </h2>
           <div className="text-lg text-gray-700">
             <p>
@@ -34,7 +34,7 @@ export default function NameMeaning() {
             className="text-3xl md:text-6xl lg:text-8xl font-extrabold animate-pulse"
             style={{ fontFamily: "cursive" }}
           >
-            <q>Zieln</q>
+            <q>Outsmash</q>
           </h1>
         </div>
       </div>

@@ -68,13 +68,7 @@ const Header = () => {
     >
       <div className="component-px flex items-center justify-between">
         <Link href="/">
-          <Image
-            src="/logo.png"
-            alt="Zieln Logo"
-            width={100}
-            height={100}
-            className="w-16 lg:w-20"
-          />
+          <h1 className="text-2xl lg:text-4xl font-bold font-lora">Outsmash</h1>
         </Link>
 
         <div className="hidden lg:flex gap-x-4">
@@ -123,7 +117,7 @@ const Header = () => {
             <GrMenu size={24} />
           </button>
           <Drawer
-            title={<h1 className="text-xl font-bold">Zieln</h1>}
+            title={<h1 className="text-xl font-bold">Outsmash</h1>}
             onClose={onClose}
             open={open}
             className="lg:hidden"
