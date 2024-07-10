@@ -9,6 +9,8 @@ export const eventsData = [
       updatedAt: "2024-07-01T00:00:00Z",
       publishedAt: "2024-07-01T00:00:00Z",
       user_id: "user123",
+      endDate: "July 9, 2024",
+      registered: 100,
       images: {
         data: [
           {
@@ -31,6 +33,8 @@ export const eventsData = [
       updatedAt: "2024-06-01T00:00:00Z",
       publishedAt: "2024-06-01T00:00:00Z",
       user_id: "user124",
+      endDate: "July 9, 2024",
+      registered: 100,
       images: {
         data: [
           {
@@ -53,6 +57,8 @@ export const eventsData = [
       updatedAt: "2024-08-01T00:00:00Z",
       publishedAt: "2024-08-01T00:00:00Z",
       user_id: "user125",
+      endDate: "July 9, 2024",
+      registered: 100,
       images: {
         data: [
           {
@@ -75,6 +81,8 @@ export const eventsData = [
       updatedAt: "2024-07-01T00:00:00Z",
       publishedAt: "2024-07-01T00:00:00Z",
       user_id: "user126",
+      endDate: "July 9, 2024",
+      registered: 100,
       images: {
         data: [
           {

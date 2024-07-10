@@ -14,16 +14,30 @@ const fetchEvents = async () => {
   const data = await response.json();
   return data;
 };
+import Link from "next/link";
+import { GoArrowUpRight } from "react-icons/go";
+import { RxStarFilled } from "react-icons/rx";
 
 /* eslint-disable @next/next/no-img-element */
 export default async function LatestEvents() {
   const events: any = await fetchEvents();
-  console.log(events);
 
   return (
     <section className="component-px component-py">
-      <div className="mb-6 sm:mb-10 max-w-2xl text-center mx-auto">
-        <h1 className="component-heading">Latest Events</h1>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="component-heading">Latest Events</h1>
+          <p className="lg:text-lg mt-2">
+            Check out the most recent events happening in your area
+          </p>
+        </div>
+        <div>
+          <Link href="/events">
+            <div className="flex items-center text-gray-600 font-medium hover:text-gray-900 transition duration-300">
+              View All Events <GoArrowUpRight className="ml-1" />
+            </div>
+          </Link>
+        </div>
       </div>
 
       {events?.data?.length === 0 && (
@@ -36,13 +50,27 @@ export default async function LatestEvents() {
       <div className="mt-4 lg:mt-8 grid md:grid-cols-2 gap-8 lg:gap-16">
         {events?.data?.length > 0
           ? events?.data?.slice(0, 4).map((event: any) => (
-              <a key={event?.id} className="group block" href="#">
-                <div className="aspect-w-16 aspect-h-12 overflow-hidden bg-gray-100 rounded-2xl shadow dark:bg-neutral-800">
+              <a
+                key={event?.id}
+                className="group block relative"
+                href={`/events/${event?.id}`}
+              >
+                <div className="aspect-w-16 aspect-h-12 overflow-hidden bg-gray-100 rounded-2xl shadow dark:bg-neutral-800 relative">
                   <img
                     className="lg:h-96 w-full group-hover:scale-105 transition-transform duration-500 ease-in-out object-cover rounded-2xl"
                     src={`${PUBLIC_URL}${event?.attributes?.images.data[0].attributes.url}`}
                     alt="Image Description"
                   />
+
+                  {/* Hover Popup */}
+                  <div className="absolute bottom-4 left-4 bg-black bg-opacity-75 text-white text-sm px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="flex items-center space-x-2">
+                      <RxStarFilled className="text-yellow-500" />
+                      <span className="text-white">
+                        {event.interested} Interested
+                      </span>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="pt-4">

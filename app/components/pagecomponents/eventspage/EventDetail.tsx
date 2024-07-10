@@ -25,15 +25,25 @@ interface EventDetailProps {
     title: string;
     date: string;
     location: string;
-    interested?: number;
+    interested?: string;
+    registered?: string;
+    endDate?: string;
     audience?: string;
-    images: {
+    banner: {
       data: {
         id: number;
         attributes: {
           url: string;
         };
-      }[];
+      };
+    };
+    logo: {
+      data: {
+        id: number;
+        attributes: {
+          url: string;
+        };
+      };
     };
   };
 }
@@ -41,8 +51,8 @@ interface EventDetailProps {
 const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
   const [saved, setSaved] = useState(false); // State to track if event is saved
   const [interested, setInterested] = useState(false); // State to track if user is interested
-  const [interestedCount, setInterestedCount] = useState(
-    event?.interested || 100
+  const [interestedCount, setInterestedCount] = useState<number>(
+    Number(event?.interested) || 0
   ); // State to track the count of interested users
 
   const toggleSaved = () => {
@@ -64,7 +74,11 @@ const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
       {/* Banner */}
       <div className="">
         <img
-          src={`${PUBLIC_URL}${event?.images.data[0].attributes.url}`}
+          src={
+            event?.banner?.data?.attributes?.url
+              ? `${PUBLIC_URL}${event?.banner?.data?.attributes?.url}`
+              : "/logo.png"
+          }
           alt="Banner"
           className="w-full h-48 sm:h-64 md:h-80 object-cover"
         />
@@ -75,7 +89,11 @@ const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
         <div className="flex flex-row gap-4 lg:gap-8">
           <div className="w-40 h-32 md:w-48 md:h-48 -mt-8 md:-mt-16 overflow-hidden rounded-lg shadow-lg border-2 flex items-center justify-center">
             <img
-              src="https://t3.ftcdn.net/jpg/04/53/38/84/360_F_453388401_QAHlQGKY8CLhXeeGV9bWkgAaGzxUY75a.jpg"
+              src={
+                event?.logo?.data?.attributes?.url
+                  ? `${PUBLIC_URL}${event?.logo?.data?.attributes?.url}`
+                  : "/logo.png"
+              }
               alt="Profile Logo"
               className="h-full w-full object-cover"
             />
@@ -96,7 +114,7 @@ const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
           </div>
           <div className="flex items-center text-sm md:text-base">
             <FaUserFriends className="mr-2" />
-            <p>{event?.audience || 500}</p>
+            <p>{event?.registered}</p>
           </div>
         </div>
       </div>
@@ -106,7 +124,7 @@ const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
         <div className="flex flex-row flex-wrap items-center gap-4 mb-8">
           <PrimaryButton
             icon={<FaRegCalendarCheck />}
-            buttonName="Register (510)"
+            buttonName={`Register (${event?.registered})`}
             link="/register"
           />
           <PrimaryOutlineButton
