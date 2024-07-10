@@ -1,11 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Avatar } from "antd";
 import PaginationComponent from "../../globalcomponents/Pagination";
-import { mentorData } from "@/app/data/mentorsData";
+import useFetch from "@/app/hooks/useFetch";
 
 // Pagination settings
 const PAGE_SIZE_OPTIONS = [5, 10, 15, 20];
@@ -13,10 +13,18 @@ const PAGE_SIZE_OPTIONS = [5, 10, 15, 20];
 const Mentors = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [mentorData, setMentorData] = useState<any[]>([]);
   const [pageSize, setPageSize] = useState(10);
 
+
+  const { data } = useFetch("/mentors?populate=socialLinks,image", true);
+
+  useEffect(() => {
+    if(data) setMentorData((data as any).data);
+  }, [data])
+
   const filteredMentors = mentorData.filter((mentor) =>
-    mentor.name.toLowerCase().includes(searchTerm.toLowerCase())
+    mentor.attributes.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const paginatedMentors = filteredMentors.slice(
@@ -95,15 +103,15 @@ const Mentors = () => {
                   />
                 </div>
                 <div className="flex items-center justify-center -mt-10">
-                  <Avatar src={mentor?.image} size={90} />
+                  <Avatar src={mentor.attributes.image.data.attributes.url} size={90} />
                 </div>
                 <div className="p-2 space-y-4 pb-6">
                   <h2 className="text-center font-medium lg:text-lg">
-                    {mentor?.name}
+                    {mentor.attributes.name}
                   </h2>
                   <p className="text-center divide-x divide-black line-clamp-1">
-                    {mentor?.keyword?.map((kw, index) => (
-                      <span key={index} className="px-2">
+                    {mentor.attributes.keyword?.map((kw, index) => (
+                      <span key={index + "_keyword_id"} className="px-2">
                         {kw}
                       </span>
                     ))}
