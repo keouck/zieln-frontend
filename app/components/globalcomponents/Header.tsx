@@ -13,6 +13,7 @@ import LoginRequiredAlert from "./LoginRequiredAlert";
 const Header = () => {
   const router = useRouter();
   const { user } = useClerk();
+  console.log(user);
 
   const [open, setOpen] = useState(false);
 

@@ -10,16 +10,20 @@ type WithAuthProps = {
 
 function withAuth<P extends WithAuthProps>(Component: ComponentType<P>) {
   const AuthenticatedComponent = (props: P) => {
-    const { isSignedIn, isLoaded } = useUser();
+    const { isSignedIn, isLoaded, user } = useUser();
     const router = useRouter();
 
     useEffect(() => {
-      if (isLoaded && !isSignedIn) {
-        router.push("/sign-in");
+      if (isLoaded) {
+        if (!isSignedIn) {
+          router.push("/sign-in");
+        } else if (!user?.unsafeMetadata?.role) {
+          router.push("/dashboard");
+        }
       }
-    }, [isLoaded, isSignedIn, router]);
+    }, [isLoaded, isSignedIn, user, router]);
 
-    if (!isLoaded || !isSignedIn) {
+    if (!isLoaded || !isSignedIn || !user?.unsafeMetadata?.role) {
       return <Loader />;
     }
 
