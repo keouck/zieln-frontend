@@ -1,10 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import { PrimaryButton } from "../../globalcomponents/Buttons";
-import { post } from "@/utils/api";
 import { toast } from "react-toastify";
+import useFetch from "@/app/hooks/useFetch";
 
 export default function ContactForm() {
+  const { post } = useFetch("/queries");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -38,7 +39,7 @@ export default function ContactForm() {
       }
 
       // Here you can handle form submission, e.g., send data to backend, etc.
-      await post("/queries", {
+      await post({
         data: {
           name: formData.name,
           email: formData.email,

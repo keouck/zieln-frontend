@@ -13,7 +13,7 @@ import {
   PrimaryOutlineButton,
 } from "../../globalcomponents/Buttons";
 import { FaBookmark } from "react-icons/fa6";
-import { PUBLIC_URL } from "@/app/config/url";
+import Loader from "../../globalcomponents/Loader";
 
 interface EventDetailProps {
   event: {
@@ -69,6 +69,8 @@ const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
     }
   };
 
+  if (!event) return <Loader />;
+
   return (
     <section className="pb-8 lg:pb-16">
       {/* Banner */}
@@ -76,7 +78,7 @@ const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
         <img
           src={
             event?.banner?.data?.attributes?.url
-              ? `${PUBLIC_URL}${event?.banner?.data?.attributes?.url}`
+              ? `${event?.banner?.data?.attributes?.url}`
               : "/logo.png"
           }
           alt="Banner"
@@ -91,7 +93,7 @@ const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
             <img
               src={
                 event?.logo?.data?.attributes?.url
-                  ? `${PUBLIC_URL}${event?.logo?.data?.attributes?.url}`
+                  ? `${event?.logo?.data?.attributes?.url}`
                   : "/logo.png"
               }
               alt="Profile Logo"
@@ -114,7 +116,7 @@ const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
           </div>
           <div className="flex items-center text-sm md:text-base">
             <FaUserFriends className="mr-2" />
-            <p>{event?.registered}</p>
+            <p>{event?.registered} registers</p>
           </div>
         </div>
       </div>

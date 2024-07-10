@@ -1,26 +1,17 @@
+"use client";
 /* eslint-disable react/no-unescaped-entities */
-
-import { PUBLIC_URL } from "@/app/config/url";
-
-const fetchEvents = async () => {
-  const response = await fetch(
-    `${process.env.NEXT_API_URL}/api/events?populate=*`,
-    {
-      next: {
-        revalidate: 10,
-      },
-    }
-  );
-  const data = await response.json();
-  return data;
-};
+import useFetch from "@/app/hooks/useFetch";
 import Link from "next/link";
 import { GoArrowUpRight } from "react-icons/go";
 import { RxStarFilled } from "react-icons/rx";
+import Loader from "../../globalcomponents/Loader";
 
 /* eslint-disable @next/next/no-img-element */
-export default async function LatestEvents() {
-  const events: any = await fetchEvents();
+export default function LatestEvents() {
+  const { data: events, loading, error } = useFetch("/events?populate=*", true);
+
+  if (loading) return <Loader />;
+  if (error) return;
 
   return (
     <section className="component-px component-py">
@@ -58,8 +49,8 @@ export default async function LatestEvents() {
                 <div className="aspect-w-16 aspect-h-12 overflow-hidden bg-gray-100 rounded-2xl shadow dark:bg-neutral-800 relative">
                   <img
                     className="lg:h-96 w-full group-hover:scale-105 transition-transform duration-500 ease-in-out object-cover rounded-2xl"
-                    src={`${PUBLIC_URL}${event?.attributes?.images.data[0].attributes.url}`}
-                    alt="Image Description"
+                    src={`${event?.attributes?.images.data[0].attributes.url}`}
+                    alt="Event Image"
                   />
 
                   {/* Hover Popup */}

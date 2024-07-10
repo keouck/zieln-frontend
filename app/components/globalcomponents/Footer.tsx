@@ -1,12 +1,13 @@
 "use client";
 /* eslint-disable react/no-unescaped-entities */
-import { post } from "@/utils/api";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import useFetch from "@/app/hooks/useFetch";
 
 const Footer: React.FC = () => {
+  const { post } = useFetch("/newsletter");
   const currentYear = new Date().getFullYear();
   const [email, setEmail] = useState("");
 
@@ -23,7 +24,7 @@ const Footer: React.FC = () => {
     }
 
     try {
-      await post("/newsletter", { to: email });
+      await post({ to: email });
       setEmail("");
       return toast.success("Thank you for subscribing to our newsletter!");
     } catch (error) {

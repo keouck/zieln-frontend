@@ -2,7 +2,6 @@
 import Loader from "@/app/components/globalcomponents/Loader";
 import PageLayout from "@/app/components/globalcomponents/PageLayout";
 import EventDetail from "@/app/components/pagecomponents/eventspage/EventDetail";
-import { eventsData } from "@/app/data/eventsData";
 import useFetch from "@/app/hooks/useFetch";
 import { useParams } from "next/navigation";
 
@@ -14,9 +13,7 @@ export default function EventDetailPage() {
     data: eventDetail,
     loading: eventLoading,
     error: eventError,
-  } = useFetch(`/api/event/${eventId}`, {
-    method: "PUT",
-  });
+  } = useFetch(`/events/${eventId}?populate=*`, true);
 
   console.log(eventDetail);
 

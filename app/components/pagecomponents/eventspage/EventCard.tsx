@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import { PUBLIC_URL } from "@/app/config/url";
 import Link from "next/link";
 import React from "react";
 import { FiCalendar, FiMapPin, FiUsers } from "react-icons/fi";
@@ -66,10 +65,10 @@ const EventCard = ({ event }: EventCardProps) => {
     <Link href={`/events/${event.id}`}>
       <div className="cursor-pointer bg-white shadow-md rounded-2xl overflow-hidden transition duration-300 transform group hover:shadow-lg hover:scale-105 relative">
         <img
-          className="w-full h-32 md:h-40 object-cover object-center group-hover:scale-105 transition duration-300"
+          className="w-full bg-gray-100 h-32 md:h-40 object-cover object-center group-hover:scale-105 transition duration-300"
           src={
             event?.attributes?.banner?.data?.attributes?.url
-              ? `${PUBLIC_URL}${event?.attributes?.banner?.data?.attributes?.url}`
+              ? `${event?.attributes?.banner?.data?.attributes?.url}`
               : `/logo.png`
           }
           alt={event.attributes?.title}

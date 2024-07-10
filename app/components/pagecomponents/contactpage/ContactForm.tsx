@@ -2,9 +2,11 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { PrimaryButton } from "../../globalcomponents/Buttons";
-import { post } from "@/utils/api";
+import useFetch from "@/app/hooks/useFetch";
 
 export default function ContactForm() {
+  const { post } = useFetch("/queries");
+
   const [formData, setFormData] = useState({
     name: "",
     company: "",
@@ -42,7 +44,7 @@ export default function ContactForm() {
         return toast.warn("Please enter a valid email address.");
       }
 
-      await post("/queries", {
+      await post({
         data: {
           name: formData.name,
           email: formData.email,
