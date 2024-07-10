@@ -4,7 +4,7 @@ import { post } from "@/utils/api";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-import { Bounce, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();

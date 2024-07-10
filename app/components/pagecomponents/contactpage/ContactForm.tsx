@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import { PrimaryButton } from "../../globalcomponents/Buttons";
+import { post } from "@/utils/api";
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -22,18 +22,44 @@ export default function ContactForm() {
     }));
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) {
-      toast.error("Please fill in all required fields.");
-      return;
+    try {
+      if (
+        !formData.name ||
+        !formData.email ||
+        !formData.message ||
+        !formData.phone
+      ) {
+        return toast.warn("All fields are required!");
+      }
+
+      // Regular expression for email validation
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+      // Validate email
+      if (!emailRegex.test(formData.email)) {
+        return toast.warn("Please enter a valid email address.");
+      }
+
+      await post("/queries", {
+        data: {
+          name: formData.name,
+          email: formData.email,
+          phoneNumber: formData.phone,
+          message: formData.message,
+          company: formData.company,
+          address: formData.address,
+        },
+      });
+
+      toast.success("Your request has been captured successfully.");
+    } catch (error) {
+      toast.warn("Failed to capture your request.");
     }
 
-    console.log("Form data:", formData);
-    toast.success("Message sent successfully!");
-    setFormData({
+    return setFormData({
       name: "",
-    
       company: "",
       email: "",
       phone: "",
@@ -142,11 +168,6 @@ export default function ContactForm() {
           <PrimaryButton buttonName="Send Message" onClick={handleSubmit} />
         </div>
       </form>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-      />
       <div className="absolute -top-14 -right-10 w-40 h-40 border-2 border-gray-600 opacity-50 md:opacity-100 rounded-full"></div>
       <div className="absolute -top-14 -right-10 w-36 h-36 border-2 border-gray-600 opacity-50 md:opacity-100 rounded-full"></div>
       <div className="absolute -top-14 -right-10 w-32 h-32 border-2 border-gray-600 opacity-50 md:opacity-100 rounded-full"></div>

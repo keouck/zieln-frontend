@@ -20,6 +20,23 @@ export default function ContactForm() {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
+      if (
+        !formData.name ||
+        !formData.email ||
+        !formData.message ||
+        !formData.phone
+      ) {
+        return toast.warn("All fields are required!");
+      }
+
+      // Regular expression for email validation
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+      // Validate email
+      if (!emailRegex.test(formData.email)) {
+        return toast.warn("Please enter a valid email address.");
+      }
+
       // Here you can handle form submission, e.g., send data to backend, etc.
       await post("/queries", {
         data: {
