@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import { PrimaryButton } from "../../globalcomponents/Buttons";
+import { post } from "@/utils/api";
+import { toast } from "react-toastify";
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -15,10 +17,30 @@ export default function ContactForm() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    // Here you can handle form submission, e.g., send data to backend, etc.
-    console.log("Form submitted:", formData);
+    try {
+      // Here you can handle form submission, e.g., send data to backend, etc.
+      await post("/queries", {
+        data: {
+          name: formData.name,
+          email: formData.email,
+          phoneNumber: formData.phone,
+          message: formData.message,
+        },
+      });
+
+      toast.success("Your request has been captured successfully.");
+    } catch (error) {
+      toast.warn("Failed to capture your request.");
+    }
+
+    return setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      message: "",
+    });
   };
 
   return (
