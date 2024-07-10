@@ -8,10 +8,11 @@ import PageLayout from "../../components/globalcomponents/PageLayout";
 import { IoShieldCheckmark } from "react-icons/io5";
 import { message, Modal } from "antd";
 import { useRouter } from "next/navigation";
+import withAuth from "@/app/hoc/withAuth";
 
 type TRole = "STUDENT" | "ORGANIZATION";
 
-const Home: React.FC = () => {
+const Dashboard: React.FC = () => {
   const { user } = useUser();
   const [selectedRole, setSelectedRole] = useState<TRole | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -124,4 +125,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default withAuth(Dashboard);

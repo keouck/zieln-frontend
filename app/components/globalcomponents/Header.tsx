@@ -3,14 +3,15 @@ import { UserButton, useClerk } from "@clerk/nextjs";
 import { Drawer, Dropdown, Menu } from "antd";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FiMenu } from "react-icons/fi";
 import { GrMenu } from "react-icons/gr";
 import { PrimaryButton, PrimaryOutlineButton } from "./Buttons";
-import ResourcesDropDown from "./ResourcesDropdown";
+import LoginRequiredAlert from "./LoginRequiredAlert";
 
 const Header = () => {
+  const router = useRouter();
   const { user } = useClerk();
 
   const [open, setOpen] = useState(false);
@@ -45,6 +46,10 @@ const Header = () => {
     window.addEventListener("scroll", scrollHandler);
     return () => window.removeEventListener("scroll", scrollHandler);
   }, [top]);
+
+  const handleCreateEvent = () => {
+    router.push("/create-event"); // Navigate to the Create Event page
+  };
 
   const menu = (
     <Menu>
@@ -84,10 +89,14 @@ const Header = () => {
           <div className="buttons flex items-center space-x-4">
             {!user ? (
               <>
-                <PrimaryOutlineButton
-                  link="/create-event"
-                  buttonName="+ Create Event"
-                />
+                <div className="hidden lg:block">
+                  <LoginRequiredAlert
+                    action={handleCreateEvent}
+                    buttonContent={
+                      <PrimaryOutlineButton buttonName="+ Create Event" />
+                    }
+                  />
+                </div>
                 <PrimaryButton link="/sign-in" buttonName="Log in" />
               </>
             ) : (

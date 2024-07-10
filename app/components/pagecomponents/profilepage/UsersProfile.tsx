@@ -17,6 +17,7 @@ import {
   PrimaryOutlineButton,
 } from "../../globalcomponents/Buttons";
 import EventCard from "../eventspage/EventCard";
+import LoginRequiredAlert from "../../globalcomponents/LoginRequiredAlert";
 
 export default function UsersProfile({
   fullName,
@@ -136,11 +137,21 @@ export default function UsersProfile({
                 <PrimaryButton buttonName="Edit Profile" />
               ) : (
                 <>
-                  <PrimaryOutlineButton
-                    buttonName={isFollowing ? "Unfollow" : "+ Follow"}
-                    onClick={isFollowing ? handleUnfollow : handleFollow}
+                  <LoginRequiredAlert
+                    action={isFollowing ? handleUnfollow : handleFollow}
+                    buttonContent={
+                      <PrimaryOutlineButton
+                        buttonName={isFollowing ? "Unfollow" : "+ Follow"}
+                      />
+                    }
                   />
-                  <PrimaryButton buttonName="Message" />
+
+                  <LoginRequiredAlert
+                    action={() => console.log("message")}
+                    buttonContent={
+                      <PrimaryButton buttonName="Message" />
+                    }
+                  />
                 </>
               )}
               {/* <div className="h-10 flex items-center">

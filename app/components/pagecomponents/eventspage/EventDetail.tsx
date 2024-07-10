@@ -13,6 +13,7 @@ import {
   PrimaryOutlineButton,
 } from "../../globalcomponents/Buttons";
 import { FaBookmark } from "react-icons/fa6";
+import LoginRequiredAlert from "../../globalcomponents/LoginRequiredAlert"; // Adjust the path accordingly
 
 interface EventDetailProps {
   event: {
@@ -89,20 +90,32 @@ const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
       {/* Buttons */}
       <div className="component-px">
         <div className="flex flex-row flex-wrap items-center gap-4 mb-8">
-          <PrimaryButton
-            icon={<FaRegCalendarCheck />}
-            buttonName="Register (510)"
-            link="/register"
+          <LoginRequiredAlert
+            action={() => console.log("Register action")}
+            buttonContent={
+              <PrimaryButton
+                icon={<FaRegCalendarCheck />}
+                buttonName={`Register (${event.interested})`}
+              />
+            }
           />
-          <PrimaryOutlineButton
-            icon={saved ? <FaBookmark /> : <FiBookmark />}
-            buttonName={saved ? "Saved For Later" : "Save For Later"}
-            onClick={toggleSaved}
+          <LoginRequiredAlert
+            action={toggleSaved}
+            buttonContent={
+              <PrimaryOutlineButton
+                icon={saved ? <FaBookmark /> : <FiBookmark />}
+                buttonName={saved ? "Saved For Later" : "Save For Later"}
+              />
+            }
           />
-          <PrimaryOutlineButton
-            icon={interested ? <FaStar /> : <FaRegStar />}
-            buttonName={`Interested (${interestedCount})`}
-            onClick={toggleInterested}
+          <LoginRequiredAlert
+            action={toggleInterested}
+            buttonContent={
+              <PrimaryOutlineButton
+                icon={interested ? <FaStar /> : <FaRegStar />}
+                buttonName={`Interested (${interestedCount})`}
+              />
+            }
           />
         </div>
       </div>
