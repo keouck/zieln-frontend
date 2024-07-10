@@ -1,6 +1,6 @@
 export const slidesData = [
   {
-    title: "Zieln",
+    title: "Outsmash",
     description: " Empowering students with access to activities",
     buttonText: "Learn More",
     buttonLink: "/about",

@@ -4,7 +4,7 @@ export const usersData = [
       username: "sajjankarna",
       fullName: "Sajjan Kumar Karna",
       skills: ["JavaScript", "React"],
-      email: "zielne@example.com",
+      email: "Outsmashe@example.com",
       phone: "+1234567890",
       bio: "Hello, I'm Sajjan Karna.",
       profilePicture: "https://randomuser.me/api/portraits/men/1.jpg",
