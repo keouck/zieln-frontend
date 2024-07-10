@@ -8,7 +8,11 @@ import Loader from "../../globalcomponents/Loader";
 
 /* eslint-disable @next/next/no-img-element */
 export default function LatestEvents() {
-  const { data: events, loading, error } = useFetch("/events?populate=*", true);
+  const {
+    data: events,
+    loading,
+    error,
+  }: any = useFetch("/events?populate=*", true);
 
   if (loading) return <Loader />;
   if (error) return;

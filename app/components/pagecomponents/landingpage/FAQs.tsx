@@ -12,7 +12,7 @@ interface FAQ {
 }
 
 const FAQs: React.FC = () => {
-  const { data, loading, error } = useFetch<FAQ[]>("/faqs", true);
+  const { data, loading, error } = useFetch<any>("/faqs", true);
 
   if (loading) {
     return <Loading />;
@@ -45,7 +45,7 @@ const FAQs: React.FC = () => {
           style={{ fontFamily: "revert" }}
         >
           {faqsData &&
-            faqsData.map((faq, index) => (
+            faqsData.map((faq: FAQ, index: number) => (
               <Panel
                 header={<h2 className="text-lg lg:text-xl">{faq.question}</h2>}
                 className="py-2"

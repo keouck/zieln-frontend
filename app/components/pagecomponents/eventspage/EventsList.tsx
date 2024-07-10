@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
 import { Select, Button, Checkbox, Modal } from "antd";
 import { PrimaryButton } from "../../globalcomponents/Buttons";
@@ -7,10 +8,8 @@ import PaginationComponent from "../../globalcomponents/Pagination";
 import useFetch from "@/app/hooks/useFetch";
 import Loader from "../../globalcomponents/Loader";
 
-export const revalidate = 10;
-
 const EventsList: React.FC = () => {
-  const [sortedEvents, setSortedEvents] = useState([]);
+  const [sortedEvents, setSortedEvents] = useState<Event[]>([]);
   const [sortOrder, setSortOrder] = useState<string>("latest");
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState<string>("");
@@ -32,24 +31,24 @@ const EventsList: React.FC = () => {
     data: event,
     loading: eventLoading,
     error: eventError,
-  } = useFetch("/events?populate=*", true);
+  }: any = useFetch("/events?populate=*", true);
 
   // fetch categories
   const {
     data: category,
     loading: categoryLoading,
     error: categoryError,
-  } = useFetch("/event-categories", true);
+  }: any = useFetch("/event-categories", true);
 
   // fetch location
   const {
     data: location,
     loading: locationLoading,
     error: locationError,
-  } = useFetch("/event-locations", true);
+  }: any = useFetch("/event-locations", true);
 
   useEffect(() => {
-    if (event?.data) {
+    if (event && event.data) {
       let filtered = event.data;
 
       if (searchInput) {

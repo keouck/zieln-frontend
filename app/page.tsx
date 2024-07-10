@@ -8,8 +8,6 @@ import LatestEvents from "./components/pagecomponents/landingpage/LatestEvents";
 import FAQs from "./components/pagecomponents/landingpage/FAQs";
 import Testimonials from "./components/pagecomponents/landingpage/Testimonials";
 import Blogs from "./components/pagecomponents/landingpage/Blogs";
-import { Bounce, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 export const metadata: Metadata = {
   title: "ZIELN",
@@ -32,19 +30,6 @@ const Home: React.FC = () => {
       <Blogs />
       <FAQs />
       <Contact />
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={true}
-        newestOnTop={false}
-        closeOnClick={true}
-        rtl={false}
-        pauseOnFocusLoss={true}
-        draggable={true}
-        pauseOnHover={true}
-        theme="light"
-        transition={Bounce}
-      />
     </PageLayout>
   );
 };

@@ -215,7 +215,7 @@ export default function UsersProfile({
               {activeTab === "Events" && (
                 <div className="mb-4">
                   <div className="col-span-4 grid md:grid-cols-2 xl:grid-cols-3 gap-8">
-                    {eventsData.slice(0, 5).map((event, index) => (
+                    {eventsData.slice(0, 5).map((event: any, index: number) => (
                       <EventCard key={index} event={event} />
                     ))}
                   </div>

@@ -5,6 +5,12 @@ import EventDetail from "@/app/components/pagecomponents/eventspage/EventDetail"
 import useFetch from "@/app/hooks/useFetch";
 import { useParams } from "next/navigation";
 
+interface EventDetailType {
+  data: {
+    attributes: any; // Replace 'any' with the actual type of attributes
+  };
+}
+
 export default function EventDetailPage() {
   const { event } = useParams();
   const eventId = Array.isArray(event) ? event[0] : event;
@@ -13,7 +19,7 @@ export default function EventDetailPage() {
     data: eventDetail,
     loading: eventLoading,
     error: eventError,
-  } = useFetch(`/events/${eventId}?populate=*`, true);
+  } = useFetch<EventDetailType>(`/events/${eventId}?populate=*`, true);
 
   console.log(eventDetail);
 
@@ -25,7 +31,7 @@ export default function EventDetailPage() {
     );
   }
 
-  if (eventError) {
+  if (eventError || !eventDetail) {
     return (
       <PageLayout>
         <section className="component-px component-py">
@@ -37,7 +43,9 @@ export default function EventDetailPage() {
 
   return (
     <PageLayout>
-      {!eventLoading && <EventDetail event={eventDetail?.data?.attributes} />}
+      {!eventLoading && eventDetail.data && (
+        <EventDetail event={eventDetail.data.attributes} />
+      )}
     </PageLayout>
   );
 }

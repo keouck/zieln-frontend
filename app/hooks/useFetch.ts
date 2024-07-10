@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { BACKEND_URI } from "@/constant";
+import Error from "next/error";
 
 interface FetchOptions {
   method: string;
@@ -10,7 +11,7 @@ interface FetchOptions {
 interface FetchState<T> {
   data: T | null;
   loading: boolean;
-  error: Error | null;
+  error: any | null;
 }
 
 const useFetch = <T>(endpoint: string, autoFetch: boolean = false) => {

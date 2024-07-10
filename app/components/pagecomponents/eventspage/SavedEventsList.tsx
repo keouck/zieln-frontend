@@ -11,7 +11,7 @@ const SavedEventsList = () => {
         </h1>
       </div>
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-        {eventsData.map((event, index) => (
+        {eventsData.map((event: any, index: number) => (
           <EventCard key={index} event={event} />
         ))}
       </div>

@@ -1,6 +1,4 @@
 import PageLayout from "@/app/components/globalcomponents/PageLayout";
-import Banner from "@/app/components/pagecomponents/eventspage/Banner";
-import EventsList from "@/app/components/pagecomponents/eventspage/EventsList";
 import SavedEventsList from "@/app/components/pagecomponents/eventspage/SavedEventsList";
 import { Metadata } from "next";
 
