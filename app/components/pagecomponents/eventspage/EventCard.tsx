@@ -1,7 +1,37 @@
 /* eslint-disable @next/next/no-img-element */
+import { PUBLIC_URL } from "@/app/config/url";
 import Link from "next/link";
 import React from "react";
 import { FiCalendar, FiMapPin, FiUsers } from "react-icons/fi";
+
+interface EventAttribute {
+  title: string;
+  location: string;
+  date: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  endDate?: string;
+  interested: string;
+  registered: string;
+  user_id?: string;
+  banner: {
+    data: {
+      id: number;
+      attributes: {
+        url: string;
+      };
+    };
+  };
+  images: {
+    data: {
+      id: number;
+      attributes: {
+        url: string;
+      };
+    }[];
+  };
+}
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 
@@ -9,13 +39,7 @@ dayjs.extend(isBetween);
 
 interface Event {
   id: number;
-  title: string;
-  date: string;
-  endDate?: string;
-  location: string;
-  image: string;
-  interested: number;
-  registered: number;
+  attributes: EventAttribute;
 }
 
 interface EventCardProps {
@@ -25,9 +49,9 @@ interface EventCardProps {
 const EventCard = ({ event }: EventCardProps) => {
   const today = dayjs().startOf("day");
 
-  const eventStart = dayjs(event.date).startOf("day");
-  const eventEnd = event.endDate
-    ? dayjs(event.endDate).endOf("day")
+  const eventStart = dayjs(event?.attributes?.date).startOf("day");
+  const eventEnd = event?.attributes?.endDate
+    ? dayjs(event?.attributes?.endDate).endOf("day")
     : eventStart;
 
   // Checking if the event is ongoing
@@ -43,8 +67,12 @@ const EventCard = ({ event }: EventCardProps) => {
       <div className="cursor-pointer bg-white shadow-md rounded-2xl overflow-hidden transition duration-300 transform group hover:shadow-lg hover:scale-105 relative">
         <img
           className="w-full h-32 md:h-40 object-cover object-center group-hover:scale-105 transition duration-300"
-          src={event.image}
-          alt={event.title}
+          src={
+            event?.attributes?.banner?.data?.attributes?.url
+              ? `${PUBLIC_URL}${event?.attributes?.banner?.data?.attributes?.url}`
+              : `/logo.png`
+          }
+          alt={event.attributes?.title}
         />
 
         <div className="flex mt-4 absolute top-0 right-4">
@@ -65,23 +93,34 @@ const EventCard = ({ event }: EventCardProps) => {
         </div>
 
         <div className="p-4">
-          <h2 className="md:text-lg font-semibold">{event.title}</h2>
+          <h2 className="md:text-lg font-semibold">
+            {event.attributes?.title}
+          </h2>
           <div className="">
             <div className="flex items-center mt-2">
               <FiCalendar className="w-4 h-4 mr-2 text-gray-700" />
-              <p className="text-gray-700 text-xs md:text-sm">{event.date}</p>
+              <p className="text-gray-700 text-xs md:text-sm">
+                {new Date(event.attributes?.date).toLocaleString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                  hour: "numeric",
+                  minute: "numeric",
+                  hour12: true,
+                })}
+              </p>
             </div>
             <div className="flex items-center mt-2">
               <FiMapPin className="w-4 h-4 mr-2 text-gray-700" />
               <p className="text-gray-700 text-xs md:text-sm">
-                {event.location}
+                {event.attributes?.location}
               </p>
             </div>
 
             <div className="flex items-center mt-2">
               <FiUsers className="w-4 h-4 mr-2 text-gray-700" />
               <span className="text-gray-700 text-xs md:text-sm">
-                {event?.registered} Registered
+                {event.attributes?.registered} Registered
               </span>
             </div>
           </div>

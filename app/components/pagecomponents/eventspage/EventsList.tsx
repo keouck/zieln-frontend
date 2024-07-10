@@ -5,15 +5,49 @@ import { PrimaryButton } from "../../globalcomponents/Buttons";
 import EventCard from "./EventCard";
 import { eventsData } from "@/app/data/eventsData";
 import PaginationComponent from "../../globalcomponents/Pagination";
+import useFetch from "@/app/hooks/useFetch";
+import Loader from "../../globalcomponents/Loader";
+
+export const revalidate = 10;
 
 const EventsList: React.FC = () => {
   const [sortedEvents, setSortedEvents] = useState(eventsData);
   const [sortOrder, setSortOrder] = useState<string>("latest");
   const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [serachInput, setSearchInput] = useState<string>("");
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(5);
+
+  // fetch events
+  const {
+    data: event,
+    loading: eventLoading,
+    error: eventError,
+  } = useFetch("/api/event", {
+    method: "PUT",
+  });
+
+  // fetch categories
+  const {
+    data: category,
+    loading: categoryLoading,
+    error: categoryError,
+  } = useFetch("/api/event/category", {
+    method: "PUT",
+  });
+
+  // fetch location
+  const {
+    data: location,
+    loading: locationLoading,
+    error: locationError,
+  } = useFetch("/api/event/location", {
+    method: "PUT",
+  });
+
+  console.log(event, category, location);
 
   const handleChange = (value: { value: string; label: React.ReactNode }) => {
     setSortOrder(value.value);
@@ -22,13 +56,9 @@ const EventsList: React.FC = () => {
   useEffect(() => {
     let sorted = [...eventsData];
     if (sortOrder === "latest") {
-      sorted.sort(
-        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-      );
+      // sort
     } else {
-      sorted.sort(
-        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-      );
+      // sort
     }
     setSortedEvents(sorted);
   }, [sortOrder]);
@@ -52,17 +82,31 @@ const EventsList: React.FC = () => {
     setModalVisible(false);
   };
 
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(e.target.value);
+  };
+
+  const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+
+  if (eventLoading) return <Loader />;
+
   return (
     <section className="component-px component-py">
       <div className="mb-8 lg:mb-16 grid md:grid-cols-3 gap-4 md:gap-0">
         <div className="md:col-span-2 flex justify-end">
           <div className="w-full flex items-center border border-gray-300 rounded-full max-w-xl px-4 py-2 space-x-3">
-            <input
-              type="text"
-              placeholder="Search events..."
-              className="w-full focus:outline-none"
-            />
-            <PrimaryButton buttonName="Search" />
+            <form>
+              <input
+                type="text"
+                placeholder="Search events..."
+                className="w-full focus:outline-none"
+                value={serachInput}
+                onChange={handleSearch}
+              />
+              <PrimaryButton buttonName="Search" buttonType="submit" />
+            </form>
           </div>
         </div>
 
@@ -97,44 +141,60 @@ const EventsList: React.FC = () => {
         footer={null}
       >
         <h2 className="text-lg font-semibold mb-4">Categories</h2>
-        <div>
-          <Checkbox className="mb-2">Education</Checkbox>
-          <Checkbox className="mb-2">Environment</Checkbox>
-          <Checkbox className="mb-2">Motorcycles</Checkbox>
-          {/* Add more categories as needed */}
-        </div>
+        {categoryLoading ? (
+          <Loader />
+        ) : (
+          <div>
+            {category?.data?.map((category: any) => (
+              <Checkbox className="mb-2" key={category?.id}>
+                {category?.attributes?.name}
+              </Checkbox>
+            ))}
+          </div>
+        )}
         <h2 className="text-lg font-semibold mt-6 mb-4">Locations</h2>
-        <div>
-          <Checkbox className="mb-2">New York</Checkbox>
-          <Checkbox className="mb-2">Los Angeles</Checkbox>
-          <Checkbox className="mb-2">Chicago</Checkbox>
-          {/* Add more locations as needed */}
-        </div>
+        {locationLoading ? (
+          <Loader />
+        ) : (
+          <div>
+            {location?.data?.map((location: any) => (
+              <Checkbox className="mb-2" key={location?.id}>
+                {location?.attributes?.location}
+              </Checkbox>
+            ))}
+          </div>
+        )}
       </Modal>
 
       <div className="grid lg:grid-cols-5 gap-8">
         <div className="col-span-1 hidden lg:block">
           <div className="border p-4 rounded-lg">
             <h2 className="text-lg font-semibold mb-4">Categories</h2>
-            <div>
-              <Checkbox className="mb-2">Education</Checkbox>
-              <Checkbox className="mb-2">Environment</Checkbox>
-              <Checkbox className="mb-2">Motorcycles</Checkbox>
-              {/* Add more categories as needed */}
-            </div>
+            {categoryLoading ? (
+              <Loader />
+            ) : (
+              <div>
+                {category?.data?.map((category: any) => (
+                  <Checkbox className="mb-2" key={category?.id}>
+                    {category?.attributes?.name}
+                  </Checkbox>
+                ))}
+              </div>
+            )}
             <h2 className="text-lg font-semibold mt-6 mb-4">Locations</h2>
             <div>
-              <Checkbox className="mb-2">New York</Checkbox>
-              <Checkbox className="mb-2">Los Angeles</Checkbox>
-              <Checkbox className="mb-2">Chicago</Checkbox>
-              {/* Add more locations as needed */}
+              {location?.data?.map((location: any) => (
+                <Checkbox className="mb-2" key={location?.id}>
+                  {location?.attributes?.location}
+                </Checkbox>
+              ))}
             </div>
           </div>
         </div>
 
         <div className="col-span-4 grid md:grid-cols-2 xl:grid-cols-3 gap-8">
-          {paginatedEvents.map((event, index) => (
-            <EventCard key={index} event={event} />
+          {event?.data?.map((event: any) => (
+            <EventCard key={event?.id} event={event} />
           ))}
         </div>
       </div>

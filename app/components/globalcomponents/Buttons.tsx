@@ -8,12 +8,14 @@ interface ButtonProps {
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   buttonName: string;
   icon?: ReactElement;
+  buttonType?: "button" | "submit" | "reset";
 }
 
 export const PrimaryButton = ({
   link,
   onClick,
   buttonName,
+  buttonType,
   icon,
 }: ButtonProps) => {
   const buttonProps = {
@@ -34,6 +36,7 @@ export const PrimaryButton = ({
         <button
           onClick={onClick}
           className="bg-primary text-white px-3 py-1.5 lg:px-4 lg:py-2 rounded-full shadow-md hover:text-primary active:scale-95 hover:bg-white border-2 border-primary transition duration-300 text-sm md:text-base flex items-center space-x-2"
+          type={buttonType}
           {...buttonProps}
         >
           {icon && <span>{icon}</span>}

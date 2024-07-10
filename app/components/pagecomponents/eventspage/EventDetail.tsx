@@ -13,22 +13,47 @@ import {
   PrimaryOutlineButton,
 } from "../../globalcomponents/Buttons";
 import { FaBookmark } from "react-icons/fa6";
+import { PUBLIC_URL } from "@/app/config/url";
 
 interface EventDetailProps {
   event: {
-    title: string;
+    user_id: string;
     description: string;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+    title: string;
+    date: string;
     location: string;
-    audience: string;
-    image: string;
-    interested: number; // New property for interested count
+    interested?: string;
+    registered?: string;
+    endDate?: string;
+    audience?: string;
+    banner: {
+      data: {
+        id: number;
+        attributes: {
+          url: string;
+        };
+      };
+    };
+    logo: {
+      data: {
+        id: number;
+        attributes: {
+          url: string;
+        };
+      };
+    };
   };
 }
 
 const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
   const [saved, setSaved] = useState(false); // State to track if event is saved
   const [interested, setInterested] = useState(false); // State to track if user is interested
-  const [interestedCount, setInterestedCount] = useState(event.interested); // State to track the count of interested users
+  const [interestedCount, setInterestedCount] = useState<number>(
+    Number(event?.interested) || 0
+  ); // State to track the count of interested users
 
   const toggleSaved = () => {
     setSaved(!saved); // Toggle the saved state
@@ -49,7 +74,11 @@ const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
       {/* Banner */}
       <div className="">
         <img
-          src={event?.image}
+          src={
+            event?.banner?.data?.attributes?.url
+              ? `${PUBLIC_URL}${event?.banner?.data?.attributes?.url}`
+              : "/logo.png"
+          }
           alt="Banner"
           className="w-full h-48 sm:h-64 md:h-80 object-cover"
         />
@@ -60,28 +89,32 @@ const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
         <div className="flex flex-row gap-4 lg:gap-8">
           <div className="w-40 h-32 md:w-48 md:h-48 -mt-8 md:-mt-16 overflow-hidden rounded-lg shadow-lg border-2 flex items-center justify-center">
             <img
-              src="https://t3.ftcdn.net/jpg/04/53/38/84/360_F_453388401_QAHlQGKY8CLhXeeGV9bWkgAaGzxUY75a.jpg"
+              src={
+                event?.logo?.data?.attributes?.url
+                  ? `${PUBLIC_URL}${event?.logo?.data?.attributes?.url}`
+                  : "/logo.png"
+              }
               alt="Profile Logo"
               className="h-full w-full object-cover"
             />
           </div>
           <div className="pt-2 md:pt-4 lg:pt-8">
             <h1 className="text-xl md:text-2xl lg:text-4xl font-semibold md:mb-2">
-              {event.title}
+              {event?.title}
             </h1>
             <p className="text-sm md:text-base text-gray-600">
-              {event.description}
+              {event?.description}
             </p>
           </div>
         </div>
         <div className=" mt-0 lg:mt-10 space-y-2">
           <div className="flex items-center text-sm md:text-base">
             <FaMapMarkerAlt className="mr-2" />
-            <p>{event.location}</p>
+            <p>{event?.location}</p>
           </div>
           <div className="flex items-center text-sm md:text-base">
             <FaUserFriends className="mr-2" />
-            <p>{event.audience}</p>
+            <p>{event?.registered}</p>
           </div>
         </div>
       </div>
@@ -91,7 +124,7 @@ const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
         <div className="flex flex-row flex-wrap items-center gap-4 mb-8">
           <PrimaryButton
             icon={<FaRegCalendarCheck />}
-            buttonName="Register (510)"
+            buttonName={`Register (${event?.registered})`}
             link="/register"
           />
           <PrimaryOutlineButton
@@ -111,19 +144,7 @@ const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
       <div className="component-px">
         <h3 className="text-lg md:text-2xl font-medium">About this Event</h3>
         <p className="text-sm lg:text-base mt-2 lg:mt-4">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque
-          asperiores voluptatem possimus modi qui vero dignissimos, illum libero
-          omnis, officiis esse eum. Vitae commodi repellat deleniti. Corrupti
-          sed natus officia vitae.
-        </p>
-        <p className="text-sm lg:text-base mt-2 lg:mt-4">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque
-          asperiores voluptatem possimus modi qui vero dignissimos, illum libero
-          omnis, officiis esse eum. Vitae commodi repellat deleniti. Corrupti
-          perferendis adipisci quod ea exercitationem odio ipsa praesentium modi
-          consectetur. Ab illo deleniti in, id, deserunt beatae libero sapiente
-          officiis, ut fuga vero quos officia. Suscipit beatae dolores molestias
-          sed natus officia vitae.
+          {event?.description}
         </p>
       </div>
     </section>
