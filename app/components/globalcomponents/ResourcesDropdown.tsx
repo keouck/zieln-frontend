@@ -73,7 +73,7 @@ export default function ResourcesDropDown() {
                 </div>
                 <div className="mt-2">
                   <p className="text-gray-800 dark:text-neutral-200">
-                    Zieln empowers students by providing seamless access to
+                    Outsmash empowers students by providing seamless access to
                     information about extra-curricular activities.
                   </p>
                   <p className="mt-3 inline-flex items-center gap-x-1 text-sm text-gray-700 decoration-2 hover:underline font-medium ">

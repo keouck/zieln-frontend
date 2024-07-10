@@ -3,12 +3,12 @@ import Mentors from "@/app/components/pagecomponents/mentorspage/Mentors";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Mentors | ZIELN",
-  keywords: "zieln, event, event listing, students, mentors",
+  title: "Mentors | Outsmash",
+  keywords: "Outsmash, event, event listing, students, mentors",
   openGraph: {
-    title: "Zieln",
+    title: "Outsmash",
     description:
-      "Our mission at Zieln is to empower students by providing seamless access to information about extra-curricular and co-curricular activities.",
+      "Our mission at Outsmash is to empower students by providing seamless access to information about extra-curricular and co-curricular activities.",
     images: "/images/og-landing.png",
   },
 };
