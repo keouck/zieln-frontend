@@ -50,14 +50,16 @@ const MentorProfile = ({ mentor }: any) => {
             <div className="my-4">
               <h3 className="font-medium mb-2 text-sm lg:text-base">Skills</h3>
               <ul className="text-gray-600 flex flex-wrap gap-3">
-                {mentor.attributes.keyword.map((keyword, index) => (
-                  <li
-                    key={index}
-                    className="px-3 py-1 border rounded-full text-xs lg:text-sm"
-                  >
-                    {keyword}
-                  </li>
-                ))}
+                {mentor.attributes.keyword.map(
+                  (keyword: string, index: number) => (
+                    <li
+                      key={index}
+                      className="px-3 py-1 border rounded-full text-xs lg:text-sm"
+                    >
+                      {keyword}
+                    </li>
+                  )
+                )}
               </ul>
             </div>
             <hr />
@@ -96,8 +98,12 @@ const MentorProfile = ({ mentor }: any) => {
         </div>
         <div className="col-span-3 py-4 lg:py-8">
           <div>
-            <h2 className="text-lg lg:text-2xl font-bold">{mentor.attributes.name}</h2>
-            <p className="text-gray-500">{mentor.attributes.shortDescription}</p>
+            <h2 className="text-lg lg:text-2xl font-bold">
+              {mentor.attributes.name}
+            </h2>
+            <p className="text-gray-500">
+              {mentor.attributes.shortDescription}
+            </p>
           </div>
         </div>
       </div>

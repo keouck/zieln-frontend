@@ -4,6 +4,8 @@ import { DatePicker, Select } from "antd";
 import { useState } from "react";
 import BlogCard from "./BlogCard";
 import PaginationComponent from "../../globalcomponents/Pagination";
+import useFetch from "@/app/hooks/useFetch";
+import Loader from "../../globalcomponents/Loader";
 
 const { Option } = Select;
 
@@ -12,9 +14,25 @@ export default function BlogsList() {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [sortOrder, setSortOrder] = useState<string>("latest");
 
+  const [filterBlogs, setFilterBlogs] = useState<any[]>([]);
+
   // Pagination state
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
+
+  const {
+    data: blogs,
+    loading,
+    error,
+  } = useFetch<any>("/blogs?populate=*", true);
+  const {
+    data: blogCategories,
+    loading: blogCategoriesLoading,
+    error: blogCategoriesError,
+  } = useFetch<any>("/blog-categories", true);
+
+  if (loading || blogCategoriesLoading) return <Loader />;
+  if (error || blogCategoriesError) return;
 
   const handleCategoryChange = (value: string | null) => {
     setSelectedCategory(value === "all" ? null : value);
@@ -31,6 +49,16 @@ export default function BlogsList() {
 
   const handleSortOrderChange = (value: string) => {
     setSortOrder(value);
+
+    setFilterBlogs(
+      blogs?.data?.filter((blog: any) => {
+        let categoryMatch = selectedCategory
+          ? blog.category === selectedCategory
+          : true;
+        let dateMatch = selectedDate ? blog.date === selectedDate : true;
+        return categoryMatch && dateMatch;
+      })
+    );
   };
 
   // Filter blogs
@@ -78,10 +106,11 @@ export default function BlogsList() {
             onChange={handleCategoryChange}
             className="w-48"
           >
-            <Option value="all">All</Option>
-            <Option value="Events">Events</Option>
-            <Option value="Tips and Tricks">Tips and Tricks</Option>
-            <Option value="business">Business</Option>
+            {blogCategories?.data?.map((category: any) => (
+              <Option key={category?.id} value={category?.attributes?.Category}>
+                {category?.attributes?.Category}
+              </Option>
+            ))}
           </Select>
           <DatePicker.RangePicker onChange={handleDateChange} />
           <Select
@@ -96,18 +125,28 @@ export default function BlogsList() {
         </div>
       </div>
 
-      {paginatedBlogs.length > 0 ? (
+      {blogs?.data?.length > 0 ? (
         <div className="component-px pb-8 lg:pb-16 grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
-          {paginatedBlogs.map((blog, index) => (
+          {blogs?.data?.map((blog: any) => (
             <BlogCard
-              key={index}
+              key={blog?.id}
               id={blog.id}
-              category={blog.category}
-              title={blog.title}
-              content={blog.content}
-              date={blog.date}
-              image={blog.image}
-              writer={blog?.writer}
+              category={blog?.blog_categories}
+              title={blog?.attributes?.Title}
+              content={blog?.attributes?.description}
+              date={new Date(blog?.attributes?.publishedAt).toLocaleString(
+                "en-US",
+                {
+                  year: "numeric",
+                  month: "numeric",
+                  day: "numeric",
+                }
+              )}
+              image={
+                blog?.attributes?.Thumbnail?.data?.attributes?.url ||
+                "/logo.png"
+              }
+              writer={blog?.attributes?.author || "Zieln"}
             />
           ))}
         </div>

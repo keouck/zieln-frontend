@@ -8,7 +8,7 @@ import { FacebookShareButton, TwitterShareButton } from "react-share";
 
 interface BlogCardProps {
   id: number;
-  category: string;
+  category: string[];
   title: string;
   content: string;
   date: string;
@@ -60,7 +60,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
         <div className="flex items-center gap-x-2">
           <img
             className="size-8 rounded-full"
-            src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=320&h=320&q=80"
+            src="/logo.png"
             alt="Image Description"
           />
           <div>

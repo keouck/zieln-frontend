@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Avatar } from "antd";
 import PaginationComponent from "../../globalcomponents/Pagination";
 import useFetch from "@/app/hooks/useFetch";
+import Loader from "../../globalcomponents/Loader";
 
 // Pagination settings
 const PAGE_SIZE_OPTIONS = [5, 10, 15, 20];
@@ -16,12 +17,14 @@ const Mentors = () => {
   const [mentorData, setMentorData] = useState<any[]>([]);
   const [pageSize, setPageSize] = useState(10);
 
-
-  const { data } = useFetch("/mentors?populate=socialLinks,image", true);
+  const { data, loading } = useFetch(
+    "/mentors?populate=socialLinks,image",
+    true
+  );
 
   useEffect(() => {
-    if(data) setMentorData((data as any).data);
-  }, [data])
+    if (data) setMentorData((data as any).data);
+  }, [data]);
 
   const filteredMentors = mentorData.filter((mentor) =>
     mentor.attributes.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -36,6 +39,8 @@ const Mentors = () => {
     setCurrentPage(page);
     setPageSize(pageSize);
   };
+
+  if (loading) return <Loader />;
 
   return (
     <section className="component-px component-py bg-gray-50 space-y-8 lg:space-y-12">
@@ -103,18 +108,23 @@ const Mentors = () => {
                   />
                 </div>
                 <div className="flex items-center justify-center -mt-10">
-                  <Avatar src={mentor.attributes.image.data.attributes.url} size={90} />
+                  <Avatar
+                    src={mentor.attributes.image.data.attributes.url}
+                    size={90}
+                  />
                 </div>
                 <div className="p-2 space-y-4 pb-6">
                   <h2 className="text-center font-medium lg:text-lg">
                     {mentor.attributes.name}
                   </h2>
                   <p className="text-center divide-x divide-black line-clamp-1">
-                    {mentor.attributes.keyword?.map((kw, index) => (
-                      <span key={index + "_keyword_id"} className="px-2">
-                        {kw}
-                      </span>
-                    ))}
+                    {mentor.attributes.keyword?.map(
+                      (kw: string, index: number) => (
+                        <span key={index + "_keyword_id"} className="px-2">
+                          {kw}
+                        </span>
+                      )
+                    )}
                   </p>
                   <div className="flex items-end justify-center">
                     <Link href={`/mentors/${mentor.id}`}>
