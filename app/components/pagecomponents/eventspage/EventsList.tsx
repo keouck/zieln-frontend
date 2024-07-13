@@ -32,7 +32,7 @@ const EventsList: React.FC = () => {
     data: event,
     loading: eventLoading,
     error: eventError,
-  } = useFetch("/events?populate=*", true);
+  } = useFetch<any>("/events?populate=*", true);
 
   // fetch categories
   const {

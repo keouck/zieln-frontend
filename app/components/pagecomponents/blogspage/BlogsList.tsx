@@ -1,7 +1,6 @@
 "use client";
-import { blogsData } from "@/app/data/blogsData";
+import { useState, useEffect } from "react";
 import { DatePicker, Select } from "antd";
-import { useState } from "react";
 import BlogCard from "./BlogCard";
 import PaginationComponent from "../../globalcomponents/Pagination";
 import useFetch from "@/app/hooks/useFetch";
@@ -13,8 +12,7 @@ export default function BlogsList() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [sortOrder, setSortOrder] = useState<string>("latest");
-
-  const [filterBlogs, setFilterBlogs] = useState<any[]>([]);
+  const [filteredBlogs, setFilteredBlogs] = useState<any[]>([]);
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -24,15 +22,54 @@ export default function BlogsList() {
     data: blogs,
     loading,
     error,
-  } = useFetch<any>("/blogs?populate=*", true);
+  } = useFetch<any>(`/blogs?populate=*`, true);
+
   const {
     data: blogCategories,
     loading: blogCategoriesLoading,
     error: blogCategoriesError,
   } = useFetch<any>("/blog-categories", true);
 
-  if (loading || blogCategoriesLoading) return <Loader />;
-  if (error || blogCategoriesError) return;
+  useEffect(() => {
+    if (blogs?.data) {
+      let filtered = blogs.data;
+
+      if (selectedCategory) {
+        filtered = filtered.filter((blog: any) =>
+          blog.attributes.blog_categories.data.some(
+            (category: any) => category.attributes.Category === selectedCategory
+          )
+        );
+      }
+
+      if (selectedDate) {
+        const selectedDateTime = new Date(selectedDate).getTime();
+        filtered = filtered.filter(
+          (blog: any) =>
+            /// should display blogs published till the end of the selected date
+            new Date(blog.attributes.publishedAt).getTime() <=
+            selectedDateTime + 86400000
+        );
+      }
+
+      let sorted = [...filtered];
+      if (sortOrder === "latest") {
+        sorted.sort(
+          (a, b) =>
+            new Date(b.attributes.publishedAt).getTime() -
+            new Date(a.attributes.publishedAt).getTime()
+        );
+      } else {
+        sorted.sort(
+          (a, b) =>
+            new Date(a.attributes.publishedAt).getTime() -
+            new Date(b.attributes.publishedAt).getTime()
+        );
+      }
+
+      setFilteredBlogs(sorted);
+    }
+  }, [sortOrder, blogs, selectedCategory, selectedDate]);
 
   const handleCategoryChange = (value: string | null) => {
     setSelectedCategory(value === "all" ? null : value);
@@ -49,38 +86,10 @@ export default function BlogsList() {
 
   const handleSortOrderChange = (value: string) => {
     setSortOrder(value);
-
-    setFilterBlogs(
-      blogs?.data?.filter((blog: any) => {
-        let categoryMatch = selectedCategory
-          ? blog.category === selectedCategory
-          : true;
-        let dateMatch = selectedDate ? blog.date === selectedDate : true;
-        return categoryMatch && dateMatch;
-      })
-    );
   };
 
-  // Filter blogs
-  const filteredBlogs = blogsData.filter((blog) => {
-    let categoryMatch = selectedCategory
-      ? blog.category === selectedCategory
-      : true;
-    let dateMatch = selectedDate ? blog.date === selectedDate : true;
-    return categoryMatch && dateMatch;
-  });
-
-  // Sort blogs
-  const sortedBlogs = filteredBlogs.sort((a, b) => {
-    if (sortOrder === "latest") {
-      return new Date(b.date).getTime() - new Date(a.date).getTime();
-    } else {
-      return new Date(a.date).getTime() - new Date(b.date).getTime();
-    }
-  });
-
   // Pagination logic
-  const paginatedBlogs = sortedBlogs.slice(
+  const paginatedBlogs = filteredBlogs.slice(
     (currentPage - 1) * pageSize,
     currentPage * pageSize
   );
@@ -89,6 +98,9 @@ export default function BlogsList() {
     setCurrentPage(page);
     if (pageSize) setPageSize(pageSize);
   };
+
+  if (loading || blogCategoriesLoading) return <Loader />;
+  if (error || blogCategoriesError) return;
 
   return (
     <section>
@@ -106,13 +118,20 @@ export default function BlogsList() {
             onChange={handleCategoryChange}
             className="w-48"
           >
+            <Option value="all">All</Option>
             {blogCategories?.data?.map((category: any) => (
               <Option key={category?.id} value={category?.attributes?.Category}>
                 {category?.attributes?.Category}
               </Option>
             ))}
           </Select>
-          <DatePicker.RangePicker onChange={handleDateChange} />
+          <DatePicker
+            onChange={handleDateChange}
+            // only allow dates before today
+            disabledDate={(current) =>
+              current && current.isAfter(new Date(Date.now()))
+            }
+          />
           <Select
             placeholder="Sort By"
             defaultValue="latest"
@@ -125,13 +144,15 @@ export default function BlogsList() {
         </div>
       </div>
 
-      {blogs?.data?.length > 0 ? (
+      {filteredBlogs.length > 0 ? (
         <div className="component-px pb-8 lg:pb-16 grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
-          {blogs?.data?.map((blog: any) => (
+          {paginatedBlogs.map((blog: any) => (
             <BlogCard
               key={blog?.id}
               id={blog.id}
-              category={blog?.blog_categories}
+              category={blog?.attributes?.blog_categories?.data
+                .map((cat: any) => cat.attributes.Category)
+                .join(", ")}
               title={blog?.attributes?.Title}
               content={blog?.attributes?.description}
               date={new Date(blog?.attributes?.publishedAt).toLocaleString(
