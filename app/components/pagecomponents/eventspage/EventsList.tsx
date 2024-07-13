@@ -39,14 +39,14 @@ const EventsList: React.FC = () => {
     data: category,
     loading: categoryLoading,
     error: categoryError,
-  } = useFetch("/event-categories", true);
+  } = useFetch<any>("/event-categories", true);
 
   // fetch location
   const {
     data: location,
     loading: locationLoading,
     error: locationError,
-  } = useFetch("/event-locations", true);
+  } = useFetch<any>("/event-locations", true);
 
   useEffect(() => {
     if (event?.data) {
