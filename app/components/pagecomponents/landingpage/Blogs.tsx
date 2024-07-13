@@ -1,11 +1,18 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import { blogsData } from "@/app/data/blogsData";
 import React from "react";
 import BlogCard from "../blogspage/BlogCard";
 import Link from "next/link";
+import useFetch from "@/app/hooks/useFetch";
+import Loader from "../../globalcomponents/Loader";
 
 export default function Blogs() {
+  const {
+    data: blogs,
+    loading,
+    error,
+  } = useFetch<any>(`/blogs?populate=*&sort=publishedAt:desc`, true);
+
   return (
     <section className="component-py component-px border-b">
       <div className="text-center mb-10 lg:mb-14">
@@ -16,18 +23,35 @@ export default function Blogs() {
       </div>
 
       <div className="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
-        {blogsData.slice(0, 3).map((blog, index) => (
-          <BlogCard
-            key={index}
-            id={blog.id}
-            category={blog.category}
-            title={blog.title}
-            content={blog.content}
-            date={blog.date}
-            image={blog.image}
-            writer={blog?.writer}
-          />
-        ))}
+        {loading ? (
+          <Loader />
+        ) : (
+          blogs?.data &&
+          blogs?.data?.slice(0, 3).map((blog: any) => (
+            <BlogCard
+              key={blog?.id}
+              id={blog?.id}
+              category={
+                blog?.attributes?.blog_categories?.data[0]?.attributes?.Category
+              }
+              title={blog?.attributes?.Title}
+              content={blog?.attributes?.description}
+              date={new Date(blog?.attributes?.publishedAt).toLocaleString(
+                "en-US",
+                {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                }
+              )}
+              image={
+                blog?.attributes?.Thumbnail?.data?.attributes?.url ||
+                "/logo.png"
+              }
+              writer={blog?.writer || "Zieln"}
+            />
+          ))
+        )}
       </div>
 
       <div className="mt-12 text-center">
