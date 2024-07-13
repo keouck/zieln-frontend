@@ -11,17 +11,30 @@ import { useRouter } from "next/navigation";
 
 type TRole = "STUDENT" | "ORGANIZATION";
 
-const Home: React.FC = () => {
-  const { user } = useUser();
+const Dashboard: React.FC = () => {
+  const { user, isLoaded, isSignedIn } = useUser();
   const [selectedRole, setSelectedRole] = useState<TRole | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
-    if (user && user.unsafeMetadata.role) {
-      setSelectedRole(user.unsafeMetadata.role as TRole);
+    if (!isLoaded) return;
+
+    if (!isSignedIn) {
+      router.push("/sign-in");
+      return;
     }
-  }, [user]);
+
+    if (user?.unsafeMetadata?.role) {
+      setSelectedRole(user.unsafeMetadata.role as TRole);
+    } else {
+      router.push("/dashboard");
+    }
+  }, [isLoaded, isSignedIn, user, router]);
+
+  const handleRoleSelection = (role: TRole) => {
+    setSelectedRole(role);
+  };
 
   const handleContinueClick = () => {
     if (selectedRole) {
@@ -45,10 +58,15 @@ const Home: React.FC = () => {
     }
   };
 
+  // Show loader until user data is loaded
+  if (!isLoaded || !isSignedIn) {
+    return <div>Loading...</div>; // Replace with your own loading indicator if necessary
+  }
+
   return (
     <PageLayout>
       <section className="component-px bg-gray-100 flex flex-col items-center justify-center min-h-screen text-center space-y-8 lg:space-y-16">
-        {!user?.unsafeMetadata.role ? (
+        {!user?.unsafeMetadata?.role ? (
           <>
             {/* Header  */}
             <div>
@@ -67,7 +85,7 @@ const Home: React.FC = () => {
                 {(["STUDENT", "ORGANIZATION"] as TRole[]).map((role) => (
                   <div
                     key={role}
-                    onClick={() => setSelectedRole(role)}
+                    onClick={() => handleRoleSelection(role)}
                     className={`relative cursor-pointer p-6 lg:p-12 flex justify-center items-center rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ${
                       selectedRole === role
                         ? "border-2 border-primary"
@@ -95,7 +113,7 @@ const Home: React.FC = () => {
                 ))}
               </div>
             </div>
-            {/* Continue BUtton  */}
+            {/* Continue Button  */}
             <PrimaryButton
               buttonName="Continue"
               onClick={handleContinueClick}
@@ -124,4 +142,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default Dashboard;

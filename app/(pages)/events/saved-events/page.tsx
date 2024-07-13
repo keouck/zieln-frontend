@@ -5,12 +5,12 @@ import SavedEventsList from "@/app/components/pagecomponents/eventspage/SavedEve
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "ZIELN | Event",
-  keywords: "zieln, event, event listing, students",
+  title: "Outsmash | Event",
+  keywords: "Outsmash, event, event listing, students",
   openGraph: {
-    title: "Zieln",
+    title: "Outsmash",
     description:
-      "Our mission at Zieln is to empower students by providing seamless access to information about extra-curricular and co-curricular activities.",
+      "Our mission at Outsmash is to empower students by providing seamless access to information about extra-curricular and co-curricular activities.",
     images: "/images/og-landing.png",
   },
 };

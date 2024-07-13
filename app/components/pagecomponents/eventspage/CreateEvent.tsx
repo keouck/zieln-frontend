@@ -2,7 +2,7 @@
 
 import { nextStepsData } from "@/app/data/nextStepsData.";
 import { DatePicker, Form, Input, Timeline } from "antd";
-import dayjs, { Dayjs } from "dayjs";
+import { Dayjs } from "dayjs";
 import Image from "next/image";
 import { useState } from "react";
 

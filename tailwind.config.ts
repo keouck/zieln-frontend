@@ -1,3 +1,4 @@
+import { Lora } from "next/font/google";
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -9,6 +10,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        lora: ['Lora', 'serif']
+      },
       animation: {
         marquee: "marquee var(--marquee-duration) linear infinite",
       },

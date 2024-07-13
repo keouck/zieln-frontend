@@ -3,15 +3,17 @@ import { UserButton, useClerk } from "@clerk/nextjs";
 import { Drawer, Dropdown, Menu } from "antd";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FiMenu } from "react-icons/fi";
 import { GrMenu } from "react-icons/gr";
 import { PrimaryButton, PrimaryOutlineButton } from "./Buttons";
-import ResourcesDropDown from "./ResourcesDropdown";
+import LoginRequiredAlert from "./LoginRequiredAlert";
 
 const Header = () => {
+  const router = useRouter();
   const { user } = useClerk();
+  console.log(user);
 
   const [open, setOpen] = useState(false);
 
@@ -46,6 +48,10 @@ const Header = () => {
     return () => window.removeEventListener("scroll", scrollHandler);
   }, [top]);
 
+  const handleCreateEvent = () => {
+    router.push("/create-event"); // Navigate to the Create Event page
+  };
+
   const menu = (
     <Menu>
       <Menu.Item key="0">
@@ -62,13 +68,7 @@ const Header = () => {
     >
       <div className="component-px flex items-center justify-between">
         <Link href="/">
-          <Image
-            src="/logo.png"
-            alt="Zieln Logo"
-            width={100}
-            height={100}
-            className="w-16 lg:w-20"
-          />
+          <h1 className="text-2xl lg:text-4xl font-bold font-lora">Outsmash</h1>
         </Link>
 
         <div className="hidden lg:flex gap-x-4">
@@ -84,10 +84,14 @@ const Header = () => {
           <div className="buttons flex items-center space-x-4">
             {!user ? (
               <>
-                <PrimaryOutlineButton
-                  link="/create-event"
-                  buttonName="+ Create Event"
-                />
+                <div className="hidden lg:block">
+                  <LoginRequiredAlert
+                    action={handleCreateEvent}
+                    buttonContent={
+                      <PrimaryOutlineButton buttonName="+ Create Event" />
+                    }
+                  />
+                </div>
                 <PrimaryButton link="/sign-in" buttonName="Log in" />
               </>
             ) : (
@@ -113,7 +117,7 @@ const Header = () => {
             <GrMenu size={24} />
           </button>
           <Drawer
-            title={<h1 className="text-xl font-bold">Zieln</h1>}
+            title={<h1 className="text-xl font-bold">Outsmash</h1>}
             onClose={onClose}
             open={open}
             className="lg:hidden"
