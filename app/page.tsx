@@ -10,6 +10,7 @@ import Testimonials from "./components/pagecomponents/landingpage/Testimonials";
 import Blogs from "./components/pagecomponents/landingpage/Blogs";
 import { Bounce, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Stats from "./components/pagecomponents/landingpage/Stats";
 
 export const metadata: Metadata = {
   title: "Outsmash",
@@ -28,7 +29,8 @@ const Home: React.FC = () => {
       <HeroSection />
       <Partners />
       <LatestEvents />
-      <Testimonials />
+      <Stats />
+      {/* <Testimonials /> */}
       <Blogs />
       <FAQs />
       <Contact />
