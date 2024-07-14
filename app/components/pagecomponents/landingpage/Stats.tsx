@@ -1,4 +1,7 @@
+"use client";
+import useFetch from "@/app/hooks/useFetch";
 import React from "react";
+import Loader from "../../globalcomponents/Loader";
 
 const statsData = [
   { value: "260+", label: "Active Users" },
@@ -20,28 +23,39 @@ const StatCard: React.FC<{ value: string; label: string }> = ({
 );
 
 export default function Stats() {
+  const {
+    data: stats,
+    loading,
+    error,
+  } = useFetch<any>("/stats?populate=*", true);
+
+  console.log(stats);
+
   return (
-    <section className="bg-gray-100 my-8 lg:my-16 component-px">
-      <div className="component-py rounded-2xl flex flex-col items-center gap-16 ">
-        <div className="text-center lg:max-w-xl">
-          <h2 className="component-heading">Our Stats</h2>
-          <p className="lg:text-lg mt-2">
-            Empowering students and professionals with exceptional educational
-            and career opportunities.
-          </p>
-        </div>
-        <div className="w-full lg:w-4/5">
-          <div className="flex flex-col gap-10 lg:gap-0 lg:flex-row lg:justify-between">
-            {statsData.map((stat) => (
-              <StatCard
-                key={stat.label}
-                value={stat.value}
-                label={stat.label}
-              />
-            ))}
+    !loading && (
+      <section className="bg-gray-100 my-8 lg:my-16 component-px">
+        <div className="component-py rounded-2xl flex flex-col items-center gap-16 ">
+          <div className="text-center lg:max-w-xl">
+            <h2 className="component-heading">
+              {stats?.data?.[0].attributes?.title}
+            </h2>
+            <p className="lg:text-lg mt-2">
+              {stats?.data?.[0].attributes?.description}
+            </p>
+          </div>
+          <div className="w-full lg:w-4/5">
+            <div className="flex flex-col gap-10 lg:gap-0 lg:flex-row lg:justify-between">
+              {stats?.data?.[0].attributes?.statistics?.map((stat: any) => (
+                <StatCard
+                  key={stat?.id}
+                  value={stat?.number}
+                  label={stat?.title}
+                />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    )
   );
 }
