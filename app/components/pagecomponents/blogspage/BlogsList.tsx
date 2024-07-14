@@ -158,9 +158,9 @@ export default function BlogsList() {
               date={new Date(blog?.attributes?.publishedAt).toLocaleString(
                 "en-US",
                 {
-                  year: "numeric",
-                  month: "numeric",
+                  month: "short",
                   day: "numeric",
+                  year: "numeric",
                 }
               )}
               image={
