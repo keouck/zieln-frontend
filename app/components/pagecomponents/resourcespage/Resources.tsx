@@ -1,10 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import { resourcesData } from "@/app/data/resourcesData";
+import { IResource } from "@/@types/resources.types";
+import useFetch from "@/app/hooks/useFetch";
 import { Select } from "antd";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import Loader from "../../globalcomponents/Loader";
 
 const { Option } = Select;
 
@@ -22,6 +24,18 @@ const Resources = () => {
   // State for search term and sort order
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState("latest");
+  const [resourcesData, setResourcesData] = useState<IResource[]>([]);
+
+  const { data, loading, error } = useFetch(
+    "/resources?populate=image,resources",
+    true
+  );
+
+  useEffect(() => {
+    if (data) setResourcesData((data as any).data);
+  }, [data]);
+
+  if (loading) return <Loader />;
 
   //   const { user } = useUser();
   //   // Check if the user is a super admin
@@ -40,15 +54,21 @@ const Resources = () => {
 
   // Filter resources based on search term
   const filteredResources = resourcesData.filter((resource) =>
-    resource.title.toLowerCase().includes(searchTerm.toLowerCase())
+    resource.attributes.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   // Sort resources based on sort order
   const sortedResources = filteredResources.sort((a, b) => {
     if (sortOrder === "latest") {
-      return new Date(b.date).getTime() - new Date(a.date).getTime();
+      return (
+        new Date(b.attributes.updatedAt).getTime() -
+        new Date(a.attributes.updatedAt).getTime()
+      );
     } else {
-      return new Date(a.date).getTime() - new Date(b.date).getTime();
+      return (
+        new Date(a.attributes.updatedAt).getTime() -
+        new Date(b.attributes.updatedAt).getTime()
+      );
     }
   });
 
@@ -80,19 +100,22 @@ const Resources = () => {
         {sortedResources.length === 0 ? (
           <p className=" text-gray-500">No resources found.</p>
         ) : (
+          !loading &&
           sortedResources.map((resource) => (
             <Link href={`/resources/${resource.id}`} key={resource.id}>
               <div className="border rounded-lg p-4 cursor-pointer hover:bg-gray-50 transition duration-300 relative">
                 <div className="flex items-center justify-center mb-4">
                   <img
-                    src={resource.image}
-                    alt={resource.title}
+                    src={resource.attributes.image.data.attributes.url}
+                    alt={resource.attributes.title}
                     className="w-full h-40 object-cover rounded"
                   />
                 </div>
-                <h2 className="text-lg font-medium mb-2">{resource.title}</h2>
+                <h2 className="text-lg font-medium mb-2">
+                  {resource.attributes.title}
+                </h2>
                 <p className="text-sm text-gray-600 line-clamp-2">
-                  {resource.description}
+                  {resource.attributes.description}
                 </p>
               </div>
             </Link>

@@ -1,20 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 // components/pagecomponents/resourcespage/ResourceDetail.tsx
 "use client";
+import { IResource } from "@/@types/resources.types";
+import { Button } from "antd";
+import Link from "next/link";
 import React from "react";
 
-interface Resource {
-  id: number;
-  title: string;
-  description: string;
-  date: string;
-  image?: string; // Optional
-  video?: string; // Optional
-  link?: string; // Optional
-}
-
 interface ResourceDetailProps {
-  resource: Resource | undefined;
+  resource: IResource | undefined;
 }
 
 const ResourceDetail = ({ resource }: ResourceDetailProps) => {
@@ -29,54 +22,59 @@ const ResourceDetail = ({ resource }: ResourceDetailProps) => {
   return (
     <section className="component-px component-py bg-gray-50">
       <div className="max-w-4xl mx-auto ">
+        <Link href="/resources">
+          <Button type="default" className="mb-6 font-semibold">
+            Go Back
+          </Button>
+        </Link>
+
         <h1 className="text-xl lg:text-3xl font-medium mb-6 text-gray-800">
-          {resource.title}
+          {resource.attributes.title}
         </h1>
 
-        <p className="text-lg mb-6 text-gray-700">{resource.description}
-           
+        <p className="text-lg mb-6 text-gray-700">
+          {resource.attributes.description}
         </p>
 
-        {resource.image && (
+        {resource.attributes.image && (
           <div className="mb-6">
             <img
-              src={resource.image}
+              src={resource.attributes.image.data.attributes.url}
               alt="Additional content"
               className="w-full h-64 object-cover rounded-md shadow-md"
             />
           </div>
         )}
 
-        {resource.video && (
-          <div className="mb-6">
-            <h2 className="text-lg lg:text-xl font-semibold mb-3 text-gray-800">
-              Videos
-            </h2>
-            <video
-              controls
-              className="w-full h-64 object-cover rounded-md shadow-md"
-            >
-              <source src={resource.video} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </div>
-        )}
+        <div className="mb-6">
+          <h2 className="text-lg lg:text-xl font-semibold mb-3 text-gray-800">
+            Resource Links
+          </h2>
 
-        {resource.link && (
-          <div className="mb-6">
-            <h2 className="text-lg lg:text-xl font-semibold mb-3 text-gray-800">
-              Additional Resources
-            </h2>
-            <a
-              href={resource.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500 underline hover:text-blue-700"
-            >
-              {resource.link}
-            </a>
+          <div className="flex flex-col gap-y-5">
+            {resource.attributes.resources.map((item, key) => {
+              return (
+                <div
+                  key={key + "_resouce_link_item"}
+                  className="flex flex-col border-b border-gray-400"
+                >
+                  <div>{item.description}</div>
+
+                  <div className="my-2">
+                    <span className="font-semibold">Link here:</span>{" "}
+                    <Link
+                      href={item.link}
+                      target="_blank"
+                      className="text-blue-600"
+                    >
+                      {item.link}
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
           </div>
-        )}
+        </div>
       </div>
     </section>
   );
