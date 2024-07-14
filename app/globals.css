@@ -167,3 +167,7 @@
 .ant-drawer{
   font-family: inherit !important;
 }
+
+.swiper-pagination-bullet-active {
+  background-color: #000 !important;
+}
