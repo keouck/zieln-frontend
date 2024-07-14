@@ -1,28 +1,33 @@
 "use client";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { UserButton, useClerk } from "@clerk/nextjs";
 import { Drawer, Dropdown, Menu } from "antd";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { FiMenu } from "react-icons/fi";
+import { FiMenu, FiSearch } from "react-icons/fi";
 import { GrMenu } from "react-icons/gr";
 import { PrimaryButton, PrimaryOutlineButton } from "./Buttons";
 import LoginRequiredAlert from "./LoginRequiredAlert";
 
-const Header = () => {
+interface NavItemProps {
+  link: string;
+  name: string;
+}
+
+const Header: React.FC = () => {
   const router = useRouter();
   const { user } = useClerk();
-  console.log(user);
 
   const [open, setOpen] = useState(false);
+  const [top, setTop] = useState(true);
 
-  const showDrawer = () => {
+  const showDrawer = useCallback(() => {
     setOpen(true);
-  };
-  const onClose = () => {
+  }, []);
+
+  const onClose = useCallback(() => {
     setOpen(false);
-  };
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -32,13 +37,10 @@ const Header = () => {
     };
 
     window.addEventListener("resize", handleResize);
-    // Check the screen size initially
     handleResize();
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  const [top, setTop] = useState(true);
 
   useEffect(() => {
     const scrollHandler = () => {
@@ -46,18 +48,21 @@ const Header = () => {
     };
     window.addEventListener("scroll", scrollHandler);
     return () => window.removeEventListener("scroll", scrollHandler);
-  }, [top]);
+  }, []);
 
-  const handleCreateEvent = () => {
-    router.push("/create-event"); // Navigate to the Create Event page
-  };
+  const handleCreateEvent = useCallback(() => {
+    router.push("/create-event");
+  }, [router]);
 
-  const menu = (
-    <Menu>
-      <Menu.Item key="0">
-        <Link href={`/profile/${user?.username}`}>View Profile</Link>
-      </Menu.Item>
-    </Menu>
+  const menu = useMemo(
+    () => (
+      <Menu>
+        <Menu.Item key="0">
+          <Link href={`/profile/${user?.username}`}>View Profile</Link>
+        </Menu.Item>
+      </Menu>
+    ),
+    [user?.username]
   );
 
   return (
@@ -67,28 +72,32 @@ const Header = () => {
       }`}
     >
       <div className="component-px flex items-center justify-between">
-        <Link href="/">
-          <h1 className="text-2xl lg:text-4xl font-bold font-lora">Outsmash</h1>
-        </Link>
+        <div className="flex items-center gap-x-4">
+          <Link href="/">
+            <h1 className="text-2xl lg:text-4xl font-bold font-lora">
+              Outsmash
+            </h1>
+          </Link>
 
-        <div className="hidden lg:flex gap-x-4">
-          <NavItem name="About" link="/about" />
-          <NavItem name="Events" link="/events" />
-          <NavItem name="Resources" link="/resources" />
-          <NavItem name="Mentorship" link="/mentors" />
-          <NavItem name="Blogs" link="/blogs" />
-          <NavItem name="Contact us" link="/contact" />
+          <div className="hidden lg:block">
+            <SearchBar />
+          </div>
         </div>
 
         <div className="flex items-center space-x-4">
           <div className="buttons flex items-center space-x-4">
+            <div className="hidden lg:flex gap-x-4">
+              {navItems.map((item) => (
+                <NavItem key={item.link} name={item.name} link={item.link} />
+              ))}
+            </div>
             {!user ? (
               <>
                 <div className="hidden lg:block">
                   <LoginRequiredAlert
                     action={handleCreateEvent}
                     buttonContent={
-                      <PrimaryOutlineButton buttonName="+ Create Event" />
+                      <PrimaryOutlineButton buttonName="+ Post Opportunity" />
                     }
                   />
                 </div>
@@ -96,10 +105,12 @@ const Header = () => {
               </>
             ) : (
               <>
-                <PrimaryOutlineButton
-                  link="/create-event"
-                  buttonName="+ Create Event"
-                />
+                <div className="hidden lg:block">
+                  <PrimaryOutlineButton
+                    link="/create-event"
+                    buttonName="+ Create Event"
+                  />
+                </div>
                 <UserButton />
                 <Dropdown
                   overlay={menu}
@@ -112,7 +123,6 @@ const Header = () => {
             )}
           </div>
 
-          {/* For small screen */}
           <button onClick={showDrawer} className="lg:hidden">
             <GrMenu size={24} />
           </button>
@@ -122,12 +132,9 @@ const Header = () => {
             open={open}
             className="lg:hidden"
           >
-            <NavItem name="About" link="/about" />
-            <NavItem name="Events" link="/events" />
-            <NavItem name="Resources" link="/resources" />
-            <NavItem name="Mentorship" link="/mentors" />
-            <NavItem name="Blogs" link="/blogs" />
-            <NavItem name="Contact us" link="/contact" />
+            {navItems.map((item) => (
+              <NavItem key={item.link} name={item.name} link={item.link} />
+            ))}
           </Drawer>
         </div>
       </div>
@@ -135,18 +142,24 @@ const Header = () => {
   );
 };
 
-export default Header;
+const navItems: NavItemProps[] = [
+  { name: "About", link: "/about" },
+  { name: "Opportunities", link: "/events" },
+  { name: "Resources", link: "/resources" },
+  { name: "Mentorship", link: "/mentors" },
+  { name: "Blogs", link: "/blogs" },
+];
 
-const NavItem = ({ link, name }: { link: string; name: string }) => {
+const NavItem: React.FC<NavItemProps> = ({ link, name }) => {
   const path = usePathname();
   const isActive = path.startsWith(link);
   return (
     <Link href={link}>
       <div
-        className={`py-3 md:px-3 md:py-6 ${
+        className={`py-3 md:px-3 md:py-6 text-sm ${
           isActive
             ? "text-black font-bold"
-            : "text-gray-800 font-medium hover:text-black  transition duration-300"
+            : "text-gray-800 font-medium hover:text-black transition duration-300"
         }`}
       >
         {name}
@@ -154,3 +167,38 @@ const NavItem = ({ link, name }: { link: string; name: string }) => {
     </Link>
   );
 };
+
+const SearchBar: React.FC = () => {
+  const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/events/search?query=${encodeURIComponent(searchQuery)}`);
+    }
+  };
+
+  return (
+    <form
+      onSubmit={handleSearch}
+      className="flex items-center border border-gray-300 rounded-full overflow-hidden"
+    >
+      <input
+        type="text"
+        placeholder="Search opportunities..."
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        className="px-4 focus:outline-none placeholder:text-sm"
+      />
+      <button
+        type="submit"
+        className="bg-primary lg:px-6 text-white rounded-r px-4 py-2 h-full"
+      >
+        <FiSearch className="text-xl" />
+      </button>
+    </form>
+  );
+};
+
+export default Header;

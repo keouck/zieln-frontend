@@ -8,6 +8,7 @@ import LatestEvents from "./components/pagecomponents/landingpage/LatestEvents";
 import FAQs from "./components/pagecomponents/landingpage/FAQs";
 import Testimonials from "./components/pagecomponents/landingpage/Testimonials";
 import Blogs from "./components/pagecomponents/landingpage/Blogs";
+import Stats from "./components/pagecomponents/landingpage/Stats";
 
 export const metadata: Metadata = {
   title: "Outsmash",
@@ -26,7 +27,8 @@ const Home: React.FC = () => {
       <HeroSection />
       <Partners />
       <LatestEvents />
-      <Testimonials />
+      <Stats />
+      {/* <Testimonials /> */}
       <Blogs />
       <FAQs />
       <Contact />

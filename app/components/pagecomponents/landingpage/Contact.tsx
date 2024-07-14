@@ -22,7 +22,7 @@ export default function Contact() {
             <div className="grow">
               <h4 className="font-semibold">Our Address:</h4>
               <address className="mt-1 text-neutral-400 text-sm not-italic">
-                Glasgow G2 4JR, United Kingdom
+                Kathmandu, Nepal
               </address>
             </div>
           </div>
@@ -35,17 +35,17 @@ export default function Contact() {
                 href="mailto:example@site.co"
                 target="_blank"
               >
-                hello@example.so
+                outsmashteam@gmail.com
               </a>
             </div>
           </div>
-          <div className="flex items-center gap-x-5">
+          {/* <div className="flex items-center gap-x-5">
             <IoPhonePortraitOutline className="text-xl lg:text-3xl" />
             <div className="grow">
               <h4 className="font-semibold">Call us:</h4>
               <p className="mt-1 text-neutral-400 text-sm">+1234567890</p>
             </div>
-          </div>
+          </div> */}
         </div>
         {/* contact form  */}
         <div className="flex items-center w-full">

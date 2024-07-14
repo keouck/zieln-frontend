@@ -17,15 +17,15 @@ export default function ContactDetail() {
       <ul className="space-y-2 lg:space-y-4 mt-6 lg:mt-12 ">
         <li className="flex items-center">
           <HiOutlineLocationMarker className="w-6 h-6 mr-2" />
-          1234 Street Name, City, State, ZIP
+          Kathmandu, Nepal
         </li>
         <li className="flex items-center">
           <HiOutlinePhone className="w-6 h-6 mr-2" />
-          (123) 456-7890
+          +12345678
         </li>
         <li className="flex items-center">
           <HiOutlineMail className="w-6 h-6 mr-2" />
-          contact@example.com
+          outsmashteam@gmail.com
         </li>
       </ul>
     </div>
