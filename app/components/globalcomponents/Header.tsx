@@ -108,7 +108,7 @@ const Header: React.FC = () => {
                 <div className="hidden lg:block">
                   <PrimaryOutlineButton
                     link="/create-event"
-                    buttonName="+ Create Event"
+                    buttonName="+ Post Opportunity"
                   />
                 </div>
                 <UserButton />
@@ -127,7 +127,7 @@ const Header: React.FC = () => {
             <GrMenu size={24} />
           </button>
           <Drawer
-            title={<h1 className="text-xl font-bold">Outsmash</h1>}
+            title={<h1 className="text-xl font-bold font-lora">Outsmash</h1>}
             onClose={onClose}
             open={open}
             className="lg:hidden"
