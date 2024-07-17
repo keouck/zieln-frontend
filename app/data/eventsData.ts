@@ -10,6 +10,7 @@ export const eventsData = [
     location: "AHZ Baneshwor Office, Kathmandu",
     interested: 128,
     registered: 200,
+    postedBy: "Student",
     audience: "Students and professionals interested in studying abroad"
   },
   {
@@ -23,6 +24,7 @@ export const eventsData = [
     location: "Global",
     interested: 128,
     registered: 200,
+    postedBy: "Organization",
     audience: "Environmentalists, activists, and concerned citizens"
   },
   {
@@ -36,6 +38,7 @@ export const eventsData = [
     location: "City Park",
     interested: 128,
     registered: 200,
+    postedBy: "Organization",
     audience: "Motorcycle enthusiasts and bikers"
   },
   {
@@ -49,6 +52,7 @@ export const eventsData = [
     location: "Uniglobe Sports Complex",
     interested: 128,
     registered: 200,
+    postedBy: "Student",
     audience: "Futsal players and sports enthusiasts of all ages"
   },
   
