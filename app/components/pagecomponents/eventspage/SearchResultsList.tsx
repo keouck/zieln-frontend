@@ -6,7 +6,7 @@ import { PrimaryButton } from "../../globalcomponents/Buttons";
 import PaginationComponent from "../../globalcomponents/Pagination";
 import EventCard from "../eventspage/EventCard";
 import { eventsData } from "@/app/data/eventsData";
-import { debounce } from "lodash";
+import debounce from "lodash/debounce";
 
 interface Event {
   id: number;
