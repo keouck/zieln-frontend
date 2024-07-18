@@ -6,7 +6,7 @@ import { PrimaryButton } from "../../globalcomponents/Buttons";
 import PaginationComponent from "../../globalcomponents/Pagination";
 import EventCard from "../eventspage/EventCard";
 import { eventsData } from "@/app/data/eventsData";
-import { debounce } from "lodash"; // Make sure to install lodash
+import { debounce } from "lodash";
 
 interface Event {
   id: number;
@@ -20,6 +20,7 @@ interface Event {
   interested: number;
   registered: number;
   audience: string;
+  postedBy: string;
 }
 
 const SearchResultsList: React.FC = () => {
