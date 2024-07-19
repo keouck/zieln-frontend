@@ -101,7 +101,7 @@ const Header: React.FC = () => {
                     }
                   />
                 </div>
-                <PrimaryButton link="/sign-in" buttonName="Log in" />
+                <PrimaryButton link="/sign-in" buttonName="Join" />
               </>
             ) : (
               <>
