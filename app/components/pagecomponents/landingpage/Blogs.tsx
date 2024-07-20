@@ -9,7 +9,7 @@ export default function Blogs() {
   return (
     <section className="component-py component-px border-b">
       <div className="text-center mb-10 lg:mb-14">
-        <h2 className="component-heading">The Blog</h2>
+        <h2 className="component-heading text-primaryDark">The Blog</h2>
         <p className="lg:text-lg mt-2">
           Discover the latest updates and insights
         </p>

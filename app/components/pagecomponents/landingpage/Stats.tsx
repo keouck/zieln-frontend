@@ -12,19 +12,19 @@ const StatCard: React.FC<{ value: string; label: string }> = ({
   label,
 }) => (
   <div className="block text-center lg:text-left">
-    <div className="font-manrope font-medium text-4xl text-primary mb-3">
+    <div className="font-manrope font-medium text-3xl text-light mb-3 flex justify-center">
       {value}
     </div>
-    <span className="text-gray-900">{label}</span>
+    <span className="">{label}</span>
   </div>
 );
 
 export default function Stats() {
   return (
-    <section className="bg-gray-100 my-8 lg:my-16 component-px">
+    <section className="bg-primaryDark my-8 lg:my-16 component-px text-light">
       <div className="component-py rounded-2xl flex flex-col items-center gap-16 ">
         <div className="text-center lg:max-w-xl">
-          <h2 className="component-heading">Our Stats</h2>
+          <h2 className="font-semibold text-2xl md:text-4xl md:leading-tight">Our Stats</h2>
           <p className="lg:text-lg mt-2">
             Empowering students and professionals with exceptional educational
             and career opportunities.
