@@ -134,132 +134,25 @@ export default function CreateEvent() {
         }}
       >
         <div className="absolute inset-0 bg-black opacity-70"></div>
-        <div className="relative component-px component-py">
-          <h1 className="text-2xl lg:text-5xl font-bold mb-2 md:mb-4">
-            Create Your Own Events
-          </h1>
-          <p className="md:text-xl mb-3 md:mb-6 max-w-xl">
-            Start planning today and make your event unforgettable. From small
-            gatherings to grand celebrations, we’ve got you covered.
-          </p>
+        <div className="relative w-full component-px component-py text-center flex items-center justify-center">
+          <div>
+            <h1 className="text-2xl lg:text-5xl font-bold mb-2 md:mb-4">
+              Add Opportunity
+            </h1>
+          </div>
         </div>
       </div>
 
       {/* Description and Form */}
-      <div className="component-px component-py grid lg:grid-cols-2 gap-8">
-        <div>
-          <div className="lg:sticky lg:top-40">
-            <h2 className="text-xl lg:text-2xl font-bold mb-4 lg:mb-8">
-              What will be the next step?
-            </h2>
-            <Timeline>
-              {nextStepsData.map((item) => (
-                <Timeline.Item color="black" key={item.step}>
-                  <h3 className="text-lg lg:text-xl font-medium">
-                    {item.step}. {item.title}
-                  </h3>
-                  <p>{item.description}</p>
-                </Timeline.Item>
-              ))}
-            </Timeline>
-          </div>
-        </div>
-
-        <div>
-          <div className="lg:-mt-40 bg-white border lg:border-none rounded-lg shadow-lg text-gray-900 relative overflow-hidden">
+      <div className="component-px component-py flex justify-center">
+        <div className="lg:w-[1000px]">
+          <div className="lg:-mt-32 bg-white border lg:border-none rounded-lg shadow-lg text-gray-900 relative overflow-hidden">
             <header className="bg-gray-100 px-6 lg:px-10 py-4 flex gap-x-2 items-center">
-              <Image
-                src="/logo.png"
-                alt=""
-                className="w-8 lg:w-12 rounded-full"
-                width={100}
-                height={100}
-              />
-              <h2 className="text-2xl font-bold">Create Event</h2>
+              <h2 className="text-2xl font-bold font-lora">Create Event</h2>
             </header>
 
             <div className="p-6 lg:p-10">
-              <h3 className="text-lg lg:text-xl font-bold mb-4">
-                Personal Details
-              </h3>
               <Form form={form} layout="vertical" onFinish={handleSubmit}>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-8">
-                  <Form.Item
-                    label="Your name"
-                    name="yourName"
-                    rules={[
-                      { required: true, message: "Please enter your name" },
-                    ]}
-                  >
-                    <Input
-                      name="yourName"
-                      placeholder="Enter your name"
-                      value={formValues.yourName}
-                      onChange={(e) =>
-                        handleFormChange({ yourName: e.target.value })
-                      }
-                    />
-                  </Form.Item>
-
-                  <Form.Item
-                    label="Your email"
-                    name="yourEmail"
-                    rules={[
-                      { required: true, message: "Please enter your email" },
-                      { type: "email", message: "Please enter a valid email" },
-                    ]}
-                  >
-                    <Input
-                      name="yourEmail"
-                      placeholder="Enter your email"
-                      value={formValues.yourEmail}
-                      onChange={(e) =>
-                        handleFormChange({ yourEmail: e.target.value })
-                      }
-                    />
-                  </Form.Item>
-
-                  <Form.Item
-                    label="Contact number"
-                    name="contactNumber"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please enter your contact number",
-                      },
-                    ]}
-                  >
-                    <Input
-                      name="contactNumber"
-                      placeholder="Enter your contact number"
-                      value={formValues.contactNumber}
-                      onChange={(e) =>
-                        handleFormChange({ contactNumber: e.target.value })
-                      }
-                    />
-                  </Form.Item>
-
-                  <Form.Item
-                    label="Address"
-                    name="address"
-                    rules={[
-                      { required: true, message: "Please enter your address" },
-                    ]}
-                  >
-                    <Input
-                      name="address"
-                      placeholder="Enter your address"
-                      value={formValues.address}
-                      onChange={(e) =>
-                        handleFormChange({ address: e.target.value })
-                      }
-                    />
-                  </Form.Item>
-                </div>
-
-                <h3 className="text-lg lg:text-xl font-bold mb-4">
-                  Event Details
-                </h3>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-8">
                   <Form.Item
                     label="Event name"
@@ -320,7 +213,7 @@ export default function CreateEvent() {
                   </Form.Item>
 
                   <Form.Item
-                    label="Company"
+                    label="Company / Organization"
                     name="company"
                     rules={[
                       {

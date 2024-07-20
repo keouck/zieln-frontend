@@ -3,13 +3,6 @@ import useFetch from "@/app/hooks/useFetch";
 import React from "react";
 import Loader from "../../globalcomponents/Loader";
 
-const statsData = [
-  { value: "260+", label: "Active Users" },
-  { value: "975+", label: "Opportunities" },
-  { value: "724+", label: "Brands Trust Us" },
-  { value: "89+", label: "Organizations" },
-];
-
 const StatCard: React.FC<{ value: string; label: string }> = ({
   value,
   label,

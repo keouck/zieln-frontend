@@ -86,7 +86,7 @@ const Header: React.FC = () => {
 
         <div className="flex items-center space-x-4">
           <div className="buttons flex items-center space-x-4">
-            <div className="hidden lg:flex gap-x-4">
+            <div className="hidden lg:flex">
               {navItems.map((item) => (
                 <NavItem key={item.link} name={item.name} link={item.link} />
               ))}
@@ -97,11 +97,11 @@ const Header: React.FC = () => {
                   <LoginRequiredAlert
                     action={handleCreateEvent}
                     buttonContent={
-                      <PrimaryOutlineButton buttonName="+ Post Opportunity" />
+                      <PrimaryOutlineButton buttonName="+ Add Opportunity" />
                     }
                   />
                 </div>
-                <PrimaryButton link="/sign-in" buttonName="Log in" />
+                <PrimaryButton link="/sign-in" buttonName="Join" />
               </>
             ) : (
               <>
@@ -127,7 +127,7 @@ const Header: React.FC = () => {
             <GrMenu size={24} />
           </button>
           <Drawer
-            title={<h1 className="text-xl font-bold">Outsmash</h1>}
+            title={<h1 className="text-xl font-bold font-lora">Outsmash</h1>}
             onClose={onClose}
             open={open}
             className="lg:hidden"
@@ -182,14 +182,14 @@ const SearchBar: React.FC = () => {
   return (
     <form
       onSubmit={handleSearch}
-      className="flex items-center border border-gray-300 rounded-full overflow-hidden"
+      className="flex items-center border border-gray-300 rounded-full overflow-hidden "
     >
       <input
         type="text"
-        placeholder="Search opportunities..."
+        placeholder="Search opport..."
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
-        className="px-4 focus:outline-none placeholder:text-sm"
+        className="px-4 focus:outline-none placeholder:text-sm max-w-40"
       />
       <button
         type="submit"
