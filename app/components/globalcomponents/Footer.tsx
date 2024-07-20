@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
   const [email, setEmail] = useState("");
 
-  const handleFormSubmit = async (e: Event) => {
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Regular expression for email validation

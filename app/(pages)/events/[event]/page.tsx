@@ -13,7 +13,7 @@ export default function EventDetailPage() {
     data: eventDetail,
     loading: eventLoading,
     error: eventError,
-  } = useFetch(`/events/${eventId}?populate=*`, true);
+  } = useFetch<any>(`/events/${eventId}?populate=*`, true);
 
   console.log(eventDetail);
 
