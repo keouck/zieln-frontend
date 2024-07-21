@@ -47,7 +47,7 @@ const Mentors = () => {
       <div className="flex items-center justify-center text-center">
         <div>
           <h1 className="text-2xl lg:text-5xl font-semibold mb-4 text-gray-900">
-            Everyone needs a <span className="text-blue-700">Mentor</span>
+            Everyone needs a <span className="text-primary">Mentor</span>
           </h1>
           <p className="max-w-2xl lg:text-lg">
             Search amazing individuals around the globe, find a mentor, expand

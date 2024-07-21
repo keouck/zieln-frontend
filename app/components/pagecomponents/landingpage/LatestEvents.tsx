@@ -21,7 +21,7 @@ export default function LatestEvents() {
     <section className="component-px component-py">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="component-heading">Latest Events</h1>
+          <h1 className="component-heading text-primaryDark">Latest Events</h1>
           <p className="lg:text-lg mt-2">
             Check out the most recent events happening in your area
           </p>

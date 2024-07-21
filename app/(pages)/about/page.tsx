@@ -20,11 +20,13 @@ export const metadata: Metadata = {
 export default function About() {
   return (
     <PageLayout>
-      <Introduction />
-      <FoundersMessage />
-      <NameMeaning />
-      <TeamsMission />
-      <Partners />
+      <main className="bg-light">
+        <Introduction />
+        <FoundersMessage />
+        <NameMeaning />
+        <TeamsMission />
+        <Partners />
+      </main>
     </PageLayout>
   );
 }

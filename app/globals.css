@@ -11,7 +11,7 @@
 }
 
 .component-heading {
-  @apply font-semibold text-2xl md:text-4xl md:leading-tight;
+  @apply font-semibold text-2xl md:text-4xl md:leading-tight text-primaryDark ;
 }
 
 .cl-internal-1j7ahlv {

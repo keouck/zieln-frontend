@@ -32,7 +32,7 @@ const FAQs: React.FC = () => {
       <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
         <div className="lg:w-1/3">
           <div className="">
-            <h1 className="component-heading">Frequently asked questions</h1>
+            <h1 className="component-heading text-primaryDark">Frequently asked questions</h1>
             <p className="mt-2 text-gray-600">
               Answers to the most frequently asked questions.
             </p>

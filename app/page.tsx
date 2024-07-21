@@ -26,27 +26,16 @@ export const metadata: Metadata = {
 const Home: React.FC = () => {
   return (
     <PageLayout>
-      <HeroSection />
-      <Partners />
-      <LatestEvents />
-      <Stats />
-      {/* <Testimonials /> */}
-      <Blogs />
-      <FAQs />
-      <Contact />
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={true}
-        newestOnTop={false}
-        closeOnClick={true}
-        rtl={false}
-        pauseOnFocusLoss={true}
-        draggable={true}
-        pauseOnHover={true}
-        theme="light"
-        transition={Bounce}
-      />
+      <main className="bg-light">
+        <HeroSection />
+        <Partners />
+        <LatestEvents />
+        <Stats />
+        {/* <Testimonials /> */}
+        <Blogs />
+        <FAQs />
+        <Contact />
+      </main>
     </PageLayout>
   );
 };

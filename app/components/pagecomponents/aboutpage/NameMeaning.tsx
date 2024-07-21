@@ -21,11 +21,10 @@ export default function NameMeaning() {
         </div>
 
         <div
-          className="w-full md:w-1/2 h-40 md:h-80 bg-primary flex items-center justify-center"
+          className="w-full md:w-1/2 h-40 md:h-80 bg-primaryDark flex items-center justify-center"
           style={{
             boxShadow: "5px 10px 30px 10px rgba(0, 0, 0, 0.5)",
             borderRadius: "50px",
-            background: "#000000",
             color: "white",
             textAlign: "center",
           }}
