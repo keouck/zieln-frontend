@@ -6,7 +6,7 @@ import React from "react";
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
   return (
-    <footer className="mt-auto bg-primary w-full dark:bg-neutral-950">
+    <footer className="mt-auto bg-secondary w-full dark:bg-neutral-950">
       <div className="mt-auto w-full  py-10 lg:pt-20 mx-auto component-px">
         {/* <!-- Grid --> */}
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">

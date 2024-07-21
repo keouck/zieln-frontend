@@ -24,14 +24,16 @@ export const metadata: Metadata = {
 const Home: React.FC = () => {
   return (
     <PageLayout>
-      <HeroSection />
-      <Partners />
-      <LatestEvents />
-      <Stats />
-      {/* <Testimonials /> */}
-      <Blogs />
-      <FAQs />
-      <Contact />
+      <main className="bg-light">
+        <HeroSection />
+        <Partners />
+        <LatestEvents />
+        <Stats />
+        {/* <Testimonials /> */}
+        <Blogs />
+        <FAQs />
+        <Contact />
+      </main>
     </PageLayout>
   );
 };

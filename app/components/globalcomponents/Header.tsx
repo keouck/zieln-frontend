@@ -74,7 +74,7 @@ const Header: React.FC = () => {
       <div className="component-px flex items-center justify-between">
         <div className="flex items-center gap-x-4">
           <Link href="/">
-            <h1 className="text-2xl lg:text-4xl font-bold font-lora">
+            <h1 className="text-2xl lg:text-4xl font-bold font-lora text-primary">
               Outsmash
             </h1>
           </Link>
