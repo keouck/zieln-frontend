@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import Link from "next/link";
 import React from "react";
 import { FaGlobe, FaEnvelope, FaPhoneAlt } from "react-icons/fa";
 
@@ -73,18 +74,22 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
           <h3 className="font-medium mb-2 text-sm lg:text-base">
             Contact Information
           </h3>
-          <div className="flex items-center text-gray-600 mb-2">
+          {/* <div className="flex items-center text-gray-600 mb-2">
             <FaGlobe className="mr-2" />
             <span>www.binitashrestha.com</span>
-          </div>
-          <div className="flex items-center text-gray-600 mb-2">
-            <FaEnvelope className="mr-2" />
-            <span>{email}</span>
-          </div>
-          <div className="flex items-center text-gray-600">
-            <FaPhoneAlt className="mr-2" />
-            <span>{phone}</span>
-          </div>
+          </div> */}
+          <Link href={`mailto:${email}`} className="cursor-pointer">
+            <div className="flex items-center text-gray-600 mb-2">
+              <FaEnvelope className="mr-2" />
+              <span className="hover:underline">{email}</span>
+            </div>
+          </Link>
+          {phone && (
+            <div className="flex items-center text-gray-600">
+              <FaPhoneAlt className="mr-2" />
+              <span>{phone}</span>
+            </div>
+          )}
         </div>
       </div>
     </div>

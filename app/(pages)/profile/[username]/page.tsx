@@ -29,25 +29,41 @@ interface User {
 const UserProfilePage = () => {
   const { username } = useParams();
   const { user } = useUser();
+  const [clerkUser, setClerkUser] = useState<any>(null);
+  const [clerkProfile, setClerkProfile] = useState<any>(null);
   const [profile, setProfile] = useState<User | null>(null);
   const [isFollowing, setIsFollowing] = useState(false);
   const [loading, setLoading] = useState(true); // Add loading state
 
   useEffect(() => {
     if (username) {
-      const userProfile = usersData.find((user) => user.username === username);
-      setProfile(userProfile || null);
-
-      if (userProfile && user) {
-        const isUserFollowing = userProfile?.followers.some(
-          (follower) => follower.id === user.id
-        );
-        setIsFollowing(isUserFollowing);
+      if (user) {
+        if (user?.username !== username) {
+          fetchOtherUser(username);
+        } else {
+          setClerkUser(user);
+        }
       }
 
       setLoading(false); // Set loading to false once data is fetched
     }
-  }, [username, user]);
+  }, [username, user, profile]);
+
+  const fetchOtherUser = async (id: string | string[]) => {
+    try {
+      const res = await fetch(`/api/user/${id}`, {
+        method: "PUT",
+      });
+      const user = await res.json();
+
+      if (user) {
+        console.log(user);
+        setClerkProfile(user.data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const handleFollow = () => {
     if (profile && user) {
@@ -90,7 +106,7 @@ const UserProfilePage = () => {
     );
   }
 
-  if (!profile) {
+  if (!user) {
     return (
       <PageLayout>
         <div className="min-h-[85vh] border-t flex justify-center items-center h-full">
@@ -106,21 +122,41 @@ const UserProfilePage = () => {
 
   return (
     <PageLayout>
-      <UsersProfile
-        fullName={profile?.fullName}
-        profileImg={profile?.profilePicture}
-        username={profile?.username}
-        email={profile?.email}
-        phone={profile?.phone}
-        designation={profile?.designation}
-        interests={profile?.interests}
-        isFollowing={isFollowing}
-        handleFollow={handleFollow}
-        handleUnfollow={handleUnfollow}
-        isCurrentUser={isCurrentUser}
-        role={profile?.unsafeMetadata?.role}
-        curriculum={profile?.curriculum}
-      />
+      {clerkProfile && (
+        <UsersProfile
+          fullName={clerkProfile?.firstName + " " + clerkProfile?.lastName}
+          profileImg={clerkProfile?.imageUrl}
+          username={clerkProfile?.username as string}
+          email={clerkProfile?.emailAddresses[0]?.emailAddress as string}
+          // phone={"1234567890"}
+          designation={"Software Engineer"}
+          interests={["React", "Next.js", "Tailwind CSS"]}
+          isFollowing={isFollowing}
+          handleFollow={handleFollow}
+          handleUnfollow={handleUnfollow}
+          isCurrentUser={isCurrentUser}
+          role={clerkProfile?.unsafeMetadata?.role as string}
+          curriculum={["Curriculum 1", "Curriculum 2", "Curriculum 3"]}
+        />
+      )}
+
+      {user && !clerkProfile && (
+        <UsersProfile
+          fullName={user?.firstName + " " + user?.lastName}
+          profileImg={user?.imageUrl}
+          username={user?.username as string}
+          email={user?.primaryEmailAddress?.emailAddress as string}
+          // phone={"1234567890"}
+          designation={"Software Engineer"}
+          interests={["React", "Next.js", "Tailwind CSS"]}
+          isFollowing={isFollowing}
+          handleFollow={handleFollow}
+          handleUnfollow={handleUnfollow}
+          isCurrentUser={isCurrentUser}
+          role={user?.unsafeMetadata?.role as string}
+          curriculum={["Curriculum 1", "Curriculum 2", "Curriculum 3"]}
+        />
+      )}
     </PageLayout>
   );
 };

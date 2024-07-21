@@ -1,4 +1,5 @@
 // app/components/pagecomponents/auths/SignInForm.tsx
+import { GoogleOneTap, SignInButton, SignIn } from "@clerk/nextjs";
 import Link from "next/link";
 
 interface SignInFormProps {
@@ -15,7 +16,7 @@ interface SignInFormProps {
 const SignInForm = ({ signInWithEmail, clerkError }: SignInFormProps) => {
   return (
     <div className="p-6 md:p-8">
-      <h1 className="text-2xl lg:text-4xl font-bold text-black mb-8 text-center uppercase">
+      {/* <h1 className="text-2xl lg:text-4xl font-bold text-black mb-8 text-center uppercase">
         Sign In
       </h1>
       <form
@@ -50,6 +51,7 @@ const SignInForm = ({ signInWithEmail, clerkError }: SignInFormProps) => {
           {clerkError && <p>{clerkError}</p>}
         </h2>
         <div className="mt-8">
+          <GoogleOneTap />
           <button
             className="w-full h-12 mb-6 text-sm font-light bg-primary text-white rounded-md"
             type="submit"
@@ -63,7 +65,8 @@ const SignInForm = ({ signInWithEmail, clerkError }: SignInFormProps) => {
         <Link className="ml-2 text-black hover:underline" href="/sign-up">
           Sign up
         </Link>
-      </p>
+      </p> */}
+      <SignIn />
     </div>
   );
 };

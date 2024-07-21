@@ -1,6 +1,7 @@
 "use client";
 
 import { nextStepsData } from "@/app/data/nextStepsData.";
+import { useAuth, useUser } from "@clerk/nextjs";
 import { DatePicker, Form, Input, Timeline } from "antd";
 import { Dayjs } from "dayjs";
 import Image from "next/image";
@@ -17,9 +18,12 @@ interface FormValues {
   eventTime: string;
   company: string;
   eventDescription: string;
+  registrationLink: string;
+  paymentLink: string;
 }
 
 export default function CreateEvent() {
+  const { user } = useUser();
   const [form] = Form.useForm();
   const [formValues, setFormValues] = useState<FormValues>({
     yourName: "",
@@ -32,6 +36,8 @@ export default function CreateEvent() {
     eventTime: "",
     company: "",
     eventDescription: "",
+    registrationLink: "",
+    paymentLink: "",
   });
 
   const [eventLogo, setEventLogo] = useState<File | null>(null);
@@ -81,12 +87,18 @@ export default function CreateEvent() {
             eventBanner: eventBannerDataURL,
           };
           console.log("Form submitted with values:", submittedValues);
+          handlePost();
           // Perform your submission logic here
         });
       })
       .catch((errorInfo) => {
         console.log("Validation failed:", errorInfo);
       });
+  };
+
+  const handlePost = async (data?: any) => {
+    const session = await user?.getSessions();
+    console.log(session);
   };
 
   const handleFileChange = (
@@ -280,6 +292,49 @@ export default function CreateEvent() {
                         </div>
                       )}
                     </label>
+                  </Form.Item>
+
+                  <Form.Item
+                    label="Registration Link"
+                    name="registrationLink"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter the registration link",
+                        // pattern for link and it must be url
+                        pattern: new RegExp(/^(http|https):\/\/[^ "]+$/),
+                      },
+                    ]}
+                  >
+                    <Input
+                      name="registrationLink"
+                      placeholder="Enter registration link"
+                      value={formValues.registrationLink}
+                      onChange={(e) =>
+                        handleFormChange({ eventName: e.target.value })
+                      }
+                    />
+                  </Form.Item>
+
+                  <Form.Item
+                    label="Payment Link"
+                    name="paymentLink"
+                    rules={[
+                      {
+                        message: "Please enter the payment link",
+                        // pattern for link and it must be url
+                        pattern: new RegExp(/^(http|https):\/\/[^ "]+$/),
+                      },
+                    ]}
+                  >
+                    <Input
+                      name="paymentLink"
+                      placeholder="Enter payment link"
+                      value={formValues.paymentLink}
+                      onChange={(e) =>
+                        handleFormChange({ paymentLink: e.target.value })
+                      }
+                    />
                   </Form.Item>
 
                   <Form.Item

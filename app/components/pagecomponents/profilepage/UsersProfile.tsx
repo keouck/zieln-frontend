@@ -10,8 +10,8 @@ type UsersProfileProps = {
   profileImg: string;
   username: string;
   email: string;
-  phone: string;
-  designation: string;
+  phone?: string;
+  designation?: string;
   interests?: string[];
   isFollowing: boolean;
   handleFollow: () => void;
@@ -48,7 +48,7 @@ const UsersProfile: React.FC<UsersProfileProps> = ({
           fullName={fullName}
           role={role}
           email={email}
-          phone={phone}
+          phone={phone as string}
           interests={interests}
           isFollowing={isFollowing}
           handleFollow={handleFollow}
