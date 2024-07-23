@@ -72,6 +72,8 @@ const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
 
   if (!event) return <Loader />;
 
+  console.log(event);
+
   return (
     <section className="pb-8 lg:pb-16">
       {/* Banner */}

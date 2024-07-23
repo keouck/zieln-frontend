@@ -96,7 +96,7 @@ export const SecondaryButton = ({
     <div>
       {link ? (
         <Link href={link}>
-          <div className="bg-secondary text-primary px-3 py-1.5 lg:px-4 lg:py-2 rounded-full shadow-md hover:text-secondary hover:border border-white hover:bg-primary active:scale-95 transition duration-300 text-sm flex items-center space-x-2">
+          <div className="bg-white text-primary px-3 py-1.5 lg:px-4 lg:py-2 rounded-full border-primary hover:bg-primary border hover:text-white hover:shadow active:scale-95 transition duration-300 text-sm flex items-center space-x-2">
             {icon && <span>{icon}</span>}
             <span>{buttonName}</span>
           </div>

@@ -3,6 +3,7 @@ import React from "react";
 import {
   PrimaryButton,
   PrimaryOutlineButton,
+  SecondaryButton,
 } from "../../globalcomponents/Buttons";
 import LoginRequiredAlert from "../../globalcomponents/LoginRequiredAlert";
 
@@ -22,7 +23,10 @@ const ProfileActions: React.FC<ProfileActionsProps> = ({
   return (
     <div className="flex space-x-4">
       {isCurrentUser ? (
-        <PrimaryButton buttonName="Edit Profile" />
+        <>
+          <SecondaryButton link="/my-events" buttonName="Manage Events" />
+          <PrimaryButton buttonName="Edit Profile" />
+        </>
       ) : (
         <>
           <LoginRequiredAlert

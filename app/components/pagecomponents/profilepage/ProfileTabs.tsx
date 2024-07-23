@@ -14,22 +14,6 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ curriculum, role }) => {
     switch (activeTab) {
       case "About":
         return <p>About Content</p>;
-      case "Created Events":
-        return (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {eventsData.slice(0, 6).map((event) => (
-              <EventCard key={event.id} event={event} />
-            ))}
-          </div>
-        );
-      case "Attended Events":
-        return (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {eventsData.slice(0, 6).map((event) => (
-              <EventCard key={event.id} event={event} />
-            ))}
-          </div>
-        );
       case "Saved Events":
         return (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -67,28 +51,6 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ curriculum, role }) => {
           >
             About
           </button>
-          <button
-            onClick={() => setActiveTab("Created Events")}
-            className={`pb-2 border-b-2 ${
-              activeTab === "Created Events"
-                ? "border-gray-900 text-black font-medium"
-                : "border-transparent text-gray-700"
-            } hover:border-gray-900`}
-          >
-            Created Events
-          </button>
-          {role !== "ORGANIZATION" && (
-            <button
-              onClick={() => setActiveTab("Attended Events")}
-              className={`pb-2 border-b-2 ${
-                activeTab === "Attended Events"
-                  ? "border-gray-900 text-black font-medium"
-                  : "border-transparent text-gray-700"
-              } hover:border-gray-900`}
-            >
-              Attended Events
-            </button>
-          )}
           <button
             onClick={() => setActiveTab("Saved Events")}
             className={`pb-2 border-b-2 ${
