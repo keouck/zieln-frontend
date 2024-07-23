@@ -11,10 +11,13 @@ interface EventAttribute {
   updatedAt: string;
   publishedAt: string;
   endDate?: string;
-  interested: string;
-  registered: string;
+  interested_by: {
+    data: [];
+  };
+  registered_by: {
+    data: [];
+  };
   user_id?: string;
-  postedBy: string;
   banner: {
     data: {
       id: number;
@@ -117,11 +120,11 @@ const EventCard = ({ event, refetch }: EventCardProps) => {
             )}
           </div>
 
-          <div className="absolute left-0 top-0 h-16 w-16">
+          {/* <div className="absolute left-0 top-0 h-16 w-16">
             <div className="bg-indigo-700 text-xs absolute transform -rotate-45 text-center text-white font-semibold py-1 left-[-34px] top-[32px] w-[170px]">
               {event?.postedBy}
             </div>
-          </div>
+          </div> */}
 
           <div className="p-4">
             <h2 className="md:text-lg font-semibold">
@@ -151,7 +154,7 @@ const EventCard = ({ event, refetch }: EventCardProps) => {
               <div className="flex items-center mt-2">
                 <FiUsers className="w-4 h-4 mr-2 text-gray-700" />
                 <span className="text-gray-700 text-xs md:text-sm">
-                  {event.attributes?.registered} Registered
+                  {event.attributes?.registered_by.data.length} Registered
                 </span>
               </div>
             </div>

@@ -6,6 +6,7 @@ import Image from "next/image";
 import { eventsData } from "@/app/data/eventsData";
 import dayjs from "dayjs";
 import useFetch from "@/app/hooks/useFetch";
+import { toast } from "react-toastify";
 
 interface FormValues {
   eventName: string;
@@ -23,7 +24,6 @@ interface EditEventProps {
 }
 
 const EditEvent = ({ eventId }: EditEventProps) => {
-  console.log("hiii", eventId);
   const [form] = Form.useForm();
   const [formValues, setFormValues] = useState<FormValues>({
     eventName: "",
@@ -51,7 +51,6 @@ const EditEvent = ({ eventId }: EditEventProps) => {
 
   useEffect(() => {
     // Fetch event data from static eventsData
-
     if (eventData) {
       let event = eventData.data.attributes;
       const initialValues = {
@@ -81,30 +80,30 @@ const EditEvent = ({ eventId }: EditEventProps) => {
     });
   };
 
-  const handleFileChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    type: "eventLogo" | "eventBanner"
-  ) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (type === "eventLogo") {
-          setEventLogoName(file.name);
-          setEventLogoPreview(reader.result as string);
-        } else {
-          setEventBannerName(file.name);
-          setEventBannerPreview(reader.result as string);
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  // const handleFileChange = (
+  //   e: React.ChangeEvent<HTMLInputElement>,
+  //   type: "eventLogo" | "eventBanner"
+  // ) => {
+  //   const file = e.target.files?.[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onload = () => {
+  //       if (type === "eventLogo") {
+  //         setEventLogoName(file.name);
+  //         setEventLogoPreview(reader.result as string);
+  //       } else {
+  //         setEventBannerName(file.name);
+  //         setEventBannerPreview(reader.result as string);
+  //       }
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
 
   const handleSubmit = () => {
     form
       .validateFields()
-      .then((values) => {
+      .then(async (values) => {
         const updatedEvent = {
           ...values,
           eventLogo: eventLogoName || null,
@@ -123,7 +122,7 @@ const EditEvent = ({ eventId }: EditEventProps) => {
           logo: eventData.data.attributes.logo.data.id,
         };
 
-        update({
+        const resUpdate: any = await update({
           data: {
             ...payload,
           },
@@ -131,10 +130,15 @@ const EditEvent = ({ eventId }: EditEventProps) => {
 
         // Here you would normally send the updatedEvent to your backend
         // For now, just logging it to the console
-        console.log("Event updated successfully:", values);
+        console.log(await resUpdate);
+        if (!resUpdate?.data) {
+          return toast.error("Failed to edit event.");
+        }
+        return toast.success("Event updated successfully");
       })
-      .catch((errorInfo) => {
-        console.log("Validation failed:", errorInfo);
+      .catch((e) => {
+        console.log(e);
+        return toast.error("Something went wrong!");
       });
   };
 
@@ -230,22 +234,21 @@ const EditEvent = ({ eventId }: EditEventProps) => {
                   </Form.Item>
 
                   <Form.Item
-                    label="Event date and time"
+                    label="Event date"
                     name="eventDateTime"
                     rules={[
                       {
                         required: true,
-                        message: "Please select the event date and time",
+                        message: "Please select the event date.",
                       },
                     ]}
                   >
                     <DatePicker
-                      showTime
-                      format="YYYY-MM-DD HH:mm:ss"
+                      format="YYYY-MM-DD"
                       className="w-full"
                       onChange={(date) => {
                         const formattedDate = date
-                          ? dayjs(date).format("YYYY-MM-DD HH:mm:ss")
+                          ? dayjs(date).format("YYYY-MM-DD")
                           : "";
                         handleFormChange({ eventDate: formattedDate });
                       }}

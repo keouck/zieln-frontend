@@ -7,7 +7,7 @@ import { useAuth, useUser } from "@clerk/nextjs";
 import { DatePicker, Form, Input, Timeline } from "antd";
 import { Dayjs } from "dayjs";
 import Image from "next/image";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 interface FormValues {
@@ -21,6 +21,7 @@ interface FormValues {
 }
 
 export default function CreateEvent() {
+  const toastId: any = useRef(null);
   const { post } = useFetch("/events");
   const { post: imageUpload } = useFetch("/upload");
   const { user } = useUser();
@@ -113,7 +114,10 @@ export default function CreateEvent() {
   };
 
   const handlePost = async (data?: any) => {
-    
+    toastId.current = toast.loading("Uploading images..", {
+      position: "top-right",
+    });
+
     const userId = user!.username; // Adjust based on how you get the user ID
     try {
       // Upload images and get their IDs
@@ -134,7 +138,10 @@ export default function CreateEvent() {
         banner: eventBannerId,
       };
       const postData: any = await post({ data: { ...payload } });
-      if (postData?.data) {
+
+      toast.dismiss(toastId.current);
+
+      if (!postData?.data) {
         return toast.error("Failed to post opportunity.");
       }
       return toast.success("Posted opportunity successfully.");
@@ -249,12 +256,12 @@ export default function CreateEvent() {
                   </Form.Item>
 
                   <Form.Item
-                    label="Event date and time"
+                    label="Event Date"
                     name="eventDateTime"
                     rules={[
                       {
                         required: true,
-                        message: "Please select event date and time",
+                        message: "Please select event date",
                       },
                     ]}
                   >
@@ -271,13 +278,13 @@ export default function CreateEvent() {
                     rules={[
                       {
                         required: true,
-                        message: "Please enter the organization_name name",
+                        message: "Please enter the organization name",
                       },
                     ]}
                   >
                     <Input
                       name="organization_name"
-                      placeholder="Enter organization_name name"
+                      placeholder="Enter organization name"
                       value={formValues.organization_name}
                       onChange={(e) =>
                         handleFormChange({ organization_name: e.target.value })

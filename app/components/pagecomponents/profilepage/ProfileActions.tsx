@@ -24,7 +24,6 @@ const ProfileActions: React.FC<ProfileActionsProps> = ({
     <div className="flex space-x-4">
       {isCurrentUser ? (
         <>
-          <SecondaryButton link="/my-events" buttonName="Manage Events" />
           <PrimaryButton buttonName="Edit Profile" />
         </>
       ) : (

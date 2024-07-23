@@ -26,10 +26,13 @@ interface EventDetailProps {
     title: string;
     date: string;
     location: string;
-    interested?: string;
-    registered?: string;
+    interested_by: {
+      data: [];
+    };
+    registered_by: {
+      data: [];
+    };
     endDate?: string;
-    audience?: string;
     banner: {
       data: {
         id: number;
@@ -53,7 +56,7 @@ const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
   const [saved, setSaved] = useState(false); // State to track if event is saved
   const [interested, setInterested] = useState(false); // State to track if user is interested
   const [interestedCount, setInterestedCount] = useState<number>(
-    Number(event?.interested) || 0
+    Number(event?.interested_by.data.length) || 0
   ); // State to track the count of interested users
 
   const toggleSaved = () => {
@@ -119,7 +122,7 @@ const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
           </div>
           <div className="flex items-center text-sm md:text-base">
             <FaUserFriends className="mr-2" />
-            <p>{event?.registered} registers</p>
+            <p>{event?.registered_by.data.length} registers</p>
           </div>
         </div>
       </div>
@@ -132,7 +135,7 @@ const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
             buttonContent={
               <PrimaryButton
                 icon={<FaRegCalendarCheck />}
-                buttonName={`Register (${event.interested})`}
+                buttonName={`Register (${event.interested_by.data.length})`}
               />
             }
           />

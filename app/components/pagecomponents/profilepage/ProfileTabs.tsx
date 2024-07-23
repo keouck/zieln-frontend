@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import EventCard from "../eventspage/EventCard";
 import useFetch from "@/app/hooks/useFetch";
 import { useUser } from "@clerk/nextjs";
+import { eventsData } from "@/app/data/eventsData";
 
 type ProfileTabsProps = {
   curriculum: string[]; // Assuming this is passed as a prop
@@ -11,16 +12,19 @@ type ProfileTabsProps = {
 const ProfileTabs: React.FC<ProfileTabsProps> = ({ curriculum, role }) => {
   const [activeTab, setActiveTab] = useState("About");
 
-  const {user} = useUser();
+  const { user } = useUser();
 
-    // fetch events
-    const {
-      data: event,
-      loading: eventLoading,
-      error: eventError,
-    } = useFetch<any>(`/events?filters[user_id][$eq]=${user!.username}&populate=*`, true);
+  // fetch events
+  const {
+    data: event,
+    loading: eventLoading,
+    error: eventError,
+  } = useFetch<any>(
+    `/events?filters[user_id][$eq]=${user!.username}&populate=*`,
+    true
+  );
 
-    console.log(event)
+  console.log(event);
 
   const renderTabContent = () => {
     switch (activeTab) {
