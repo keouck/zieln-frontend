@@ -113,7 +113,8 @@ export default function CreateEvent() {
   };
 
   const handlePost = async (data?: any) => {
-    const userId = "bibekshhh"; // Adjust based on how you get the user ID
+    
+    const userId = user!.username; // Adjust based on how you get the user ID
     try {
       // Upload images and get their IDs
       const eventLogoId = await uploadImage(eventLogo);
