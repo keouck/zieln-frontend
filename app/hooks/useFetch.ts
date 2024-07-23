@@ -71,13 +71,20 @@ const useFetch = <T>(endpoint: string, autoFetch: boolean = false) => {
     [fetchData]
   );
 
+  const update = useCallback(
+    async (body: any, headers: HeadersInit = {}) => {
+      await fetchData("PUT", body, headers);
+    },
+    [fetchData]
+  );
+
   useEffect(() => {
     if (autoFetch) {
       get();
     }
   }, [get, autoFetch]);
 
-  return { ...fetchState, get, post };
+  return { ...fetchState, get, post, update };
 };
 
 export default useFetch;
