@@ -1,3 +1,4 @@
+import { SignUp } from "@clerk/nextjs";
 import Link from "next/link";
 
 interface SignUpFormProps {
@@ -19,8 +20,8 @@ interface SignUpFormProps {
 
 const SignupForm = ({ signUpWithEmail, clerkError }: SignUpFormProps) => {
   return (
-    <div className="p-6 md:p-8">
-      <h1 className="text-2xl lg:text-4xl font-bold text-black mb-8 text-center uppercase">
+    <div className="w-full">
+      {/* <h1 className="text-2xl lg:text-4xl font-bold text-black mb-8 text-center uppercase">
         Sign Up
       </h1>
       <form
@@ -103,7 +104,8 @@ const SignupForm = ({ signUpWithEmail, clerkError }: SignUpFormProps) => {
         <Link className="ml-2 text-black hover:underline" href="/sign-in">
           Sign in
         </Link>
-      </p>
+      </p> */}
+      <SignUp />
     </div>
   );
 };

@@ -2,6 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+.cl-rootBox,
+.cl-signUp-root,
+.cl-cardBox,
+.cl-signUp-start {
+  width: 100% !important;
+}
+
+.cl-rootBox,
+.cl-signIn-root,
+.cl-cardBox,
+.cl-signIn-start {
+  width: 100% !important;
+}
+
+.cl-card.cl-signIn-start {
+  padding: 10% 15%;
+}
+
+.cl-card.cl-signUp-start {
+  padding: 7.5% 15%;
+}
+
 .component-px {
   @apply px-6 sm:px-12 md:px-16 lg:px-24;
 }
@@ -11,7 +33,7 @@
 }
 
 .component-heading {
-  @apply font-semibold text-2xl md:text-4xl md:leading-tight text-primaryDark ;
+  @apply font-semibold text-2xl md:text-4xl md:leading-tight text-primaryDark;
 }
 
 .cl-internal-1j7ahlv {
@@ -85,7 +107,6 @@
   border: 2px solid #fff !important; Add a white border around the circular buttons */
 }
 
-
 /* Adjust the size of the arrow icons */
 .swiper-button-prev:after,
 .swiper-button-next:after {
@@ -108,10 +129,12 @@
   right: 10px !important; /* Adjust the position if needed */
 }
 
-.ant-select-outlined:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover .ant-select-selector {
+.ant-select-outlined:not(.ant-select-disabled):not(
+    .ant-select-customize-input
+  ):not(.ant-pagination-size-changer):hover
+  .ant-select-selector {
   border-color: #000000 !important;
 }
-
 
 .ant-collapse-item .ant-collapse-header-text {
   font-weight: 500 !important;
@@ -122,7 +145,6 @@
   font-weight: 600 !important;
   color: #000000 !important;
 }
-
 
 .ant-collapse-item-active .ant-collapse-header-text {
   font-weight: 600 !important;
@@ -153,18 +175,20 @@
   animation-delay: -1s;
 }
 @keyframes l2 {
-    100% {box-shadow: 0 0 0 40px #0000}
+  100% {
+    box-shadow: 0 0 0 40px #0000;
+  }
 }
 
 .ant-select-selection-placeholder {
   color: #000 !important;
 }
 
- .ant-picker-input  {
+.ant-picker-input {
   color: #000 !important;
 }
 
-.ant-drawer{
+.ant-drawer {
   font-family: inherit !important;
 }
 

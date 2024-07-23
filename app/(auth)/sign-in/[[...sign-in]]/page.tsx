@@ -52,7 +52,7 @@ const Signin = () => {
             zIndex: -1,
           }}
         ></div>
-        <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-16 w-full rounded-2xl border overflow-hidden min-h-96 shadow-xl">
+        <div className="relative grid grid-cols-1 lg:grid-cols-2 w-full rounded-2xl border overflow-hidden min-h-96 shadow-xl">
           <div className="bg-primary hidden  lg:flex items-center justify-center">
             <div className="text-center">
               <h1 className="text-2xl lg:text-4xl font-bold text-white">
