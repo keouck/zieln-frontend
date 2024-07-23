@@ -61,12 +61,14 @@ const EventCard = ({ event }: EventCardProps) => {
   const showCountdown =
     !isOngoing && daysUntilEvent >= 0 && daysUntilEvent <= 7;
 
+    console.log("rrr: ", event)
+
   return (
     <Link href={`/events/${event.id}`}>
       <div className="cursor-pointer bg-white shadow-md rounded-2xl  transition duration-300 transform group hover:shadow-lg hover:scale-105 relative overflow-hidden">
         <img
           className="w-full h-32 md:h-40 object-cover object-center group-hover:scale-105 transition duration-300"
-          src={event.attributes.images.data[0].attributes.url}
+          src={event.attributes.banner.data.attributes.url}
           alt="event card image"
         />
 
