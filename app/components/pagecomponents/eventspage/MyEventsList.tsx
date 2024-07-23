@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Select, Input, Modal } from "antd";
+import { Select, Input } from "antd";
 import { PrimaryButton } from "../../globalcomponents/Buttons";
 import MyEventCard from "./MyEventCard";
 import { eventsData } from "@/app/data/eventsData";
@@ -41,9 +41,9 @@ const MyEventsList: React.FC = () => {
     currentPage * pageSize
   );
 
-  const handlePageChange = (page: number, pageSize?: number) => {
+  const handlePageChange = (page: number, pageSize: number) => {
     setCurrentPage(page);
-    if (pageSize) setPageSize(pageSize);
+    setPageSize(pageSize);
   };
 
   const handleDelete = (eventId: number) => {
@@ -59,7 +59,7 @@ const MyEventsList: React.FC = () => {
             <input
               type="text"
               placeholder="Search events..."
-              className="w-full focus:outline-none"
+              className="w-full focus:outline-none bg-transparent"
             />
             <PrimaryButton buttonName="Search" />
           </div>
@@ -85,10 +85,10 @@ const MyEventsList: React.FC = () => {
       </div>
 
       <PaginationComponent
-        currentPage={currentPage}
+        current={currentPage}
         pageSize={pageSize}
         totalItems={sortedEvents.length}
-        onChange={handlePageChange}
+        onPageChange={handlePageChange}
       />
     </section>
   );
