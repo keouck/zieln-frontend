@@ -22,7 +22,9 @@ export default function Stats() {
     error,
   } = useFetch<any>("/stats?populate=*", true);
 
-  console.log(stats);
+  if (loading) return <Loader />;
+  if (error) return;
+  console.log(stats?.data);
 
   return (
     <section className="bg-primaryDark my-8 lg:my-16 component-px text-light">
@@ -39,13 +41,15 @@ export default function Stats() {
         <div className="w-full lg:w-4/5">
           <div className="flex flex-col gap-10 lg:gap-0 lg:flex-row lg:justify-between">
             {stats?.data.length ? (
-              stats?.data?.[0].attributes?.statistics?.map((stat: any) => (
-                <StatCard
-                  key={stat?.id}
-                  value={stat?.number}
-                  label={stat?.title}
-                />
-              ))
+              stats?.data.map((item: any) =>
+                item?.attributes?.statistics?.map((stat: any) => (
+                  <StatCard
+                    key={stat?.id}
+                    value={stat?.number}
+                    label={stat?.title}
+                  />
+                ))
+              )
             ) : (
               <></>
             )}
