@@ -20,7 +20,8 @@ export default function About() {
       <Banner
         title="Featured Opportunities"
         backgroundImage="https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8ZXZlbnRzfGVufDB8fDB8fHww"
-        subtitle="Check out the curated opportunities handpicked for you from top organizations."
+        buttonName="+ Add Opportunity"
+        buttonLink="/create-event"
       />
       <EventsList />
     </PageLayout>

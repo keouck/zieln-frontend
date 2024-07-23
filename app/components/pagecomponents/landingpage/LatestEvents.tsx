@@ -11,7 +11,7 @@ export default function LatestEvents() {
     <section className="component-px component-py">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="component-heading">Latest Events</h1>
+          <h1 className="component-heading text-primaryDark">Latest Events</h1>
           <p className="lg:text-lg mt-2">
             Check out the most recent events happening in your area
           </p>
@@ -42,9 +42,11 @@ export default function LatestEvents() {
 
               {/* Hover Popup */}
               <div className="absolute bottom-4 left-4 bg-black bg-opacity-75 text-white text-sm px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-2">
                   <RxStarFilled className="text-yellow-500" />
-                  <span className="text-white">{event.interested} Interested</span>
+                  <span className="text-white">
+                    {event.interested} Interested
+                  </span>
                 </div>
               </div>
             </div>

@@ -74,7 +74,7 @@ const Header: React.FC = () => {
       <div className="component-px flex items-center justify-between">
         <div className="flex items-center gap-x-4">
           <Link href="/">
-            <h1 className="text-2xl lg:text-4xl font-bold font-lora">
+            <h1 className="text-2xl lg:text-4xl font-bold font-lora text-primary">
               Outsmash
             </h1>
           </Link>
@@ -86,7 +86,7 @@ const Header: React.FC = () => {
 
         <div className="flex items-center space-x-4">
           <div className="buttons flex items-center space-x-4">
-            <div className="hidden lg:flex gap-x-4">
+            <div className="hidden lg:flex">
               {navItems.map((item) => (
                 <NavItem key={item.link} name={item.name} link={item.link} />
               ))}
@@ -97,18 +97,18 @@ const Header: React.FC = () => {
                   <LoginRequiredAlert
                     action={handleCreateEvent}
                     buttonContent={
-                      <PrimaryOutlineButton buttonName="+ Post Opportunity" />
+                      <PrimaryOutlineButton buttonName="+ Add Opportunity" />
                     }
                   />
                 </div>
-                <PrimaryButton link="/sign-in" buttonName="Log in" />
+                <PrimaryButton link="/sign-in" buttonName="Join" />
               </>
             ) : (
               <>
                 <div className="hidden lg:block">
                   <PrimaryOutlineButton
                     link="/create-event"
-                    buttonName="+ Post Opportunity"
+                    buttonName="+ Add Opportunity"
                   />
                 </div>
                 <UserButton />
@@ -182,14 +182,14 @@ const SearchBar: React.FC = () => {
   return (
     <form
       onSubmit={handleSearch}
-      className="flex items-center border border-gray-300 rounded-full overflow-hidden"
+      className="flex items-center border border-gray-300 rounded-full overflow-hidden "
     >
       <input
         type="text"
-        placeholder="Search opportunities..."
+        placeholder="Search opport..."
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
-        className="px-4 focus:outline-none placeholder:text-sm"
+        className="px-4 focus:outline-none placeholder:text-sm max-w-40"
       />
       <button
         type="submit"

@@ -1,7 +1,6 @@
 import {
   IoLocationOutline,
-  IoMailOutline,
-  IoPhonePortraitOutline,
+  IoMailOutline
 } from "react-icons/io5";
 import ContactForm from "./ContactForm";
 
@@ -12,7 +11,7 @@ export default function Contact() {
         {/* contact infos  */}
         <div className="space-y-8">
           <div className="max-w-3xl mb-10 lg:mb-14">
-            <h1 className="component-heading">Contact us</h1>
+            <h1 className="component-heading text-primaryDark">Contact us</h1>
             <p className="mt-1 text-neutral-400">
               Whatever your goal - we will get you there.
             </p>
