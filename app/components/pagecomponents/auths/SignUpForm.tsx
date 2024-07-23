@@ -20,7 +20,7 @@ interface SignUpFormProps {
 
 const SignupForm = ({ signUpWithEmail, clerkError }: SignUpFormProps) => {
   return (
-    <div className="w-full">
+    <div className="w-full auth-page">
       {/* <h1 className="text-2xl lg:text-4xl font-bold text-black mb-8 text-center uppercase">
         Sign Up
       </h1>

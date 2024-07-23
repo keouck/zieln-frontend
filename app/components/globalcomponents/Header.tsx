@@ -186,10 +186,10 @@ const SearchBar: React.FC = () => {
     >
       <input
         type="text"
-        placeholder="Search opport..."
+        placeholder="Search opportu.."
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
-        className="px-4 focus:outline-none placeholder:text-sm max-w-40"
+        className="px-4 focus:outline-none w-full placeholder:text-sm max-w-40"
       />
       <button
         type="submit"

@@ -2,17 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-.cl-rootBox,
-.cl-signUp-root,
-.cl-cardBox,
-.cl-signUp-start {
+.auth-page .cl-rootBox,
+.auth-page .cl-signUp-root,
+.auth-page .cl-cardBox,
+.auth-page .cl-signUp-start {
   width: 100% !important;
 }
 
-.cl-rootBox,
-.cl-signIn-root,
-.cl-cardBox,
-.cl-signIn-start {
+.auth-page .cl-rootBox,
+.auth-page .cl-signIn-root,
+.auth-page .cl-cardBox,
+.auth-page .cl-signIn-start {
   width: 100% !important;
 }
 

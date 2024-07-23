@@ -15,7 +15,7 @@ interface SignInFormProps {
 
 const SignInForm = ({ signInWithEmail, clerkError }: SignInFormProps) => {
   return (
-    <div className="w-full">
+    <div className="w-full auth-page">
       {/* <h1 className="text-2xl lg:text-4xl font-bold text-black mb-8 text-center uppercase">
         Sign In
       </h1>

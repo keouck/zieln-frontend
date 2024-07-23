@@ -45,11 +45,14 @@ export default function HeroSection() {
         {/* Text Grid */}
         <div className="flex flex-col justify-center">
           <div className="relative">
-            <h1 className="text-3xl lg:text-5xl font-[600] text-black dark:text-white">
-              <span className="text-primary">Empower Your Journey</span> Beyond
-              the Classroom
+            <h1 className="text-2xl lg:text-4xl font-[600] text-gray-700 ">
+              <span className="text-primary text-3xl lg:text-5xl">
+                Empower Your Journey
+              </span>
+              <br />
+              Beyond the Classroom
             </h1>
-            <h2 className="lg:text-lg text-gray-700 dark:text-gray-300 mt-4">
+            <h2 className="lg:text-lg text-gray-600 mt-4">
               Discover, Engage, and Grow with Outsmash, Your Hub for
               Extra-Curricular and Co-Curricular Opportunities
             </h2>

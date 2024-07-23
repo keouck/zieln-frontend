@@ -21,17 +21,17 @@ export default function NameMeaning() {
         </div>
 
         <div
-          className="w-full md:w-1/2 h-40 md:h-80 bg-primaryDark flex items-center justify-center"
+          className="w-full md:w-1/2 h-40 md:h-80  flex items-center justify-center"
           style={{
-            boxShadow: "5px 10px 30px 10px rgba(0, 0, 0, 0.5)",
-            borderRadius: "50px",
+            // boxShadow: "5px 10px 30px 10px rgba(0, 0, 0, 0.5)",
+            borderRadius: "20px",
             color: "white",
             textAlign: "center",
           }}
         >
           <h1
-            className="text-3xl md:text-6xl lg:text-8xl font-extrabold animate-pulse"
-            style={{ fontFamily: "cursive" }}
+            className="text-3xl md:text-6xl text-primary lg:text-8xl font-extrabold "
+            style={{ fontFamily: "font-lora" }}
           >
             <q>Outsmash</q>
           </h1>
