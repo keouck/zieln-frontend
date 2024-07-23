@@ -63,15 +63,11 @@ const EventCard = ({ event }: EventCardProps) => {
 
   return (
     <Link href={`/events/${event.id}`}>
-      <div className="cursor-pointer bg-white shadow-md rounded-2xl overflow-hidden transition duration-300 transform group hover:shadow-lg hover:scale-105 relative">
+      <div className="cursor-pointer bg-white shadow-md rounded-2xl  transition duration-300 transform group hover:shadow-lg hover:scale-105 relative overflow-hidden">
         <img
-          className="w-full bg-gray-100 h-32 md:h-40 object-cover object-center group-hover:scale-105 transition duration-300"
-          src={
-            event?.attributes?.banner?.data?.attributes?.url
-              ? `${event?.attributes?.banner?.data?.attributes?.url}`
-              : `/logo.png`
-          }
-          alt={event.attributes?.title}
+          className="w-full h-32 md:h-40 object-cover object-center group-hover:scale-105 transition duration-300"
+          src={event.image}
+          alt={event.title}
         />
 
         <div className="flex mt-4 absolute top-0 right-4">
@@ -89,6 +85,12 @@ const EventCard = ({ event }: EventCardProps) => {
               {daysUntilEvent} Days to go
             </div>
           )}
+        </div>
+
+        <div className="absolute left-0 top-0 h-16 w-16">
+          <div className="bg-indigo-700 text-xs absolute transform -rotate-45 text-center text-white font-semibold py-1 left-[-34px] top-[32px] w-[170px]">
+            {event?.postedBy}
+          </div>
         </div>
 
         <div className="p-4">

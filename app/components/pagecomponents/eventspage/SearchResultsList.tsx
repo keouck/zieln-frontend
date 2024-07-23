@@ -20,6 +20,7 @@ interface Event {
   interested: number;
   registered: number;
   audience: string;
+  postedBy: string;
 }
 
 const SearchResultsList: React.FC = () => {
