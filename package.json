@@ -1,5 +1,5 @@
 {
-  "name": "Outsmash-frontend",
+  "name": "outsmash-frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -12,7 +12,7 @@
     "@clerk/nextjs": "^5.1.3",
     "antd": "^5.17.4",
     "axios": "^1.7.2",
-    "dayjs": "^1.11.11",
+    "dayjs": "^1.11.12",
     "lodash": "^4.17.21",
     "next": "14.2.3",
     "preline": "^2.3.0",
