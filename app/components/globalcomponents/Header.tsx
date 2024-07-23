@@ -105,7 +105,7 @@ const Header: React.FC = () => {
               </>
             ) : (
               <>
-                <div className="hidden lg:block">
+                <div className="">
                   <PrimaryOutlineButton
                     link="/create-event"
                     buttonName="+ Add Opportunity"
@@ -135,6 +135,14 @@ const Header: React.FC = () => {
             {navItems.map((item) => (
               <NavItem key={item.link} name={item.name} link={item.link} />
             ))}
+            <div className="block mt-2">
+              <LoginRequiredAlert
+                action={handleCreateEvent}
+                buttonContent={
+                  <PrimaryOutlineButton buttonName="+ Add Opportunity" />
+                }
+              />
+            </div>
           </Drawer>
         </div>
       </div>
