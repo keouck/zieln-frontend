@@ -38,13 +38,17 @@ export default function Stats() {
         </div>
         <div className="w-full lg:w-4/5">
           <div className="flex flex-col gap-10 lg:gap-0 lg:flex-row lg:justify-between">
-            {stats?.data?.[0].attributes?.statistics?.map((stat: any) => (
-              <StatCard
-                key={stat?.id}
-                value={stat?.number}
-                label={stat?.title}
-              />
-            ))}
+            {stats?.data.length ? (
+              stats?.data?.[0].attributes?.statistics?.map((stat: any) => (
+                <StatCard
+                  key={stat?.id}
+                  value={stat?.number}
+                  label={stat?.title}
+                />
+              ))
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </div>

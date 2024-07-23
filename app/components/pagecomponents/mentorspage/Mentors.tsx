@@ -17,10 +17,7 @@ const Mentors = () => {
   const [mentorData, setMentorData] = useState<any[]>([]);
   const [pageSize, setPageSize] = useState(10);
 
-  const { data, loading } = useFetch(
-    "/mentors?populate=socialLinks,image",
-    true
-  );
+  const { data, loading } = useFetch("/mentors?populate=*", true);
 
   useEffect(() => {
     if (data) setMentorData((data as any).data);

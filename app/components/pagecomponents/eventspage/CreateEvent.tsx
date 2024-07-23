@@ -1,43 +1,38 @@
 "use client";
 
 import { nextStepsData } from "@/app/data/nextStepsData.";
+import useFetch from "@/app/hooks/useFetch";
+import { BACKEND_URI } from "@/constant";
 import { useAuth, useUser } from "@clerk/nextjs";
 import { DatePicker, Form, Input, Timeline } from "antd";
 import { Dayjs } from "dayjs";
 import Image from "next/image";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 interface FormValues {
-  yourName: string;
-  yourEmail: string;
-  contactNumber: string;
-  address: string;
-  eventName: string;
-  eventAddress: string;
-  eventDate: string;
-  eventTime: string;
-  company: string;
-  eventDescription: string;
-  registrationLink: string;
-  paymentLink: string;
+  title: string;
+  description: string;
+  date: string;
+  location: string;
+  organization_name: string;
+  registration_link: string;
+  payment_link: string;
 }
 
 export default function CreateEvent() {
+  const { post } = useFetch("/events");
+  const { post: imageUpload } = useFetch("/upload");
   const { user } = useUser();
   const [form] = Form.useForm();
   const [formValues, setFormValues] = useState<FormValues>({
-    yourName: "",
-    yourEmail: "",
-    contactNumber: "",
-    address: "",
-    eventName: "",
-    eventAddress: "",
-    eventDate: "",
-    eventTime: "",
-    company: "",
-    eventDescription: "",
-    registrationLink: "",
-    paymentLink: "",
+    title: "",
+    description: "",
+    date: "",
+    location: "",
+    organization_name: "",
+    registration_link: "",
+    payment_link: "",
   });
 
   const [eventLogo, setEventLogo] = useState<File | null>(null);
@@ -49,6 +44,28 @@ export default function CreateEvent() {
   );
   const [eventLogoName, setEventLogoName] = useState<string | null>(null);
   const [eventBannerName, setEventBannerName] = useState<string | null>(null);
+
+  const uploadImage = async (file: File | null): Promise<string | null> => {
+    if (!file) return null;
+
+    const formData = new FormData();
+    formData.append("files", file);
+
+    console.log(formData);
+    try {
+      const rawResponse: any = await fetch(BACKEND_URI + "/api/upload", {
+        method: "post",
+        body: formData,
+      });
+
+      const response = await rawResponse.json();
+      console.log(response[0].id);
+      return response[0].id; // Adjust if needed based on actual response
+    } catch (error) {
+      console.error("Image upload failed:", error);
+      return null;
+    }
+  };
 
   const handleFormChange = (changedValues: Partial<FormValues>) => {
     setFormValues({
@@ -86,8 +103,7 @@ export default function CreateEvent() {
             eventLogo: eventLogoDataURL,
             eventBanner: eventBannerDataURL,
           };
-          console.log("Form submitted with values:", submittedValues);
-          handlePost();
+          handlePost(submittedValues);
           // Perform your submission logic here
         });
       })
@@ -97,8 +113,35 @@ export default function CreateEvent() {
   };
 
   const handlePost = async (data?: any) => {
-    const session = await user?.getSessions();
-    console.log(session);
+    const userId = "bibekshhh"; // Adjust based on how you get the user ID
+    try {
+      // Upload images and get their IDs
+      const eventLogoId = await uploadImage(eventLogo);
+      const eventBannerId = await uploadImage(eventBanner);
+
+      const payload = {
+        event_id: formValues?.title.replace(/\s+/g, "-").toLowerCase(), // example UID generation
+        title: formValues.title,
+        description: formValues.description,
+        date: formValues.date,
+        location: data.location,
+        organization_name: data.organization_name,
+        registration_link: data.registration_link,
+        payment_link: data.payment_link,
+        user_id: userId,
+        logo: eventLogoId,
+        banner: eventBannerId,
+      };
+      const postData: any = await post({ data: { ...payload } });
+      if (postData?.data) {
+        return toast.error("Failed to post opportunity.");
+      }
+      return toast.success("Posted opportunity successfully.");
+    } catch (error) {
+      return toast.error("Something went wrong!");
+      // console.error("Error creating event:", error);
+      // Handle error response (e.g., show an error message)
+    }
   };
 
   const handleFileChange = (
@@ -127,11 +170,9 @@ export default function CreateEvent() {
       // Handle the case where dateString is an array
       return;
     }
-    const [datePart, timePart] = dateString.split(" ");
     setFormValues({
       ...formValues,
-      eventDate: datePart,
-      eventTime: timePart,
+      date: dateString,
     });
   };
 
@@ -179,16 +220,16 @@ export default function CreateEvent() {
                     <Input
                       name="eventName"
                       placeholder="Enter event name"
-                      value={formValues.eventName}
+                      value={formValues.title}
                       onChange={(e) =>
-                        handleFormChange({ eventName: e.target.value })
+                        handleFormChange({ title: e.target.value })
                       }
                     />
                   </Form.Item>
 
                   <Form.Item
                     label="Event address"
-                    name="eventAddress"
+                    name="location"
                     rules={[
                       {
                         required: true,
@@ -197,11 +238,11 @@ export default function CreateEvent() {
                     ]}
                   >
                     <Input
-                      name="eventAddress"
+                      name="location"
                       placeholder="Enter event address"
-                      value={formValues.eventAddress}
+                      value={formValues.location}
                       onChange={(e) =>
-                        handleFormChange({ eventAddress: e.target.value })
+                        handleFormChange({ location: e.target.value })
                       }
                     />
                   </Form.Item>
@@ -217,29 +258,28 @@ export default function CreateEvent() {
                     ]}
                   >
                     <DatePicker
-                      showTime
-                      format="YYYY-MM-DD HH:mm:ss"
+                      format="YYYY-MM-DD"
                       onChange={handleDateChange}
                       className="w-full"
                     />
                   </Form.Item>
 
                   <Form.Item
-                    label="Company / Organization"
-                    name="company"
+                    label="Organization"
+                    name="organization_name"
                     rules={[
                       {
                         required: true,
-                        message: "Please enter the company name",
+                        message: "Please enter the organization_name name",
                       },
                     ]}
                   >
                     <Input
-                      name="company"
-                      placeholder="Enter company name"
-                      value={formValues.company}
+                      name="organization_name"
+                      placeholder="Enter organization_name name"
+                      value={formValues.organization_name}
                       onChange={(e) =>
-                        handleFormChange({ company: e.target.value })
+                        handleFormChange({ organization_name: e.target.value })
                       }
                     />
                   </Form.Item>
@@ -296,7 +336,7 @@ export default function CreateEvent() {
 
                   <Form.Item
                     label="Registration Link"
-                    name="registrationLink"
+                    name="registration_link"
                     rules={[
                       {
                         required: true,
@@ -307,18 +347,18 @@ export default function CreateEvent() {
                     ]}
                   >
                     <Input
-                      name="registrationLink"
+                      name="registration_link"
                       placeholder="Enter registration link"
-                      value={formValues.registrationLink}
+                      value={formValues.registration_link}
                       onChange={(e) =>
-                        handleFormChange({ eventName: e.target.value })
+                        handleFormChange({ registration_link: e.target.value })
                       }
                     />
                   </Form.Item>
 
                   <Form.Item
                     label="Payment Link"
-                    name="paymentLink"
+                    name="payment_link"
                     rules={[
                       {
                         message: "Please enter the payment link",
@@ -328,11 +368,11 @@ export default function CreateEvent() {
                     ]}
                   >
                     <Input
-                      name="paymentLink"
+                      name="payment_link"
                       placeholder="Enter payment link"
-                      value={formValues.paymentLink}
+                      value={formValues.payment_link}
                       onChange={(e) =>
-                        handleFormChange({ paymentLink: e.target.value })
+                        handleFormChange({ payment_link: e.target.value })
                       }
                     />
                   </Form.Item>
@@ -352,9 +392,9 @@ export default function CreateEvent() {
                       name="eventDescription"
                       placeholder="Enter event description"
                       rows={5}
-                      value={formValues.eventDescription}
+                      value={formValues.description}
                       onChange={(e) =>
-                        handleFormChange({ eventDescription: e.target.value })
+                        handleFormChange({ description: e.target.value })
                       }
                     />
                   </Form.Item>

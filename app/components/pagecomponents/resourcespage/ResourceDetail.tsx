@@ -59,17 +59,20 @@ const ResourceDetail = ({ resource }: ResourceDetailProps) => {
                   className="flex flex-col border-b border-gray-400"
                 >
                   <div>{item.description}</div>
-
-                  <div className="my-2">
-                    <span className="font-semibold">Link here:</span>{" "}
-                    <Link
-                      href={item.link}
-                      target="_blank"
-                      className="text-blue-600"
-                    >
-                      {item.link}
-                    </Link>
-                  </div>
+                  {item.link ? (
+                    <div className="my-2">
+                      <span className="font-semibold">Link here:</span>{" "}
+                      <Link
+                        href={item.link}
+                        target="_blank"
+                        className="text-blue-600"
+                      >
+                        {item.link}
+                      </Link>
+                    </div>
+                  ) : (
+                    <></>
+                  )}
                 </div>
               );
             })}
