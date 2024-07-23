@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import EventCard from "../eventspage/EventCard";
-import { eventsData } from "@/app/data/eventsData";
+import useFetch from "@/app/hooks/useFetch";
+import { useUser } from "@clerk/nextjs";
 
 type ProfileTabsProps = {
   curriculum: string[]; // Assuming this is passed as a prop
@@ -10,10 +11,37 @@ type ProfileTabsProps = {
 const ProfileTabs: React.FC<ProfileTabsProps> = ({ curriculum, role }) => {
   const [activeTab, setActiveTab] = useState("About");
 
+  const {user} = useUser();
+
+    // fetch events
+    const {
+      data: event,
+      loading: eventLoading,
+      error: eventError,
+    } = useFetch<any>(`/events?filters[user_id][$eq]=${user!.username}&populate=*`, true);
+
+    console.log(event)
+
   const renderTabContent = () => {
     switch (activeTab) {
       case "About":
         return <p>About Content</p>;
+      case "Created Events":
+        return (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {event.data.map((item: any) => (
+              <EventCard key={item.id} event={item} />
+            ))}
+          </div>
+        );
+      case "Attended Events":
+        return (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {eventsData.slice(0, 6).map((event) => (
+              <EventCard key={event.id} event={event} />
+            ))}
+          </div>
+        );
       case "Saved Events":
         return (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -52,14 +80,14 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ curriculum, role }) => {
             About
           </button>
           <button
-            onClick={() => setActiveTab("Saved Events")}
+            onClick={() => setActiveTab("Created Events")}
             className={`pb-2 border-b-2 ${
               activeTab === "Saved Events"
                 ? "border-gray-900 text-black font-medium"
                 : "border-transparent text-gray-700"
             } hover:border-gray-900`}
           >
-            Saved Events
+            Created Events
           </button>
           <button
             onClick={() => setActiveTab("Interested Events")}

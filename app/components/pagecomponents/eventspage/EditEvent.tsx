@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { eventsData } from "@/app/data/eventsData";
 import dayjs from "dayjs";
+import useFetch from "@/app/hooks/useFetch";
 
 interface FormValues {
   eventName: string;
@@ -13,6 +14,8 @@ interface FormValues {
   eventTime: string;
   company: string;
   eventDescription: string;
+  registration_link: string;
+  payment_link: string;
 }
 
 interface EditEventProps {
@@ -29,6 +32,8 @@ const EditEvent = ({ eventId }: EditEventProps) => {
     eventTime: "",
     company: "",
     eventDescription: "",
+    registration_link: "",
+    payment_link: "",
   });
 
   const [eventLogoName, setEventLogoName] = useState<string | null>(null);
@@ -37,20 +42,27 @@ const EditEvent = ({ eventId }: EditEventProps) => {
   const [eventBannerPreview, setEventBannerPreview] = useState<string | null>(
     null
   );
+  const {
+    data: eventData,
+    loading: eventLoading,
+    error: eventError,
+    update,
+  } = useFetch<any>(`/events/${eventId}?populate=*`, true);
 
   useEffect(() => {
     // Fetch event data from static eventsData
-    const event = eventsData.find((e) => e.id === eventId);
-    console.log("hii", event);
 
-    if (event) {
+    if (eventData) {
+      let event = eventData.data.attributes;
       const initialValues = {
         eventName: event.title,
         eventAddress: event.location,
-        eventDate: "", // Left uninitialized
+        eventDate: event.date, // Left uninitialized
         eventTime: "", // Left uninitialized
-        company: "", // Assuming company name is not available in event data
-        eventDescription: "", // Assuming description is not available in event data
+        company: event.organization_name, // Assuming company name is not available in event data
+        eventDescription: event.description, // Assuming description is not available in event data
+        registration_link: event.registration_link,
+        payment_link: event.payment_link,
       };
 
       setFormValues(initialValues);
@@ -60,7 +72,7 @@ const EditEvent = ({ eventId }: EditEventProps) => {
       setEventLogoName(null); // Placeholder for uninitialized
       setEventBannerName(null); // Placeholder for uninitialized
     }
-  }, [eventId, form]);
+  }, [eventId, form, eventData]);
 
   const handleFormChange = (changedValues: Partial<FormValues>) => {
     setFormValues({
@@ -99,9 +111,27 @@ const EditEvent = ({ eventId }: EditEventProps) => {
           eventBanner: eventBannerName || null,
         };
 
+        const payload = {
+          ...eventData.data.attributes,
+          description: values.description,
+          payment_link: values.payment_link,
+          registration_link: values.registration_link,
+          date: values.eventDate,
+          organization_name: values.company,
+          title: values.eventName,
+          banner: eventData.data.attributes.banner.data.id,
+          logo: eventData.data.attributes.logo.data.id,
+        };
+
+        update({
+          data: {
+            ...payload,
+          },
+        });
+
         // Here you would normally send the updatedEvent to your backend
         // For now, just logging it to the console
-        console.log("Event updated successfully:", updatedEvent);
+        console.log("Event updated successfully:", values);
       })
       .catch((errorInfo) => {
         console.log("Validation failed:", errorInfo);
@@ -160,6 +190,44 @@ const EditEvent = ({ eventId }: EditEventProps) => {
                       }
                     />
                   </Form.Item>
+                  <Form.Item
+                    label="Payment link"
+                    name="payment_link"
+                    rules={[
+                      {
+                        required: true,
+                        message: "",
+                      },
+                    ]}
+                  >
+                    <Input
+                      name="Payment link"
+                      placeholder="Enter link"
+                      value={formValues.payment_link}
+                      onChange={(e) =>
+                        handleFormChange({ payment_link: e.target.value })
+                      }
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    label="Registration link"
+                    name="registration_link"
+                    rules={[
+                      {
+                        required: true,
+                        message: "",
+                      },
+                    ]}
+                  >
+                    <Input
+                      name="registration_link"
+                      placeholder="Enter link"
+                      value={formValues.registration_link}
+                      onChange={(e) =>
+                        handleFormChange({ registration_link: e.target.value })
+                      }
+                    />
+                  </Form.Item>
 
                   <Form.Item
                     label="Event date and time"
@@ -193,56 +261,6 @@ const EditEvent = ({ eventId }: EditEventProps) => {
                         handleFormChange({ company: e.target.value })
                       }
                     />
-                  </Form.Item>
-
-                  <Form.Item label="Event Logo">
-                    <label className="block cursor-pointer">
-                      <input
-                        type="file"
-                        accept="image/*"
-                        style={{ display: "none" }}
-                        onChange={(e) => handleFileChange(e, "eventLogo")}
-                      />
-                      <div className="border border-gray-300 p-2 text-gray-700">
-                        {eventLogoName || "Choose event logo"}
-                      </div>
-                      {eventLogoPreview && (
-                        <div className="mt-2">
-                          <Image
-                            src={eventLogoPreview}
-                            alt="Event Logo Preview"
-                            width={100}
-                            height={100}
-                            className="rounded"
-                          />
-                        </div>
-                      )}
-                    </label>
-                  </Form.Item>
-
-                  <Form.Item label="Event Banner">
-                    <label className="block cursor-pointer">
-                      <input
-                        type="file"
-                        accept="image/*"
-                        style={{ display: "none" }}
-                        onChange={(e) => handleFileChange(e, "eventBanner")}
-                      />
-                      <div className="border border-gray-300 p-2 text-gray-700">
-                        {eventBannerName || "Choose event banner"}
-                      </div>
-                      {eventBannerPreview && (
-                        <div className="mt-2">
-                          <Image
-                            src={eventBannerPreview}
-                            alt="Event Banner Preview"
-                            width={100}
-                            height={100}
-                            className="rounded"
-                          />
-                        </div>
-                      )}
-                    </label>
                   </Form.Item>
 
                   <Form.Item
