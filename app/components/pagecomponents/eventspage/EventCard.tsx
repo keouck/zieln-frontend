@@ -92,14 +92,13 @@ const EventCard = ({ event, refetch }: EventCardProps) => {
     router.push(`/edit-event/${event.id}`);
   };
 
-  console.log("here: ", event);
   return (
     <div className="relative">
       <Link href={`/events/${event.id}`} onClick={(e) => e.stopPropagation()}>
         <div className="cursor-pointer bg-white shadow-md rounded-2xl  transition duration-300 transform group hover:shadow-lg hover:scale-105 relative overflow-hidden">
           <img
             className="w-full h-32 md:h-40 object-cover object-center group-hover:scale-105 transition duration-300"
-            src={event.attributes.banner.data.attributes.url}
+            src={event?.attributes.banner.data.attributes.url}
             alt="event card image"
           />
 

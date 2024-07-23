@@ -60,17 +60,25 @@ const Footer: React.FC = () => {
                   className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200"
                   href="/events"
                 >
-                  Events
+                  Opportunities
                 </Link>
               </p>
-              {/* <p>
+              <p>
                 <Link
                   className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200"
-                  href="#"
+                  href="/resources"
+                >
+                  Resources
+                </Link>
+              </p>
+              <p>
+                <Link
+                  className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200"
+                  href="/mentors"
                 >
                   Mentorship
                 </Link>
-              </p> */}
+              </p>
             </div>
           </div>
           {/* <!-- End Col --> */}
@@ -87,6 +95,7 @@ const Footer: React.FC = () => {
                   About us
                 </Link>
               </p>
+
               <p>
                 <Link
                   className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200"

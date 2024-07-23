@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FaMapMarkerAlt,
   FaRegCalendarCheck,
@@ -15,6 +15,9 @@ import {
 import { FaBookmark } from "react-icons/fa6";
 import Loader from "../../globalcomponents/Loader";
 import LoginRequiredAlert from "../../globalcomponents/LoginRequiredAlert"; // Adjust the path accordingly
+import useFetch from "@/app/hooks/useFetch";
+import { useUser } from "@clerk/nextjs";
+import { useParams } from "next/navigation";
 
 interface EventDetailProps {
   event: {
@@ -59,23 +62,77 @@ const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
     Number(event?.interested_by.data.length) || 0
   ); // State to track the count of interested users
 
+  const { event: eventId } = useParams();
+
+  const [currentClerkUserId, setCurrentClerkUserId] = useState<string | null>(
+    null
+  );
+
+  const { user } = useUser();
+
+  console.log(user);
+
+  const { data: clerkUserData } = useFetch(
+    `/clerk-users?filters[username][$eq]=${user?.username || "dummy"}`,
+    true
+  );
+
+  const { data: prevData, update } = useFetch(
+    `/events/${eventId}?populate=*`,
+    true
+  );
+
+  useEffect(() => {
+    if (!clerkUserData) return;
+
+    if ((clerkUserData as any).data.length === 0) {
+      setCurrentClerkUserId(null);
+      return;
+    }
+
+    const userData = (clerkUserData as any).data.filter(
+      (item: any) => item.attributes.username === user!.username
+    );
+
+    if (userData.length === 0) {
+      setCurrentClerkUserId(null);
+      return;
+    }
+
+    setCurrentClerkUserId(userData[0].id);
+  }, [clerkUserData, user]);
+
   const toggleSaved = () => {
-    setSaved(!saved); // Toggle the saved state
+    const payload = { ...(prevData as any).data.attributes };
+
+    update({
+      data: {
+        ...payload,
+        saved_by: {
+          connect: [currentClerkUserId],
+        },
+        banner: payload.banner.data.id,
+        logo: payload.logo.data.id,
+      },
+    });
   };
 
-  const toggleInterested = () => {
-    if (interested) {
-      setInterested(false); // If already interested, toggle to uninterested
-      setInterestedCount(interestedCount - 1); // Decrement the interested count
-    } else {
-      setInterested(true); // If not interested, toggle to interested
-      setInterestedCount(interestedCount + 1); // Increment the interested count
-    }
+  const toggleInterested = async () => {
+    const payload = { ...(prevData as any).data.attributes };
+
+    update({
+      data: {
+        ...payload,
+        interested_by: {
+          connect: [currentClerkUserId],
+        },
+        banner: payload.banner.data.id,
+        logo: payload.logo.data.id,
+      },
+    });
   };
 
   if (!event) return <Loader />;
-
-  console.log(event);
 
   return (
     <section className="pb-8 lg:pb-16">
@@ -144,7 +201,9 @@ const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
             buttonContent={
               <PrimaryOutlineButton
                 icon={saved ? <FaBookmark /> : <FiBookmark />}
-                buttonName={saved ? "Saved For Later" : "Save For Later"}
+                buttonName={`${
+                  saved ? "Saved For Later" : "Save For Later "
+                } (${event.saved_by.data.length})`}
               />
             }
           />
@@ -153,7 +212,9 @@ const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
             buttonContent={
               <PrimaryOutlineButton
                 icon={interested ? <FaStar /> : <FaRegStar />}
-                buttonName={`Interested (${interestedCount})`}
+                buttonName={`Interested (${
+                  (event.interested_by as any).data.length
+                })`}
               />
             }
           />

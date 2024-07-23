@@ -24,7 +24,15 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ curriculum, role }) => {
     true
   );
 
-  console.log(event);
+  // fetch all events
+  const {
+    data: profileData,
+    loading: profileLoading,
+    error: profileError,
+  } = useFetch<any>(
+    `/clerk-users?filters[username][$eq]=${user!.username}&populate=*`,
+    true
+  );
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -57,9 +65,11 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ curriculum, role }) => {
       case "Interested Events":
         return (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {eventsData.slice(0, 6).map((event) => (
-              <EventCard key={event.id} event={event} />
-            ))}
+            {profileData.data[0].attributes.interested_events.data.map(
+              (item: any) => (
+                <EventCard key={item.id} event={item} />
+              )
+            )}
           </div>
         );
       case "Curriculum/Board":
@@ -93,7 +103,7 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ curriculum, role }) => {
           >
             Created Events
           </button>
-          <button
+          {/* <button
             onClick={() => setActiveTab("Interested Events")}
             className={`pb-2 border-b-2 ${
               activeTab === "Interested Events"
@@ -102,7 +112,7 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ curriculum, role }) => {
             } hover:border-gray-900`}
           >
             Interested Events
-          </button>
+          </button> */}
           {curriculum?.length > 0 && (
             <button
               onClick={() => setActiveTab("Curriculum/Board")}
