@@ -20,7 +20,6 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ curriculum, role }) => {
       error: eventError,
     } = useFetch<any>(`/events?filters[user_id][$eq]=${user!.username}&populate=*`, true);
 
-    console.log(event)
 
   const renderTabContent = () => {
     switch (activeTab) {
