@@ -33,7 +33,7 @@ const EditEvent = ({ eventId }: EditEventProps) => {
     company: "",
     eventDescription: "",
     registration_link: "",
-    payment_link: ""
+    payment_link: "",
   });
 
   const [eventLogoName, setEventLogoName] = useState<string | null>(null);
@@ -46,9 +46,8 @@ const EditEvent = ({ eventId }: EditEventProps) => {
     data: eventData,
     loading: eventLoading,
     error: eventError,
-    update
+    update,
   } = useFetch<any>(`/events/${eventId}?populate=*`, true);
-
 
   useEffect(() => {
     // Fetch event data from static eventsData
@@ -63,7 +62,7 @@ const EditEvent = ({ eventId }: EditEventProps) => {
         company: event.organization_name, // Assuming company name is not available in event data
         eventDescription: event.description, // Assuming description is not available in event data
         registration_link: event.registration_link,
-        payment_link: event.payment_link
+        payment_link: event.payment_link,
       };
 
       setFormValues(initialValues);
@@ -112,18 +111,23 @@ const EditEvent = ({ eventId }: EditEventProps) => {
           eventBanner: eventBannerName || null,
         };
 
+        const payload = {
+          ...eventData.data.attributes,
+          description: values.description,
+          payment_link: values.payment_link,
+          registration_link: values.registration_link,
+          date: values.eventDate,
+          organization_name: values.company,
+          title: values.eventName,
+          banner: eventData.data.attributes.banner.data.id,
+          logo: eventData.data.attributes.logo.data.id,
+        };
 
         update({
           data: {
-            title: values.eventName,
-            description: values.description,
-            payment_link: values.payment_link,
-            registration_link: values.registration_link,
-            date: values.eventDate,
-            organization_name: values.company
-          }
-        })
-         
+            ...payload,
+          },
+        });
 
         // Here you would normally send the updatedEvent to your backend
         // For now, just logging it to the console

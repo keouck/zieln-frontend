@@ -41,16 +41,12 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
         <small className="text-center">{role}</small>
         <div className="my-4">
           <p className="flex justify-between">
-            <span className="font-medium">Profile views</span>
-            <span>489</span>
-          </p>
-          <p className="flex justify-between">
             <span className="font-medium">Events Organized</span>
             <span>6</span>
           </p>
           <p className="flex justify-between">
             <span className="font-medium">
-              {isOrganization ? "Events Attendees" : "Events Attended"}
+              {isOrganization ? "Total Attendees" : "Events Attended"}
             </span>
             <span>50</span>
           </p>

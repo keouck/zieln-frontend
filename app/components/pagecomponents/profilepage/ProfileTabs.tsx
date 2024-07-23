@@ -20,6 +20,8 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ curriculum, role }) => {
       error: eventError,
     } = useFetch<any>(`/events?filters[user_id][$eq]=${user!.username}&populate=*`, true);
 
+    console.log(event)
+
   const renderTabContent = () => {
     switch (activeTab) {
       case "About":
@@ -80,34 +82,12 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ curriculum, role }) => {
           <button
             onClick={() => setActiveTab("Created Events")}
             className={`pb-2 border-b-2 ${
-              activeTab === "Created Events"
-                ? "border-gray-900 text-black font-medium"
-                : "border-transparent text-gray-700"
-            } hover:border-gray-900`}
-          >
-            Created Events
-          </button>
-          {role !== "ORGANIZATION" && (
-            <button
-              onClick={() => setActiveTab("Attended Events")}
-              className={`pb-2 border-b-2 ${
-                activeTab === "Attended Events"
-                  ? "border-gray-900 text-black font-medium"
-                  : "border-transparent text-gray-700"
-              } hover:border-gray-900`}
-            >
-              Attended Events
-            </button>
-          )}
-          <button
-            onClick={() => setActiveTab("Saved Events")}
-            className={`pb-2 border-b-2 ${
               activeTab === "Saved Events"
                 ? "border-gray-900 text-black font-medium"
                 : "border-transparent text-gray-700"
             } hover:border-gray-900`}
           >
-            Saved Events
+            Created Events
           </button>
           <button
             onClick={() => setActiveTab("Interested Events")}

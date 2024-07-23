@@ -120,11 +120,19 @@ const UserProfilePage = () => {
 
   const isCurrentUser = user?.username === username;
 
+  const fullName = (clerkProfile: any) => {
+    const { firstName, lastName } = clerkProfile || {};
+    if (firstName && lastName) {
+      return `${firstName} ${lastName}`;
+    }
+    return lastName || firstName || "";
+  };
+
   return (
     <PageLayout>
       {clerkProfile && (
         <UsersProfile
-          fullName={clerkProfile?.firstName + " " + clerkProfile?.lastName}
+          fullName={fullName(clerkProfile)}
           profileImg={clerkProfile?.imageUrl}
           username={clerkProfile?.username as string}
           email={clerkProfile?.emailAddresses[0]?.emailAddress as string}
@@ -142,7 +150,7 @@ const UserProfilePage = () => {
 
       {user && !clerkProfile && (
         <UsersProfile
-          fullName={user?.firstName + " " + user?.lastName}
+          fullName={fullName(user)}
           profileImg={user?.imageUrl}
           username={user?.username as string}
           email={user?.primaryEmailAddress?.emailAddress as string}

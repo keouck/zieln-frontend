@@ -14,6 +14,7 @@ interface EventAttribute {
   interested: string;
   registered: string;
   user_id?: string;
+  postedBy: string;
   banner: {
     data: {
       id: number;
@@ -36,6 +37,7 @@ import isBetween from "dayjs/plugin/isBetween";
 import { useRouter } from "next/navigation";
 import { Modal } from "antd";
 import { BACKEND_URI } from "@/constant";
+import { useUser } from "@clerk/nextjs";
 
 dayjs.extend(isBetween);
 
@@ -50,6 +52,7 @@ interface EventCardProps {
 }
 
 const EventCard = ({ event, refetch }: EventCardProps) => {
+  const { user } = useUser();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const router = useRouter();
   const today = dayjs().startOf("day");
@@ -73,7 +76,7 @@ const EventCard = ({ event, refetch }: EventCardProps) => {
 
   const handleOk = async () => {
     const url = `${BACKEND_URI}/api/events/${event.id}`;
-    await fetch(url, {method: "DELETE"});
+    await fetch(url, { method: "DELETE" });
     refetch && refetch();
     setIsModalVisible(false);
   };
@@ -85,6 +88,8 @@ const EventCard = ({ event, refetch }: EventCardProps) => {
   const handleEdit = () => {
     router.push(`/edit-event/${event.id}`);
   };
+
+  console.log("here: ", event);
   return (
     <div className="relative">
       <Link href={`/events/${event.id}`} onClick={(e) => e.stopPropagation()}>
@@ -153,39 +158,43 @@ const EventCard = ({ event, refetch }: EventCardProps) => {
           </div>
         </div>
       </Link>
-      <Modal
-        title="Confirm Deletion"
-        visible={isModalVisible}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        okText="Delete"
-        okButtonProps={{ danger: true }}
-      >
-        <p>Are you sure you want to delete this event?</p>
-      </Modal>
-      <div
-        className="flex items-center justify-end mt-2 space-x-2 absolute bottom-3 right-3"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            handleEdit();
-          }}
-          className="text-blue-500 hover:text-blue-700"
-        >
-          <FiEdit className="w-5 h-5" />
-        </button>
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            showModal();
-          }}
-          className="text-red-500 hover:text-red-700"
-        >
-          <FiTrash className="w-5 h-5" />
-        </button>
-      </div>
+      {event.attributes.user_id === user?.username && (
+        <>
+          <Modal
+            title="Confirm Deletion"
+            visible={isModalVisible}
+            onOk={handleOk}
+            onCancel={handleCancel}
+            okText="Delete"
+            okButtonProps={{ danger: true }}
+          >
+            <p>Are you sure you want to delete this event?</p>
+          </Modal>
+          <div
+            className="flex items-center justify-end mt-2 space-x-2 absolute bottom-3 right-3"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                handleEdit();
+              }}
+              className="text-blue-500 hover:text-blue-700"
+            >
+              <FiEdit className="w-5 h-5" />
+            </button>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                showModal();
+              }}
+              className="text-red-500 hover:text-red-700"
+            >
+              <FiTrash className="w-5 h-5" />
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 };
