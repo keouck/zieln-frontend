@@ -114,9 +114,7 @@ export default function CreateEvent() {
   };
 
   const handlePost = async (data?: any) => {
-    toastId.current = toast.loading("Uploading images..", {
-      position: "top-right",
-    });
+    toastId.current = toast.loading("Uploading images..");
 
     const userId = user!.username; // Adjust based on how you get the user ID
     try {
@@ -141,7 +139,7 @@ export default function CreateEvent() {
 
       toast.dismiss(toastId.current);
 
-      if (!postData?.data) {
+      if (postData?.error) {
         return toast.error("Failed to post opportunity.");
       }
       return toast.success("Posted opportunity successfully.");
