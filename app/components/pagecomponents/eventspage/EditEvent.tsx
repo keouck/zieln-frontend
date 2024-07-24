@@ -131,7 +131,7 @@ const EditEvent = ({ eventId }: EditEventProps) => {
         // Here you would normally send the updatedEvent to your backend
         // For now, just logging it to the console
         console.log(await resUpdate);
-        if (!resUpdate?.data) {
+        if (resUpdate?.error) {
           return toast.error("Failed to edit event.");
         }
         return toast.success("Event updated successfully");
