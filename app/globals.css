@@ -206,3 +206,38 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+.podcast > .swiper-button-prev,
+.podcast > .swiper-button-next {
+  position: absolute !important;
+  top: var(--swiper-navigation-top-offset, 50%) !important;
+  width: 40px !important; /* Decrease the size of the circle */
+  height: 40px !important; /* Decrease the size of the circle */
+  margin-top: calc(-20px) !important; /* Center the button vertically */
+  z-index: 10 !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.5
+  ) !important; /* Semi-transparent black background */
+  color: white !important; /* Change the color of the arrows to white */
+  border-radius: 50% !important; /* Make the button circular */
+  border: 2px solid #fff !important; /* Add a white border around the circular buttons */
+  transition: background-color 0.3s ease, transform 0.3s ease !important; /* Add transition for hover effects */
+}
+
+.podcast > .swiper-button-prev:hover,
+.podcast > .swiper-button-next:hover {
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.7
+  ) !important; /* Darker background on hover */
+  transform: scale(1.1) !important; /* Slightly enlarge on hover */
+}
