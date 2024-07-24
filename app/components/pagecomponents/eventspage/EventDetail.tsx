@@ -29,10 +29,15 @@ interface EventDetailProps {
     title: string;
     date: string;
     location: string;
+    registration_link: string;
+    payment_link: string;
     interested_by: {
       data: [];
     };
     registered_by: {
+      data: [];
+    };
+    saved_by: {
       data: [];
     };
     endDate?: string;
@@ -192,7 +197,8 @@ const EventDetail: React.FC<EventDetailProps> = ({ event }) => {
             buttonContent={
               <PrimaryButton
                 icon={<FaRegCalendarCheck />}
-                buttonName={`Register (${event.interested_by.data.length})`}
+                link={event.registration_link ?? "/"}
+                buttonName={`Register`}
               />
             }
           />

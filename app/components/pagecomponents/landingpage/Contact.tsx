@@ -1,7 +1,4 @@
-import {
-  IoLocationOutline,
-  IoMailOutline
-} from "react-icons/io5";
+import { IoLocationOutline, IoMailOutline } from "react-icons/io5";
 import ContactForm from "./ContactForm";
 
 export default function Contact() {

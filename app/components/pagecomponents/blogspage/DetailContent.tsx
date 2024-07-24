@@ -162,7 +162,6 @@ export default function DetailContent({ blog }: DetailContentProps) {
                 link: ({ children, url }) => (
                   <Link
                     href={url}
-                    target="_blank"
                     rel="noopener noreferrer"
                     className="text-black underline hover:no-underline"
                   >
