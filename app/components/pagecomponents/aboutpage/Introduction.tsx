@@ -6,12 +6,7 @@ export default function Introduction() {
         <div className="order-2 md:order-1">
           <h1 className="component-heading  mb-4">About Outsmash</h1>
           <p className="md:text-lg text-gray-700">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum veniam
-            at dicta totam numquam? Dolore veritatis vitae porro cupiditate
-            consequuntur, delectus asperiores, nam dignissimos amet corporis
-            assumenda odio voluptates recusandae. Quam sint non assumenda eaque
-            nihil! Explicabo qui, ullam, consequuntur officia reprehenderit
-            odio, iure sunt repellat nisi quaerat exercitationem sequi.
+          Outsmash empowers students by centralizing information on extracurricular and co-curricular activities, fostering a supportive online community, and providing a user-friendly platform to discover and participate in enriching experiences. We believe in unlocking student potential by encouraging active engagement, maximizing personal and professional growth, and ultimately transforming the way students experience school life.
           </p>
         </div>
         <div className="order-1 md:order-2">

@@ -151,7 +151,7 @@ const Header: React.FC = () => {
 };
 
 const navItems: NavItemProps[] = [
-  { name: "About", link: "/about" },
+  // { name: "About", link: "/about" },
   { name: "Opportunities", link: "/events" },
   { name: "Resources", link: "/resources" },
   { name: "Mentorship", link: "/mentors" },
@@ -194,10 +194,10 @@ const SearchBar: React.FC = () => {
     >
       <input
         type="text"
-        placeholder="Search opport..."
+        placeholder="Search opportunities..."
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
-        className="px-4 focus:outline-none placeholder:text-sm max-w-40"
+        className="px-4 focus:outline-none placeholder:text-sm max-w-70"
       />
       <button
         type="submit"

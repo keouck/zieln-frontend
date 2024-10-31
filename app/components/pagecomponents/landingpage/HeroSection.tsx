@@ -46,15 +46,15 @@ export default function HeroSection() {
         <div className="flex flex-col justify-center">
           <div className="relative">
             <h1 className="text-3xl lg:text-5xl font-[600] text-black dark:text-white">
-              <span className="text-primary">Empower Your Journey</span> Beyond
-              the Classroom
+              <span className="text-primary">Empower Your Journey Beyond
+              the Classroom</span>
             </h1>
-            <h2 className="lg:text-lg text-gray-700 dark:text-gray-300 mt-4">
+            <h2 className="lg:text-lg text-gray-700 dark:text-black-300 mt-4">
               Discover, Engage, and Grow with Outsmash, Your Hub for
               Extra-Curricular and Co-Curricular Opportunities
             </h2>
 
-            <div className="hidden absolute w-full end-0 right-32 lg:flex justify-end">
+            {/* <div className="hidden absolute w-full end-0 right-32 lg:flex justify-end">
               <svg
                 viewBox="0 0 202.819 45.163"
                 className="hero__underline w-60"
@@ -64,7 +64,7 @@ export default function HeroSection() {
                   fill="#273469"
                 ></path>
               </svg>
-            </div>
+            </div> */}
           </div>
 
           <div className="mt-4 flex">

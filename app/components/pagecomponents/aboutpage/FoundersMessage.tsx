@@ -17,11 +17,8 @@ export default function FoundersMessage() {
             Greetings from the Founders
           </h1>
           <p className="md:text-lg text-gray-700">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis
-            doloremque minus alias, esse explicabo dolor vero laborum repellat,
-            in animi porro. Dolorem explicabo aut fugiat delectus facilis
-            impedit illum, molestiae illo, eligendi neque aperiam
-            necessitatibus?
+          Ever felt like your school's a maze of missed opportunities? Us too. That's why we built Outsmash, your one-stop shop for crushing the extracurricular and co-curricular game! We want you to actively engage, discover your passions, and unlock your full potential.
+          So ditch the FOMO (fear of missing out) and join the Outsmash revolution! We'll help you turn "I wish" into a resounding "I did!"
           </p>
         </div>
       </div>
