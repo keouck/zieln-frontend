@@ -72,18 +72,23 @@ const Header: React.FC = () => {
       }`}
     >
       <div className="component-px flex items-center justify-between">
-        <div className="flex items-center gap-x-4">
-          <Link href="/">
-            <h1 className="text-2xl lg:text-4xl font-bold font-lora text-primary">
+        {/* Title and Search Bar */}
+        <div className="flex items-center gap-x-6 w-full">
+          <Link href="/" className="flex-shrink-1">
+            <h1
+              className="text-2xl lg:text-4xl font-bold font-lora text-primary"
+              style={{ whiteSpace: "nowrap", margin:"0px" }}
+            >
               Outsmash
             </h1>
           </Link>
-
-          <div className="hidden lg:block">
+          {/* Search Bar */}
+          <div className="hidden lg:block flex-grow">
             <SearchBar />
           </div>
         </div>
 
+        {/* Buttons and Drawer */}
         <div className="flex items-center space-x-4">
           <div className="buttons flex items-center space-x-4">
             <div className="hidden lg:flex">
@@ -127,7 +132,7 @@ const Header: React.FC = () => {
             <GrMenu size={24} />
           </button>
           <Drawer
-            title={<h1 className="text-xl font-bold font-lora">Outsmash</h1>}
+            title={<h1 className="text-2xl lg:text-4xl font-bold font-sans text-primary">Outsmash</h1>}
             onClose={onClose}
             open={open}
             className="lg:hidden"
@@ -151,7 +156,6 @@ const Header: React.FC = () => {
 };
 
 const navItems: NavItemProps[] = [
-  // { name: "About", link: "/about" },
   { name: "Opportunities", link: "/events" },
   { name: "Resources", link: "/resources" },
   { name: "Mentorship", link: "/mentors" },
@@ -190,18 +194,20 @@ const SearchBar: React.FC = () => {
   return (
     <form
       onSubmit={handleSearch}
-      className="flex items-center border border-gray-300 rounded-full overflow-hidden "
+      className="flex items-center border border-gray-300 rounded-full overflow-hidden bg-white w-full max-w-lg"
     >
+      {/* Input */}
       <input
         type="text"
         placeholder="Search opportunities..."
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
-        className="px-4 focus:outline-none placeholder:text-sm max-w-70"
+        className="px-4 py-2 focus:outline-none placeholder:text-sm flex-grow"
       />
+      {/* Button */}
       <button
         type="submit"
-        className="bg-primary lg:px-6 text-white rounded-r px-4 py-2 h-full"
+        className="bg-primary text-white px-4 py-2 flex items-center justify-center"
       >
         <FiSearch className="text-xl" />
       </button>

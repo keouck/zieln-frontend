@@ -9,6 +9,7 @@ export const mentorsData = [
     skills: ["React", "Node.js", "JavaScript"],
     location: "New York, USA",
     linkedin: "https://linkedin.com/in/johndoe",
+    CV: "google.com",
     email: "john.doe@example.com"
   },
   {
@@ -20,6 +21,7 @@ export const mentorsData = [
     skills: ["Python", "Machine Learning", "Data Analysis"],
     location: "San Francisco, USA",
     linkedin: "https://linkedin.com/in/janesmith",
+    CV: "google.com",
     email: "jane.smith@example.com"
   },
   {
@@ -31,6 +33,7 @@ export const mentorsData = [
     skills: ["Product Strategy", "Project Management", "Agile"],
     location: "Austin, USA",
     linkedin: "https://linkedin.com/in/markjohnson",
+    CV: "google.com",
     email: "mark.johnson@example.com"
   },
   {
@@ -42,6 +45,7 @@ export const mentorsData = [
     skills: ["Figma", "User Research", "Prototyping"],
     location: "Los Angeles, USA",
     linkedin: "https://linkedin.com/in/emmabrown",
+    CV: "google.com",
     email: "emma.brown@example.com"
   },
   {
@@ -53,6 +57,7 @@ export const mentorsData = [
     skills: ["Network Security", "Threat Analysis", "Encryption"],
     location: "Chicago, USA",
     linkedin: "https://linkedin.com/in/michaellee",
+    CV: "google.com",
     email: "michael.lee@example.com"
   },
   {
@@ -64,6 +69,7 @@ export const mentorsData = [
     skills: ["SEO", "Content Marketing", "Brand Strategy"],
     location: "Miami, USA",
     linkedin: "https://linkedin.com/in/sophiataylor",
+    CV: "google.com",
     email: "sophia.taylor@example.com"
   },
   {
@@ -75,6 +81,7 @@ export const mentorsData = [
     skills: ["Deep Learning", "Python", "NLP"],
     location: "Seattle, USA",
     linkedin: "https://linkedin.com/in/chrisgreen",
+    CV: "google.com",
     email: "chris.green@example.com"
   },
   {
@@ -86,6 +93,7 @@ export const mentorsData = [
     skills: ["Data Analysis", "Business Intelligence", "SQL"],
     location: "Boston, USA",
     linkedin: "https://linkedin.com/in/oliviaclark",
+    CV: "google.com",
     email: "olivia.clark@example.com"
   }
 ];

@@ -10,6 +10,7 @@ interface Mentor {
   skills: string[];
   location: string;
   linkedin: string;
+  CV: string;
   email: string;
 }
 
@@ -51,6 +52,9 @@ const MentorProfile: React.FC<{ mentor: Mentor }> = ({ mentor }) => {
       <div className="mt-4 flex justify-center space-x-4">
         <a href={mentor.linkedin} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-400">
           LinkedIn
+        </a>
+        <a href={mentor.linkedin} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-400">
+          CV
         </a>
         <a href={`mailto:${mentor.email}`} className="text-blue-600 hover:text-blue-400">
           Email

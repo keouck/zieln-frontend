@@ -44,6 +44,40 @@ export const PrimaryButton = ({
   );
 };
 
+export const MainPageButton = ({
+  link,
+  onClick,
+  buttonName,
+  icon,
+}: ButtonProps) => {
+  const buttonProps = {
+    ...(link && { href: link }),
+    ...(onClick && { onClick }),
+  };
+
+  return (
+    <div>
+      {link ? (
+        <Link href={link}>
+          <div className="bg-primary text-white px-3 py-1.5 lg:px-3 lg:py-2 rounded-full shadow-md hover:text-primary active:scale-95 hover:bg-white border-2 border-primary transition duration-300 text-sm flex items-center space-x-2 w-20">
+            {icon && <span>{icon}</span>}
+            <span>{buttonName}</span>
+          </div>
+        </Link>
+      ) : (
+        <button
+          onClick={onClick}
+          className="bg-primary text-white px-3 py-1.5 lg:px-4 lg:py-2 rounded-full shadow-md hover:text-primary active:scale-95 hover:bg-white border-2 border-primary transition duration-300 text-sm flex items-center space-x-2 w-20"
+          {...buttonProps}
+        >
+          {icon && <span>{icon}</span>}
+          <span>{buttonName}</span>
+        </button>
+      )}
+    </div>
+  );
+};
+
 export const PrimaryOutlineButton = ({
   link,
   onClick,

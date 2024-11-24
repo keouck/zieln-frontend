@@ -7,11 +7,11 @@ import LatestEvents from "./components/pagecomponents/landingpage/LatestEvents";
 import FoundersMessage from "./components/pagecomponents/aboutpage/FoundersMessage";
 import Introduction from "./components/pagecomponents/aboutpage/Introduction";
 import NameMeaning from "./components/pagecomponents/aboutpage/NameMeaning";
-import Partners from "./components/pagecomponents/aboutpage/Partners";
-// import FAQs from "./components/pagecomponents/landingpage/FAQs";
+// import Partners from "./components/pagecomponents/aboutpage/Partners";
+import FAQs from "./components/pagecomponents/landingpage/FAQs";
 import Testimonials from "./components/pagecomponents/landingpage/Testimonials";
 import Blogs from "./components/pagecomponents/landingpage/Blogs";
-import Stats from "./components/pagecomponents/landingpage/Stats";
+// import Stats from "./components/pagecomponents/landingpage/Stats";
 import Podcasts from "./components/pagecomponents/landingpage/Podcasts";
 
 export const metadata: Metadata = {
@@ -30,16 +30,16 @@ const Home: React.FC = () => {
     <PageLayout>
       <main className="bg-light">
         <HeroSection />
-        <Partners />
+        {/* <Partners /> */}
         <LatestEvents />
         <Podcasts />
-        <Stats />
+        {/* <Introduction /> */}
+        {/* <FoundersMessage /> */}
+        {/* <Stats /> */}
         {/* <Testimonials /> */}
         <Blogs />
-        <Introduction />
-        <FoundersMessage />
+        <FAQs />
         <NameMeaning />
-        {/* <FAQs /> */}
         <Contact />
       </main>
     </PageLayout>
