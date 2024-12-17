@@ -63,17 +63,14 @@ export default function HeroSection() {
         <div className="flex flex-col items-center">
           <div className="w-[70%] bg-white shadow-xl rounded-lg p-4">
             <iframe
-              className="w-full h-64 md:h-96 rounded-lg shadow-md"
-              src="https://www.youtube.com/embed/kkbQ8cWz2YA"
+              className="w-[110%] max-w-4xl mx-auto aspect-video rounded-lg shadow-lg"
+              src="https://www.youtube.com/embed/k68o_IG7HU4"
               title="YouTube video player"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             ></iframe>
           </div>
-          <h3 className="mt-4 text-lg md:text-xl font-semibold text-black text-center">
-            Watch Our Video to Learn More About Outsmash
-          </h3>
         </div>
       </div>
     </section>
