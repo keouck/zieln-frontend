@@ -41,7 +41,7 @@ const SearchResultsList: React.FC = () => {
     const fetchSearchResults = () => {
       setLoading(true);
       try {
-        let filteredResults = eventsData.filter((event) => {
+        const filteredResults = eventsData.filter((event) => {
           const lowerCaseQuery = query.toLowerCase();
           return (
             event.title.toLowerCase().includes(lowerCaseQuery) ||

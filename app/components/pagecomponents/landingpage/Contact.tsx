@@ -32,7 +32,7 @@ export default function Contact() {
               <a
                 className="mt-1 text-neutral-400 text-sm"
                 href="mailto:example@site.co"
-                target="_blank"
+                target="_blank" rel="noreferrer"
               >
                 outsmashteam@gmail.com
               </a>

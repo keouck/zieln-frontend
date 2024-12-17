@@ -17,8 +17,8 @@ export default function FoundersMessage() {
             Greetings from the Founders
           </h1>
           <p className="md:text-lg text-gray-700">
-          Ever felt like your school's a maze of missed opportunities? Us too. That's why we built Outsmash, your one-stop shop for crushing the extracurricular and co-curricular game! We want you to actively engage, discover your passions, and unlock your full potential.
-          So ditch the FOMO (fear of missing out) and join the Outsmash revolution! We'll help you turn "I wish" into a resounding "I did!"
+          Ever felt like your school is a maze of missed opportunities? Us too. That is why we built Outsmash, your one-stop shop for crushing the extracurricular and co-curricular game! We want you to actively engage, discover your passions, and unlock your full potential.
+          So ditch the FOMO (fear of missing out) and join the Outsmash revolution! We&apos;ll help you turn &quot;I wish&quot; into a resounding &quot;I did!&quot;
           </p>
         </div>
       </div>

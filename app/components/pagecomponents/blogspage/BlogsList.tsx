@@ -35,10 +35,10 @@ export default function BlogsList() {
 
   // Filter blogs
   const filteredBlogs = blogsData.filter((blog) => {
-    let categoryMatch = selectedCategory
+    const categoryMatch = selectedCategory
       ? blog.category === selectedCategory
       : true;
-    let dateMatch = selectedDate ? blog.date === selectedDate : true;
+    const dateMatch = selectedDate ? blog.date === selectedDate : true;
     return categoryMatch && dateMatch;
   });
 

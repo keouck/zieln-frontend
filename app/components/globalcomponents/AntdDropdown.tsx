@@ -35,7 +35,6 @@ const AntdDropdown = ({
         stroke="currentColor"
         strokeWidth="2"
         strokeLinecap="round"
-        strokeLinecap="round"
       >
         <path d="m6 9 6 6 6-6" />
       </svg>
