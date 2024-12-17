@@ -11,11 +11,7 @@ export default function NameMeaning() {
           </h2>
           <div className="text-lg text-gray-700">
             <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe
-              earum fugit nesciunt provident laboriosam consectetur explicabo
-              aliquid voluptatibus, enim ratione, voluptates exercitationem et
-              corrupti illo voluptate veniam quo dicta quam maiores id? Ipsam
-              saepe totam ea iste voluptate.
+            Outsmash is a collaborative platform which caters to students, clubs and organizations and other institutions , eventually bridging the gap between them together and spreading the word of opportunities to the students to help them become aware of the amazing opportunities available OUTside of the BOX, hence out name: OUTSMASH. We aim to help students go explore OUTside world of opportunities by SMASHing the walls of limitations.
             </p>
           </div>
         </div>

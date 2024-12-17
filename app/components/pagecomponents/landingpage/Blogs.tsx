@@ -9,7 +9,7 @@ export default function Blogs() {
   return (
     <section className="component-py component-px border-b">
       <div className="text-center mb-10 lg:mb-14">
-        <h2 className="component-heading text-primaryDark">The Blog</h2>
+        <h2 className="component-heading text-primaryDark">Blogs</h2>
         <p className="lg:text-lg mt-2">
           Discover the latest updates and insights
         </p>
@@ -44,9 +44,9 @@ export default function Blogs() {
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           >
             <path d="m9 18 6-6-6-6" />
           </svg>

@@ -1,96 +1,66 @@
-/* eslint-disable @next/next/no-img-element */
-import React from "react";
-import { Avatar } from "antd";
-import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
+// MentorProfile.tsx
+import React from 'react';
 
 interface Mentor {
   id: number;
+  profileImage: string;
   name: string;
-  image: string;
-  keyword: string[];
-  shortDescription: string;
-  socialLinks: { platform: string; url: string }[];
+  title: string;
+  bio: string;
+  skills: string[];
+  location: string;
+  linkedin: string;
+  CV: string;
+  email: string;
 }
 
-interface MentorProfileProps {
-  mentor?: Mentor;
-}
-
-const MentorProfile: React.FC<MentorProfileProps> = ({ mentor }) => {
-  if (!mentor) {
-    return <p className="text-center text-red-500">Mentor not found</p>;
-  }
-
+const MentorProfile: React.FC<{ mentor: Mentor }> = ({ mentor }) => {
   return (
-    <section>
+    <div className="max-w-md bg-white rounded-lg shadow-lg p-6 text-center">
+      {/* Larger Profile Picture */}
       <img
-        src="https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvdjU0NmJhdGNoMy1teW50LTM0LWJhZGdld2F0ZXJjb2xvcl8xLmpwZw.jpg"
-        alt={mentor.name}
-        className="h-60 lg:h-72 w-full object-cover object-bottom"
+        src={mentor.profileImage}
+        alt={`${mentor.name}'s profile`}
+        className="w-24 h-24 mx-auto rounded-full mb-4 border-2 border-blue-300"
       />
-      <div className="component-px pb-8 lg:pb-16 lg:grid lg:grid-cols-4 gap-4 lg:gap-8">
-        <div className="lg:col-span-1">
-          <div className="-mt-16 lg:-mt-24 bg-white lg:p-4 lg:rounded-3xl lg:shadow lg:sticky lg:top-32">
-            <div className="flex lg:justify-center mb-2 overflow-hidden">
-              <Avatar
-                src={mentor.image}
-                size={96}
-                className="border-2 border-gray-200"
-              />
-            </div>
-            <h2 className="text-sm lg:text-center mb-4 lg:mb-8">{mentor.name}</h2>
 
-            <hr />
-            <div className="my-4">
-              <h3 className="font-medium mb-2 text-sm lg:text-base">Skills</h3>
-              <ul className="text-gray-600 flex flex-wrap gap-3">
-                {mentor.keyword.map((keyword, index) => (
-                  <li
-                    key={index}
-                    className="px-3 py-1 border rounded-full text-xs lg:text-sm"
-                  >
-                    {keyword}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <hr />
-            <div className="my-4">
-              <h3 className="font-medium mb-2 text-sm lg:text-base">
-                Social Links
-              </h3>
-              <div className="flex  space-x-4">
-                {mentor.socialLinks.map((link, index) => (
-                  <a
-                    key={index}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-600"
-                  >
-                    {link.platform === "Facebook" && (
-                      <FaFacebook size={24} className="text-blue-600" />
-                    )}
-                    {link.platform === "Instagram" && (
-                      <FaInstagram size={24} className="text-pink-500" />
-                    )}
-                    {link.platform === "LinkedIn" && (
-                      <FaLinkedin size={24} className="text-blue-700" />
-                    )}
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="col-span-3 py-4 lg:py-8">
-          <div>
-            <h2 className="text-lg lg:text-2xl font-bold">{mentor.name}</h2>
-            <p className="text-gray-500">{mentor.shortDescription}</p>
-          </div>
-        </div>
+      {/* Name and Title */}
+      <h2 className="text-xl font-semibold text-gray-800">{mentor.name}</h2>
+      <p className="text-gray-500 text-sm">{mentor.title}</p>
+
+      {/* Bio / Description */}
+      <p className="mt-4 text-gray-600 text-sm leading-relaxed">
+        {mentor.bio}
+      </p>
+
+      {/* Skills / Specializations */}
+      <div className="mt-4">
+        <h3 className="text-gray-700 font-medium">Specializations:</h3>
+        <ul className="mt-2 space-y-1">
+          {mentor.skills.map((skill, index) => (
+            <li key={index} className="text-gray-600 text-sm">
+              {skill}
+            </li>
+          ))}
+        </ul>
       </div>
-    </section>
+
+      {/* Location */}
+      <p className="mt-4 text-gray-500 text-sm">{mentor.location}</p>
+
+      {/* Contact Links */}
+      <div className="mt-4 flex justify-center space-x-4">
+        <a href={mentor.linkedin} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-400">
+          LinkedIn
+        </a>
+        <a href={mentor.linkedin} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-400">
+          CV
+        </a>
+        <a href={`mailto:${mentor.email}`} className="text-blue-600 hover:text-blue-400">
+          Email
+        </a>
+      </div>
+    </div>
   );
 };
 

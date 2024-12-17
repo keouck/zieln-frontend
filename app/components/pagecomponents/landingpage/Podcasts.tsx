@@ -19,32 +19,15 @@ interface Podcast {
 const podcasts: Podcast[] = [
   {
     id: 1,
-    title: "Podcast Episode 1",
-    embedUrl: "https://www.youtube.com/embed/bOLPy0TBzdk?autoplay=0",
+    title: "Columbia University",
+    embedUrl: "https://www.youtube.com/embed/k68o_IG7HU4?si=wP4o7yPl3H6chiS7",
   },
   {
     id: 2,
-    title: "Podcast Episode 2",
+    title: "NYUAD",
     embedUrl:
-      "https://www.youtube.com/embed/fBnAMUkNM2k?si=LOjPW53K7hZpp6Ak&autoplay=0",
-  },
-  {
-    id: 3,
-    title: "Podcast Episode 3",
-    embedUrl: "https://www.youtube.com/embed/bOLPy0TBzdk?autoplay=0",
-  },
-  {
-    id: 4,
-    title: "Podcast Episode 4",
-    embedUrl:
-      "https://www.youtube.com/embed/fBnAMUkNM2k?si=LOjPW53K7hZpp6Ak&autoplay=0",
-  },
-  {
-    id: 5,
-    title: "Podcast Episode 5",
-    embedUrl: "https://www.youtube.com/embed/bOLPy0TBzdk?autoplay=0",
-  },
-  // Add more podcast episodes as needed
+      "https://www.youtube.com/embed/kkbQ8cWz2YA?si=saeQVdia2Cue07tp",
+  }
 ];
 
 const getThumbnailUrl = (embedUrl: string) => {

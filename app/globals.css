@@ -50,6 +50,9 @@
   --swiper-pagination-bullet-inactive-color: #fff;
   --swiper-pagination-bullet-active-color: #999898; /* or any desired color */
 }
+.swiper-wrapper {
+  justify-content: center;
+}
 
 .swiper-pagination-bullet {
   width: 30px !important;
